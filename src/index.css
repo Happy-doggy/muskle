@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── ShadCN CSS variables (thème Muskle — tons chauds papier/encre) ── */
+@layer base {
+  :root {
+    --background:    36 25% 96%;    /* paper #F5F3EE */
+    --foreground:    0 0% 6%;       /* ink  #0F0F0F  */
+
+    --card:          36 20% 93%;
+    --card-foreground: 0 0% 6%;
+
+    --popover:       36 25% 96%;
+    --popover-foreground: 0 0% 6%;
+
+    --primary:       0 0% 6%;       /* ink */
+    --primary-foreground: 36 25% 96%;
+
+    --secondary:     36 18% 88%;    /* paper-warm */
+    --secondary-foreground: 0 0% 6%;
+
+    --muted:         36 15% 85%;
+    --muted-foreground: 0 0% 42%;
+
+    --accent:        18 78% 57%;    /* terracotta #E8603C */
+    --accent-foreground: 0 0% 100%;
+
+    --destructive:   0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border:        36 15% 82%;
+    --input:         36 15% 82%;
+    --ring:          18 78% 57%;
+
+    --radius: 0.625rem;
+  }
+
+  .dark {
+    --background:    0 0% 7%;
+    --foreground:    36 15% 94%;
+
+    --card:          0 0% 10%;
+    --card-foreground: 36 15% 94%;
+
+    --popover:       0 0% 10%;
+    --popover-foreground: 36 15% 94%;
+
+    --primary:       36 15% 94%;
+    --primary-foreground: 0 0% 7%;
+
+    --secondary:     0 0% 14%;
+    --secondary-foreground: 36 15% 94%;
+
+    --muted:         0 0% 14%;
+    --muted-foreground: 0 0% 55%;
+
+    --accent:        18 78% 57%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive:   0 62% 40%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border:        0 0% 18%;
+    --input:         0 0% 18%;
+    --ring:          18 78% 57%;
+  }
+}
+
+@layer base {
+  * { @apply border-border; }
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+  h1, h2, h3 {
+    font-family: 'DM Serif Display', serif;
+  }
+}
+
+@layer components {
+  /* Timer ring */
+  .timer-ring-progress {
+    fill: none;
+    stroke-width: 8;
+    stroke-linecap: round;
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+    transition: stroke-dashoffset 1s linear, stroke 0.4s ease;
+  }
+
+  /* Category badge */
+  .category-badge {
+    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-sm text-xs font-medium;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+}
