@@ -1,4 +1,4 @@
-# FitPlanner
+# Muskle
 
 Application web pour planifier et réaliser des séances de sport à la maison — renforcement musculaire, musculation, yoga, kiné.
 
