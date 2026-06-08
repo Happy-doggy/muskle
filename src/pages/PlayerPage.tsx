@@ -1,13 +1,13 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { useEffect, useCallback, useMemo } from 'react'
-import { ChevronLeft, ChevronRight, Play, Pause, SkipForward, X, RotateCcw } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Play, Pause, SkipForward, RotateCcw } from 'lucide-react'
 import { useAppStore } from '../store'
 import { getCatalogExercises } from '../lib/customExercises'
 import { useSessionPlayer } from '../hooks/useSessionPlayer'
 import { useTimer } from '../hooks/useTimer'
 import { useTimerSounds } from '../hooks/useTimerSounds'
 import { unlockTimerSounds } from '../lib/timerSounds'
-import TimerRing from '../components/ui/TimerRing'
+import TimerRing, { TIMER_RING_TRACK } from '../components/ui/TimerRing'
 
 export default function PlayerPage() {
   const { sessionId } = useParams<{ sessionId: string }>()
@@ -102,35 +102,45 @@ function PlayerCore({
   const phaseColor =
     step.phase === 'prepare' ? '#5B8EC4' :
     step.phase === 'work'    ? '#E8603C' :
-    step.phase === 'rest'    ? '#6BAE8E' : '#9B7BB8'
+    step.phase === 'rest'    ? '#4BA278' : '#9B7BB8'
+
+  const stepFraction =
+    !hasReps && step.duration > 0 ? timer.progress : 0
+  const sessionProgressPercent =
+    player.steps.length > 0
+      ? Math.min(100, ((player.currentIndex + stepFraction) / player.steps.length) * 100)
+      : 0
 
   return (
     <div className="min-h-screen bg-ink text-paper flex flex-col select-none">
-      <div className="flex items-center justify-between px-4 pt-4 pb-2">
-        <button
-          onClick={onExit}
-          className="p-2 rounded-lg text-paper/60 hover:text-paper hover:bg-ink-soft transition-colors"
-        >
-          <X size={20} />
-        </button>
+      <div className="px-4 pt-4 pb-3 flex flex-col gap-3">
+        <div className="flex items-center justify-between gap-4">
+          <button
+            type="button"
+            onClick={onExit}
+            className="w-[4.5rem] px-3 py-1.5 rounded-md border border-paper/20 bg-white text-forest text-sm font-medium transition-opacity hover:opacity-90 shrink-0"
+          >
+            Arrêter
+          </button>
 
-        <div className="text-center">
-          <p className="text-xs text-paper/40 uppercase tracking-wider">{session.name}</p>
-          <p className="text-sm text-paper/70 font-medium">{step.blockTitle}</p>
+          <div className="text-center min-w-0 flex-1">
+            <p className="text-xs text-paper/40 uppercase tracking-wider truncate">{session.name}</p>
+            <p className="text-sm text-paper/70 font-medium truncate">{step.blockTitle}</p>
+          </div>
+
+          <span className="w-[4.5rem] text-xs text-paper/60 font-medium tabular-nums shrink-0 text-right">
+            {Math.round(sessionProgressPercent)}%
+          </span>
         </div>
 
-        <div className="flex gap-1">
-          {Array.from({ length: Math.min(player.steps.length, 12) }).map((_, i) => (
-            <div
-              key={i}
-              className="w-1.5 h-1.5 rounded-full transition-colors"
-              style={{
-                background:
-                  i === player.currentIndex ? phaseColor :
-                  i < player.currentIndex   ? '#4A4A4A' : '#2C2C2C',
-              }}
-            />
-          ))}
+        <div
+          className="h-1.5 rounded-full overflow-hidden"
+          style={{ backgroundColor: TIMER_RING_TRACK }}
+        >
+          <div
+            className="h-full bg-mint transition-all duration-300"
+            style={{ width: `${sessionProgressPercent}%` }}
+          />
         </div>
       </div>
 
@@ -240,7 +250,7 @@ function FinishedScreen({ onComplete, onRestart }: { onComplete: () => void; onR
         </button>
         <button
           onClick={onComplete}
-          className="flex items-center gap-2 px-5 py-3 rounded-lg bg-accent text-white font-medium hover:bg-accent-light transition-colors"
+          className="flex items-center gap-2 px-5 py-3 rounded-lg bg-accent text-accent-foreground font-medium hover:opacity-90 transition-opacity"
         >
           Terminer
         </button>

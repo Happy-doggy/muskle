@@ -2,6 +2,7 @@
  * ExercisesPage.tsx
  */
 import { useMemo, useState } from 'react'
+import { LayoutGroup } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import {
   filterExercisesByCategory,
@@ -13,6 +14,7 @@ import { formatExerciseDefaults } from '../lib/customExercises'
 import { Button } from '../components/ui/button'
 import { cn } from '@/lib/utils'
 import { Dumbbell, Plus } from 'lucide-react'
+import SlidingTabIndicator from '../components/ui/SlidingTabIndicator'
 
 export default function ExercisesPage() {
   const { exercises } = useExerciseCatalog()
@@ -43,25 +45,33 @@ export default function ExercisesPage() {
         </Button>
       </div>
 
-      <div className="flex flex-wrap gap-2 mb-6">
-        <Button
-          variant={category === null ? 'default' : 'outline'}
-          size="sm"
+      <LayoutGroup id="exercise-categories">
+      <div className="tabs mb-6">
+        <button
+          type="button"
           onClick={() => setCategory(null)}
+          className={cn('tab', category === null && 'tab-active')}
         >
-          Tous
-        </Button>
+          {category === null && (
+            <SlidingTabIndicator layoutId="exercise-category-pill" />
+          )}
+          <span className="relative z-10">Tous</span>
+        </button>
         {muscleGroups.map((group) => (
-          <Button
+          <button
             key={group}
-            variant={category === group ? 'default' : 'outline'}
-            size="sm"
+            type="button"
             onClick={() => setCategory(group)}
+            className={cn('tab', category === group && 'tab-active')}
           >
-            {group}
-          </Button>
+            {category === group && (
+              <SlidingTabIndicator layoutId="exercise-category-pill" />
+            )}
+            <span className="relative z-10">{group}</span>
+          </button>
         ))}
       </div>
+      </LayoutGroup>
 
       {filteredExercises.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-20 text-center gap-3">
@@ -83,14 +93,14 @@ export default function ExercisesPage() {
               {ex.image ? (
                 <img src={ex.image} alt={ex.name} className="w-14 h-14 object-cover rounded" />
               ) : (
-                <div className="w-14 h-14 bg-muted rounded flex items-center justify-center shrink-0">
-                  <Dumbbell size={20} className="text-ink/30" />
+                <div className="w-14 h-14 bg-accent rounded-lg flex items-center justify-center shrink-0">
+                  <Dumbbell size={20} className="text-white/70" />
                 </div>
               )}
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1 flex-wrap">
                   <h3 className="font-medium text-ink">{ex.name}</h3>
-                  <span className="text-[10px] px-1.5 py-0 rounded-full bg-muted text-ink/60 font-medium">
+                  <span className="text-xs px-2.5 py-1 rounded-full bg-mint text-white font-medium">
                     {ex.category}
                   </span>
                 </div>

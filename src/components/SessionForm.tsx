@@ -62,6 +62,7 @@ export default function SessionForm({ sessionId }: SessionFormProps) {
   )
   const addSession = useAppStore((s) => s.addSession)
   const updateSession = useAppStore((s) => s.updateSession)
+  const deleteSession = useAppStore((s) => s.deleteSession)
 
   const [form, setForm] = useState<FormState>(() =>
     existing ? sessionToForm(existing) : initialForm(blocks),
@@ -147,6 +148,14 @@ export default function SessionForm({ sessionId }: SessionFormProps) {
 
   const isEdit = Boolean(existing)
 
+  const handleDelete = () => {
+    if (!existing) return
+    if (window.confirm(`Supprimer la séance « ${existing.name} » ?`)) {
+      deleteSession(existing.id)
+      navigate('/sessions')
+    }
+  }
+
   if (sessionId && !existing) {
     return (
       <div className="max-w-lg mx-auto text-center py-12">
@@ -178,12 +187,28 @@ export default function SessionForm({ sessionId }: SessionFormProps) {
             Retour
           </Link>
         </Button>
-        <h1 className="font-display text-3xl text-ink">
-          {isEdit ? 'Modifier la séance' : 'Nouvelle séance'}
-        </h1>
-        <p className="text-ink/50 text-sm mt-1">
-          Assemble des blocs dans l’ordre d’exécution.
-        </p>
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <h1 className="font-display text-3xl text-ink">
+              {isEdit ? 'Modifier la séance' : 'Nouvelle séance'}
+            </h1>
+            <p className="text-ink/50 text-sm mt-1">
+              Assemble des blocs dans l’ordre d’exécution.
+            </p>
+          </div>
+          {isEdit && (
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              className="text-destructive hover:text-destructive shrink-0"
+              onClick={handleDelete}
+            >
+              <Trash2 size={14} />
+              Supprimer
+            </Button>
+          )}
+        </div>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
@@ -212,7 +237,7 @@ export default function SessionForm({ sessionId }: SessionFormProps) {
                 placeholder="Objectif, durée estimée…"
                 rows={3}
                 className={cn(
-                  'flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background',
+                  'flex w-full rounded-md border border-input bg-white px-3 py-2 text-sm ring-offset-background',
                   'placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2',
                   'focus-visible:ring-ring focus-visible:ring-offset-2',
                 )}

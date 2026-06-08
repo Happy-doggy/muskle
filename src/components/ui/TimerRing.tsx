@@ -7,10 +7,12 @@ interface TimerRingProps {
   size?: number
 }
 
+export const TIMER_RING_TRACK = '#F6D5BC'
+
 const PHASE_COLORS: Record<TimerPhase, string> = {
   prepare: '#5B8EC4',
   work:    '#E8603C',
-  rest:    '#6BAE8E',
+  rest:    '#4BA278',
   done:    '#9B7BB8',
 }
 
@@ -39,7 +41,7 @@ export default function TimerRing({ progress, remaining, phase, size = 200 }: Ti
           cy={size / 2}
           r={radius}
           fill="none"
-          stroke="#D9D4C8"
+          stroke={TIMER_RING_TRACK}
           strokeWidth={8}
         />
         {/* Progress */}

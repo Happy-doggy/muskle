@@ -6,6 +6,7 @@ import { muscleGroups, type Exercise } from '../data/exercices'
 import { getCatalogExercises } from '../lib/customExercises'
 import { useAppStore } from '../store'
 import { Button } from './ui/button'
+import SegmentedTabs from './ui/SegmentedTabs'
 import { Input } from './ui/input'
 import { Label } from './ui/label'
 import {
@@ -107,6 +108,7 @@ export default function BlockForm({ blockId }: BlockFormProps) {
   )
   const addBlock = useAppStore((s) => s.addBlock)
   const updateBlock = useAppStore((s) => s.updateBlock)
+  const deleteBlock = useAppStore((s) => s.deleteBlock)
 
   const [form, setForm] = useState<FormState>(() =>
     existing ? blockToForm(existing) : initialForm(),
@@ -294,6 +296,14 @@ export default function BlockForm({ blockId }: BlockFormProps) {
 
   const isEdit = Boolean(existing)
 
+  const handleDelete = () => {
+    if (!existing) return
+    if (window.confirm(`Supprimer le bloc « ${existing.name} » ?`)) {
+      deleteBlock(existing.id)
+      navigate('/blocks')
+    }
+  }
+
   if (blockId && !existing) {
     return (
       <div className="max-w-lg mx-auto text-center py-12">
@@ -314,12 +324,28 @@ export default function BlockForm({ blockId }: BlockFormProps) {
             Retour
           </Link>
         </Button>
-        <h1 className="font-display text-3xl text-ink">
-          {isEdit ? 'Modifier le bloc' : 'Nouveau bloc'}
-        </h1>
-        <p className="text-ink/50 text-sm mt-1">
-          Compose une liste ou un circuit d’exercices.
-        </p>
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <h1 className="font-display text-3xl text-ink">
+              {isEdit ? 'Modifier le bloc' : 'Nouveau bloc'}
+            </h1>
+            <p className="text-ink/50 text-sm mt-1">
+              Compose une liste ou un circuit d’exercices.
+            </p>
+          </div>
+          {isEdit && (
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              className="text-destructive hover:text-destructive shrink-0"
+              onClick={handleDelete}
+            >
+              <Trash2 size={14} />
+              Supprimer
+            </Button>
+          )}
+        </div>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
@@ -442,24 +468,16 @@ export default function BlockForm({ blockId }: BlockFormProps) {
 
                   <div className="space-y-2">
                     <Label>Type d&apos;effort</Label>
-                    <div className="flex gap-2">
-                      <Button
-                        type="button"
-                        variant={row.measureType === 'reps' ? 'default' : 'outline'}
-                        className="flex-1"
-                        onClick={() => setRowMeasureType(row.key, 'reps')}
-                      >
-                        Répétitions
-                      </Button>
-                      <Button
-                        type="button"
-                        variant={row.measureType === 'duration' ? 'default' : 'outline'}
-                        className="flex-1"
-                        onClick={() => setRowMeasureType(row.key, 'duration')}
-                      >
-                        Durée
-                      </Button>
-                    </div>
+                    <SegmentedTabs
+                      layoutId={`block-exercise-type-${row.key}`}
+                      value={row.measureType}
+                      onChange={(type) => setRowMeasureType(row.key, type)}
+                      fullWidth
+                      segments={[
+                        { value: 'reps', label: 'Répétitions' },
+                        { value: 'duration', label: 'Durée' },
+                      ]}
+                    />
                   </div>
 
                   <div className={cn('grid gap-3', form.mode === 'list' ? 'grid-cols-3' : 'grid-cols-2')}>

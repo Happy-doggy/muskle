@@ -1,18 +1,10 @@
 import { Link } from 'react-router-dom'
 import { useAppStore } from '../store'
 import { Button } from '../components/ui/button'
-import { Badge } from '../components/ui/badge'
-import { Layers, Pencil, Plus, Trash2 } from 'lucide-react'
+import { Layers, Plus } from 'lucide-react'
 
 export default function BlocksPage() {
   const blocks = useAppStore((s) => s.blocks)
-  const deleteBlock = useAppStore((s) => s.deleteBlock)
-
-  const handleDelete = (id: string, name: string) => {
-    if (window.confirm(`Supprimer le bloc « ${name} » ?`)) {
-      deleteBlock(id)
-    }
-  }
 
   return (
     <div>
@@ -26,7 +18,7 @@ export default function BlocksPage() {
         <Button variant="outline" asChild>
           <Link to="/blocks/new">
             <Plus size={16} />
-            Nouveau bloc
+            Ajouter
           </Link>
         </Button>
       </div>
@@ -43,46 +35,25 @@ export default function BlocksPage() {
       ) : (
         <div className="grid gap-3">
           {blocks.map((block) => (
-            <div
+            <Link
               key={block.id}
-              className="list-card"
+              to={`/blocks/${block.id}/edit`}
+              className="list-card list-card-clickable block"
             >
-              <div className="flex items-start justify-between gap-4">
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-2 flex-wrap">
-                    <h3 className="font-medium text-ink">{block.name}</h3>
-                    <Badge variant="secondary">
-                      {block.mode === 'circuit' ? 'Circuit' : 'Liste'}
-                    </Badge>
-                  </div>
-                  <p className="text-sm text-ink/50">
-                    {block.exercises.length} exercice
-                    {block.exercises.length !== 1 ? 's' : ''}
-                    {block.mode === 'circuit' && block.rounds != null && (
-                      <span> · {block.rounds} rounds</span>
-                    )}
-                  </p>
-                </div>
-
-                <div className="flex items-center gap-2 shrink-0">
-                  <Button variant="outline" size="sm" asChild>
-                    <Link to={`/blocks/${block.id}/edit`}>
-                      <Pencil size={14} />
-                      Éditer
-                    </Link>
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="text-destructive hover:text-destructive"
-                    onClick={() => handleDelete(block.id, block.name)}
-                  >
-                    <Trash2 size={14} />
-                    Supprimer
-                  </Button>
-                </div>
+              <div className="flex items-center gap-2 mb-2 flex-wrap">
+                <h3 className="font-medium text-ink">{block.name}</h3>
+                <span className="text-xs px-2.5 py-1 rounded-full bg-mint text-white font-medium">
+                  {block.mode === 'circuit' ? 'Circuit' : 'Liste'}
+                </span>
               </div>
-            </div>
+              <p className="text-sm text-ink/50">
+                {block.exercises.length} exercice
+                {block.exercises.length !== 1 ? 's' : ''}
+                {block.mode === 'circuit' && block.rounds != null && (
+                  <span> · {block.rounds} rounds</span>
+                )}
+              </p>
+            </Link>
           ))}
         </div>
       )}

@@ -1,6 +1,8 @@
 import { Outlet, NavLink } from 'react-router-dom'
+import { LayoutGroup } from 'framer-motion'
 import { Dumbbell, Layers, CalendarDays } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import SlidingTabIndicator from './SlidingTabIndicator'
 
 const navItems = [
   { to: '/sessions', icon: CalendarDays, label: 'Séances' },
@@ -11,28 +13,32 @@ const navItems = [
 export default function Layout() {
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <header className="border-b bg-background/95 backdrop-blur sticky top-0 z-40">
+      <header className="border-b header-blur backdrop-blur sticky top-0 z-40">
         <div className="max-w-4xl mx-auto px-4 h-14 flex items-center justify-between">
           <span className="font-display text-xl text-foreground">Muskle</span>
-          <nav className="flex items-center gap-1">
+          <LayoutGroup id="main-nav">
+          <nav className="tabs">
             {navItems.map(({ to, icon: Icon, label }) => (
               <NavLink
                 key={to}
                 to={to}
                 className={({ isActive }) =>
-                  cn(
-                    'flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-colors',
-                    isActive
-                      ? 'bg-primary text-primary-foreground'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
-                  )
+                  cn('tab', isActive && 'tab-active')
                 }
               >
-                <Icon size={16} />
-                <span className="hidden sm:inline">{label}</span>
+                {({ isActive }) => (
+                  <>
+                    {isActive && <SlidingTabIndicator layoutId="main-nav-pill" />}
+                    <span className="relative z-10 flex items-center gap-2">
+                      <Icon size={16} />
+                      <span className="hidden sm:inline">{label}</span>
+                    </span>
+                  </>
+                )}
               </NavLink>
             ))}
           </nav>
+          </LayoutGroup>
         </div>
       </header>
 

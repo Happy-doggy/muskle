@@ -2,68 +2,51 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ── ShadCN CSS variables (thème Muskle — tons chauds papier/encre) ── */
+/* ── ShadCN CSS variables (thème Muskle — couleurs hex) ── */
 @layer base {
   :root {
-    --background:    36 25% 96%;    /* paper #F5F3EE */
-    --foreground:    0 0% 6%;       /* ink  #0F0F0F  */
-
-    --card:          0 0% 100%;
-    --card-foreground: 0 0% 6%;
-
-    --popover:       36 25% 96%;
-    --popover-foreground: 0 0% 6%;
-
-    --primary:       0 0% 6%;       /* ink */
-    --primary-foreground: 36 25% 96%;
-
-    --secondary:     36 18% 88%;    /* paper-warm */
-    --secondary-foreground: 0 0% 6%;
-
-    --muted:         36 15% 85%;
-    --muted-foreground: 0 0% 42%;
-
-    --accent:        18 78% 57%;    /* terracotta #E8603C */
-    --accent-foreground: 0 0% 100%;
-
-    --destructive:   0 72% 51%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border:        36 15% 82%;
-    --input:         36 15% 82%;
-    --ring:          18 78% 57%;
-
-    --radius: 0.625rem;
+    --background:           #FDF5EF; /* cream */
+    --foreground:           #0F0F0F; /* ink */
+    --card:                   #FFFFFF;
+    --card-foreground:        #0F0F0F;
+    --popover:                #FDF5EF;
+    --popover-foreground:     #0F0F0F;
+    --primary:                #004337; /* Forest */
+    --primary-foreground:     #FFFFFF;
+    --secondary:              #E6E2DB; /* paper-warm */
+    --secondary-foreground:   #0F0F0F;
+    --muted:                  #DEDAD3;
+    --muted-foreground:       #6B6B6B;
+    --accent:                 #4BA278; /* Mint */
+    --accent-foreground:      #FFFFFF;
+    --destructive:            #DC2828;
+    --destructive-foreground: #FFFFFF;
+    --border:                 #F7EDE5; /* stroke */
+    --input:                  #F7EDE5;
+    --ring:                   #4BA278;
+    --radius:                 0.625rem;
   }
 
   .dark {
-    --background:    0 0% 7%;
-    --foreground:    36 15% 94%;
-
-    --card:          0 0% 10%;
-    --card-foreground: 36 15% 94%;
-
-    --popover:       0 0% 10%;
-    --popover-foreground: 36 15% 94%;
-
-    --primary:       36 15% 94%;
-    --primary-foreground: 0 0% 7%;
-
-    --secondary:     0 0% 14%;
-    --secondary-foreground: 36 15% 94%;
-
-    --muted:         0 0% 14%;
-    --muted-foreground: 0 0% 55%;
-
-    --accent:        18 78% 57%;
-    --accent-foreground: 0 0% 100%;
-
-    --destructive:   0 62% 40%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border:        0 0% 18%;
-    --input:         0 0% 18%;
-    --ring:          18 78% 57%;
+    --background:           #121212;
+    --foreground:           #F2F0ED;
+    --card:                   #1A1A1A;
+    --card-foreground:      #F2F0ED;
+    --popover:                #1A1A1A;
+    --popover-foreground:     #F2F0ED;
+    --primary:                #F2F0ED;
+    --primary-foreground:     #121212;
+    --secondary:              #242424;
+    --secondary-foreground:   #F2F0ED;
+    --muted:                  #242424;
+    --muted-foreground:       #8C8C8C;
+    --accent:                 #4BA278;
+    --accent-foreground:      #FFFFFF;
+    --destructive:            #A52727;
+    --destructive-foreground: #FFFFFF;
+    --border:                 #2E2E2E;
+    --input:                  #2E2E2E;
+    --ring:                   #4BA278;
   }
 }
 
@@ -95,7 +78,32 @@
 
   /* List cards (séances, blocs, exercices) */
   .list-card {
-    @apply bg-white border border-border rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow;
+    @apply bg-white border border-border rounded-lg p-4;
+  }
+
+  .list-card-clickable {
+    @apply cursor-pointer transition-colors hover:border-mint;
+  }
+
+  .tabs {
+    @apply flex flex-wrap items-center gap-1 bg-white rounded-lg p-1 border border-border;
+  }
+
+  .tab {
+    @apply relative z-0 px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-200 text-muted-foreground;
+  }
+
+  .tab:hover:not(.tab-active) {
+    background-color: color-mix(in srgb, var(--accent) 35%, transparent);
+    @apply text-foreground;
+  }
+
+  .tab-active {
+    @apply text-white;
+  }
+
+  .header-blur {
+    background-color: color-mix(in srgb, var(--background) 95%, transparent);
   }
 }
 

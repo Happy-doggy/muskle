@@ -8,6 +8,7 @@ import {
   saveCustomExercise,
 } from '../lib/customExercises'
 import { Button } from '../components/ui/button'
+import SegmentedTabs from '../components/ui/SegmentedTabs'
 import { Input } from '../components/ui/input'
 import { Label } from '../components/ui/label'
 import {
@@ -135,7 +136,7 @@ export default function AddExercisePage() {
   return (
     <div className="max-w-lg mx-auto">
       <div className="mb-6">
-        <Button variant="ghost" size="sm" className="-ml-2 mb-4" asChild>
+        <Button variant="outline" size="sm" className="-ml-2 mb-4" asChild>
           <Link to="/exercises">
             <ArrowLeft size={16} />
             Retour
@@ -194,7 +195,7 @@ export default function AddExercisePage() {
                 rows={4}
                 required
                 className={cn(
-                  'flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background',
+                  'flex w-full rounded-md border border-input bg-white px-3 py-2 text-sm ring-offset-background',
                   'placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2',
                   'focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50'
                 )}
@@ -211,24 +212,16 @@ export default function AddExercisePage() {
           <CardContent className="space-y-4">
             <div className="space-y-2">
               <Label>Type</Label>
-              <div className="flex gap-2">
-                <Button
-                  type="button"
-                  variant={form.type === 'reps' ? 'default' : 'outline'}
-                  className="flex-1"
-                  onClick={() => update('type', 'reps')}
-                >
-                  Répétitions
-                </Button>
-                <Button
-                  type="button"
-                  variant={form.type === 'duration' ? 'default' : 'outline'}
-                  className="flex-1"
-                  onClick={() => update('type', 'duration')}
-                >
-                  Durée
-                </Button>
-              </div>
+              <SegmentedTabs
+                layoutId="exercise-type"
+                value={form.type}
+                onChange={(type) => update('type', type)}
+                fullWidth
+                segments={[
+                  { value: 'reps', label: 'Répétitions' },
+                  { value: 'duration', label: 'Durée' },
+                ]}
+              />
             </div>
 
             <div className="space-y-2">
@@ -310,7 +303,7 @@ export default function AddExercisePage() {
           <Button type="button" variant="outline" className="flex-1" asChild>
             <Link to="/exercises">Annuler</Link>
           </Button>
-          <Button type="submit" className="flex-1">
+          <Button type="submit" className="flex-1 bg-mint text-white hover:opacity-90">
             Enregistrer
           </Button>
         </div>
