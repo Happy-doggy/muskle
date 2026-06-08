@@ -26,7 +26,15 @@ import {
 } from './ui/card'
 import { cn } from '@/lib/utils'
 
-type ExerciseRow = BlockExercise & { key: string }
+type MeasureType = 'reps' | 'duration'
+
+type ExerciseRow = BlockExercise & { key: string; measureType: MeasureType }
+
+function inferMeasureType(row: BlockExercise, ex?: Exercise): MeasureType {
+  if (row.duration !== undefined) return 'duration'
+  if (row.reps !== undefined) return 'reps'
+  return ex?.type === 'duration' ? 'duration' : 'reps'
+}
 
 type FormState = {
   name: string
@@ -36,28 +44,29 @@ type FormState = {
   exercises: ExerciseRow[]
 }
 
-function defaultsFromExercise(ex: Exercise, mode: BlockMode): BlockExercise {
-  if (ex.type === 'reps') {
-    return {
-      exerciseId: ex.id,
-      sets: mode === 'list' ? ex.defaultSets ?? 3 : undefined,
-      reps: ex.defaultReps ?? 12,
-      restSeconds: 60,
-    }
-  }
-  return {
+function defaultsFromExercise(
+  ex: Exercise,
+  mode: BlockMode,
+  measureType?: MeasureType,
+): Omit<ExerciseRow, 'key'> {
+  const mt = measureType ?? (ex.type === 'duration' ? 'duration' : 'reps')
+  const base: Omit<ExerciseRow, 'key'> = {
     exerciseId: ex.id,
+    measureType: mt,
     sets: mode === 'list' ? ex.defaultSets ?? 3 : undefined,
-    duration: ex.defaultDuration ?? 30,
-    restSeconds: 30,
+    restSeconds: mt === 'reps' ? 60 : 30,
   }
+  if (mt === 'reps') {
+    return { ...base, reps: ex.defaultReps ?? 12 }
+  }
+  return { ...base, duration: ex.defaultDuration ?? 30 }
 }
 
 function emptyRow(mode: BlockMode): ExerciseRow {
   const catalog = getCatalogExercises()
   const first = catalog[0]
   if (!first) {
-    return { key: crypto.randomUUID(), exerciseId: '', restSeconds: 60 }
+    return { key: crypto.randomUUID(), exerciseId: '', restSeconds: 60, measureType: 'reps' }
   }
   return { key: crypto.randomUUID(), ...defaultsFromExercise(first, mode) }
 }
@@ -68,7 +77,14 @@ function blockToForm(block: Block): FormState {
     mode: block.mode,
     rounds: String(block.rounds ?? 3),
     restBetweenRounds: String(block.restBetweenRounds ?? 60),
-    exercises: block.exercises.map((ex) => ({ ...ex, key: crypto.randomUUID() })),
+    exercises: block.exercises.map((row) => {
+      const ex = getCatalogExercises().find((e) => e.id === row.exerciseId)
+      return {
+        ...row,
+        key: crypto.randomUUID(),
+        measureType: inferMeasureType(row, ex),
+      }
+    }),
   }
 }
 
@@ -122,7 +138,7 @@ export default function BlockForm({ blockId }: BlockFormProps) {
       exercises: prev.exercises.map((row) => {
         const ex = catalog.find((e) => e.id === row.exerciseId)
         if (!ex) return row
-        const base = defaultsFromExercise(ex, mode)
+        const base = defaultsFromExercise(ex, mode, row.measureType)
         return { ...row, ...base, key: row.key }
       }),
     }))
@@ -142,7 +158,31 @@ export default function BlockForm({ blockId }: BlockFormProps) {
   const onExerciseChange = (key: string, exerciseId: string) => {
     const ex = catalog.find((e) => e.id === exerciseId)
     if (!ex) return
-    updateRow(key, { ...defaultsFromExercise(ex, form.mode), exerciseId })
+    const row = form.exercises.find((r) => r.key === key)
+    updateRow(key, {
+      ...defaultsFromExercise(ex, form.mode, row?.measureType),
+      exerciseId,
+    })
+  }
+
+  const setRowMeasureType = (key: string, measureType: MeasureType) => {
+    const row = form.exercises.find((r) => r.key === key)
+    const ex = catalog.find((e) => e.id === row?.exerciseId)
+    if (!row || !ex) return
+    const defaults = defaultsFromExercise(ex, form.mode, measureType)
+    if (measureType === 'reps') {
+      updateRow(key, {
+        measureType,
+        reps: defaults.reps,
+        duration: undefined,
+      })
+    } else {
+      updateRow(key, {
+        measureType,
+        duration: defaults.duration,
+        reps: undefined,
+      })
+    }
   }
 
   const addRow = () => {
@@ -183,7 +223,7 @@ export default function BlockForm({ blockId }: BlockFormProps) {
         return { error: 'Le repos après exercice doit être un nombre positif ou zéro.' }
       }
 
-      if (ex.type === 'reps') {
+      if (row.measureType === 'reps') {
         const reps = Number(row.reps)
         if (!Number.isFinite(reps) || reps < 1) {
           return { error: 'Les répétitions doivent être au moins 1.' }
@@ -350,12 +390,10 @@ export default function BlockForm({ blockId }: BlockFormProps) {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            {form.exercises.map((row, index) => {
-              const ex = catalog.find((e) => e.id === row.exerciseId)
-              return (
+            {form.exercises.map((row, index) => (
                 <div
                   key={row.key}
-                  className="border border-paper-muted rounded-lg p-4 space-y-3 bg-paper-warm/50"
+                  className="border border-border rounded-lg p-4 space-y-3 bg-white"
                 >
                   <div className="flex items-center justify-between gap-2">
                     <span className="text-xs font-medium text-ink/50">
@@ -402,21 +440,43 @@ export default function BlockForm({ blockId }: BlockFormProps) {
                     </Select>
                   </div>
 
-                  {ex?.type === 'reps' ? (
-                    <div className={cn('grid gap-3', form.mode === 'list' ? 'grid-cols-3' : 'grid-cols-2')}>
-                      {form.mode === 'list' && (
-                        <div className="space-y-2">
-                          <Label>Séries</Label>
-                          <Input
-                            type="number"
-                            min={1}
-                            value={row.sets ?? ''}
-                            onChange={(e) =>
-                              updateRow(row.key, { sets: Number(e.target.value) })
-                            }
-                          />
-                        </div>
-                      )}
+                  <div className="space-y-2">
+                    <Label>Type d&apos;effort</Label>
+                    <div className="flex gap-2">
+                      <Button
+                        type="button"
+                        variant={row.measureType === 'reps' ? 'default' : 'outline'}
+                        className="flex-1"
+                        onClick={() => setRowMeasureType(row.key, 'reps')}
+                      >
+                        Répétitions
+                      </Button>
+                      <Button
+                        type="button"
+                        variant={row.measureType === 'duration' ? 'default' : 'outline'}
+                        className="flex-1"
+                        onClick={() => setRowMeasureType(row.key, 'duration')}
+                      >
+                        Durée
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div className={cn('grid gap-3', form.mode === 'list' ? 'grid-cols-3' : 'grid-cols-2')}>
+                    {form.mode === 'list' && (
+                      <div className="space-y-2">
+                        <Label>Séries</Label>
+                        <Input
+                          type="number"
+                          min={1}
+                          value={row.sets ?? ''}
+                          onChange={(e) =>
+                            updateRow(row.key, { sets: Number(e.target.value) })
+                          }
+                        />
+                      </div>
+                    )}
+                    {row.measureType === 'reps' ? (
                       <div className="space-y-2">
                         <Label>Répétitions</Label>
                         <Input
@@ -428,33 +488,7 @@ export default function BlockForm({ blockId }: BlockFormProps) {
                           }
                         />
                       </div>
-                      <div className="space-y-2">
-                        <Label>Repos après (s)</Label>
-                        <Input
-                          type="number"
-                          min={0}
-                          value={row.restSeconds ?? ''}
-                          onChange={(e) =>
-                            updateRow(row.key, { restSeconds: Number(e.target.value) })
-                          }
-                        />
-                      </div>
-                    </div>
-                  ) : (
-                    <div className={cn('grid gap-3', form.mode === 'list' ? 'grid-cols-3' : 'grid-cols-2')}>
-                      {form.mode === 'list' && (
-                        <div className="space-y-2">
-                          <Label>Séries</Label>
-                          <Input
-                            type="number"
-                            min={1}
-                            value={row.sets ?? ''}
-                            onChange={(e) =>
-                              updateRow(row.key, { sets: Number(e.target.value) })
-                            }
-                          />
-                        </div>
-                      )}
+                    ) : (
                       <div className="space-y-2">
                         <Label>Durée (s)</Label>
                         <Input
@@ -466,22 +500,21 @@ export default function BlockForm({ blockId }: BlockFormProps) {
                           }
                         />
                       </div>
-                      <div className="space-y-2">
-                        <Label>Repos après (s)</Label>
-                        <Input
-                          type="number"
-                          min={0}
-                          value={row.restSeconds ?? ''}
-                          onChange={(e) =>
-                            updateRow(row.key, { restSeconds: Number(e.target.value) })
-                          }
-                        />
-                      </div>
+                    )}
+                    <div className="space-y-2">
+                      <Label>Repos après (s)</Label>
+                      <Input
+                        type="number"
+                        min={0}
+                        value={row.restSeconds ?? ''}
+                        onChange={(e) =>
+                          updateRow(row.key, { restSeconds: Number(e.target.value) })
+                        }
+                      />
                     </div>
-                  )}
+                  </div>
                 </div>
-              )
-            })}
+            ))}
 
             <Button type="button" variant="outline" className="w-full" onClick={addRow}>
               <Plus size={16} />

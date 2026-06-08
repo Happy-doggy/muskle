@@ -54,7 +54,14 @@ function pushWorkAndRest(
     totalExercisesInBlock,
   }
 
-  if (exercise.type === 'duration' || blockEx.duration) {
+  const useDuration =
+    blockEx.duration !== undefined
+      ? true
+      : blockEx.reps !== undefined
+        ? false
+        : exercise.type === 'duration'
+
+  if (useDuration) {
     steps.push({
       ...base,
       phase: 'work',

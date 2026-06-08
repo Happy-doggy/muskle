@@ -5,6 +5,8 @@ import { useAppStore } from '../store'
 import { getCatalogExercises } from '../lib/customExercises'
 import { useSessionPlayer } from '../hooks/useSessionPlayer'
 import { useTimer } from '../hooks/useTimer'
+import { useTimerSounds } from '../hooks/useTimerSounds'
+import { unlockTimerSounds } from '../lib/timerSounds'
 import TimerRing from '../components/ui/TimerRing'
 
 export default function PlayerPage() {
@@ -74,6 +76,22 @@ function PlayerCore({
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [player.currentIndex])
+
+  useTimerSounds({
+    remaining: timer.remaining,
+    isRunning: timer.isRunning,
+    phase: step?.phase ?? 'done',
+    duration: step?.duration ?? 0,
+    stepIndex: player.currentIndex,
+  })
+
+  useEffect(() => {
+    const unlock = () => {
+      unlockTimerSounds()
+    }
+    window.addEventListener('pointerdown', unlock, { once: true })
+    return () => window.removeEventListener('pointerdown', unlock)
+  }, [])
 
   if (player.isFinished) {
     return <FinishedScreen onComplete={onComplete} onRestart={player.restart} />
@@ -172,7 +190,7 @@ function PlayerCore({
           {hasReps ? (
             <button
               onClick={player.goNext}
-              className="flex items-center gap-2 px-8 py-4 rounded-xl font-medium text-ink transition-all active:scale-95"
+              className="flex items-center gap-2 px-8 py-4 rounded-xl font-medium text-white transition-all active:scale-95"
               style={{ background: phaseColor }}
             >
               <SkipForward size={20} />
@@ -180,8 +198,12 @@ function PlayerCore({
             </button>
           ) : (
             <button
-              onClick={() => (timer.isRunning ? timer.pause() : timer.start())}
-              className="p-5 rounded-full text-ink transition-all active:scale-95"
+              onClick={() => {
+                unlockTimerSounds()
+                if (timer.isRunning) timer.pause()
+                else timer.start()
+              }}
+              className="p-5 rounded-full text-white transition-all active:scale-95"
               style={{ background: phaseColor }}
             >
               {timer.isRunning ? <Pause size={28} /> : <Play size={28} />}
@@ -218,7 +240,7 @@ function FinishedScreen({ onComplete, onRestart }: { onComplete: () => void; onR
         </button>
         <button
           onClick={onComplete}
-          className="flex items-center gap-2 px-5 py-3 rounded-lg bg-accent text-paper font-medium hover:bg-accent-light transition-colors"
+          className="flex items-center gap-2 px-5 py-3 rounded-lg bg-accent text-white font-medium hover:bg-accent-light transition-colors"
         >
           Terminer
         </button>

@@ -54,8 +54,8 @@ export default {
         sm: 'calc(var(--radius) - 4px)',
       },
       fontFamily: {
-        display: ['"DM Serif Display"', 'serif'],
-        sans:    ['"DM Sans"', 'sans-serif'],
+        display: ['"Outfit"', 'sans-serif'],
+        sans:    ['"Host Grotesk"', 'sans-serif'],
         mono:    ['"JetBrains Mono"', 'monospace'],
       },
       keyframes: {

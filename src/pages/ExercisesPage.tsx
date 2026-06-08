@@ -77,20 +77,20 @@ export default function ExercisesPage() {
             <div
               key={ex.id}
               className={cn(
-                'bg-paper-warm border border-paper-muted rounded-lg p-4 flex gap-4 items-start shadow-card hover:shadow-card-hover transition-shadow'
+                'list-card flex gap-4 items-start'
               )}
             >
               {ex.image ? (
                 <img src={ex.image} alt={ex.name} className="w-14 h-14 object-cover rounded" />
               ) : (
-                <div className="w-14 h-14 bg-paper-muted rounded flex items-center justify-center shrink-0">
+                <div className="w-14 h-14 bg-muted rounded flex items-center justify-center shrink-0">
                   <Dumbbell size={20} className="text-ink/30" />
                 </div>
               )}
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1 flex-wrap">
                   <h3 className="font-medium text-ink">{ex.name}</h3>
-                  <span className="text-[10px] px-1.5 py-0 rounded-full bg-paper-muted text-ink/60 font-medium">
+                  <span className="text-[10px] px-1.5 py-0 rounded-full bg-muted text-ink/60 font-medium">
                     {ex.category}
                   </span>
                 </div>

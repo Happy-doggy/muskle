@@ -3,8 +3,8 @@ export type BlockMode = 'list' | 'circuit'
 export type BlockExercise = {
   exerciseId: string      // référence à Exercise.id
   sets?: number           // ex: 3
-  reps?: number           // si type === 'reps'
-  duration?: number       // si type === 'duration', en secondes
+  reps?: number           // répétitions (exclusif avec duration)
+  duration?: number       // durée en secondes (exclusif avec reps)
   restSeconds?: number    // repos après cet exercice
 }
 

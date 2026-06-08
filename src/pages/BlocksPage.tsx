@@ -45,7 +45,7 @@ export default function BlocksPage() {
           {blocks.map((block) => (
             <div
               key={block.id}
-              className="bg-paper-warm border border-paper-muted rounded-lg p-4 shadow-card hover:shadow-card-hover transition-shadow"
+              className="list-card"
             >
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1 min-w-0">

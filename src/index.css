@@ -8,7 +8,7 @@
     --background:    36 25% 96%;    /* paper #F5F3EE */
     --foreground:    0 0% 6%;       /* ink  #0F0F0F  */
 
-    --card:          36 20% 93%;
+    --card:          0 0% 100%;
     --card-foreground: 0 0% 6%;
 
     --popover:       36 25% 96%;
@@ -73,7 +73,7 @@
     @apply bg-background text-foreground font-sans;
   }
   h1, h2, h3 {
-    font-family: 'DM Serif Display', serif;
+    font-family: 'Outfit', sans-serif;
   }
 }
 
@@ -91,6 +91,11 @@
   /* Category badge */
   .category-badge {
     @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-sm text-xs font-medium;
+  }
+
+  /* List cards (séances, blocs, exercices) */
+  .list-card {
+    @apply bg-white border border-border rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow;
   }
 }
 

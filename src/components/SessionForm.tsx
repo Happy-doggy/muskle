@@ -230,7 +230,7 @@ export default function SessionForm({ sessionId }: SessionFormProps) {
             {form.blockRows.map((row, index) => (
               <div
                 key={row.key}
-                className="flex items-end gap-3 border border-paper-muted rounded-lg p-4 bg-paper-warm/50"
+                className="flex items-end gap-3 border border-border rounded-lg p-4 bg-white"
               >
                 <div className="flex-1 space-y-2">
                   <Label>Bloc {index + 1}</Label>

@@ -48,7 +48,7 @@ export default function SessionsPage() {
           {sessions.map((session) => (
             <div
               key={session.id}
-              className="bg-paper-warm border border-paper-muted rounded-lg p-4 shadow-card hover:shadow-card-hover transition-shadow"
+              className="list-card"
             >
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1 min-w-0">
@@ -69,7 +69,7 @@ export default function SessionsPage() {
                   <button
                     type="button"
                     onClick={() => navigate(`/play/${session.id}`)}
-                    className="flex items-center justify-center gap-2 bg-accent text-paper px-4 py-2 rounded-lg text-sm font-medium hover:bg-accent-light transition-colors"
+                    className="flex items-center justify-center gap-2 bg-accent text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-accent-light transition-colors"
                   >
                     <Play size={14} />
                     Lancer
