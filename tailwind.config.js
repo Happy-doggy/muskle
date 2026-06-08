@@ -41,7 +41,6 @@ export default {
         },
         // ── Couleurs Muskle ─────────────────────────
         mint:   'var(--accent)',
-        forest: 'var(--primary)',
         // ── Couleurs métier FitPlanner ──────────────
         musculation: '#E85D4A',
         renforcement: '#E8963C',

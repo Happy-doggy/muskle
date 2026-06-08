@@ -11,7 +11,7 @@
     --card-foreground:        #0F0F0F;
     --popover:                #FDF5EF;
     --popover-foreground:     #0F0F0F;
-    --primary:                #004337; /* Forest */
+    --primary:                #4BA278; /* Mint */
     --primary-foreground:     #FFFFFF;
     --secondary:              #E6E2DB; /* paper-warm */
     --secondary-foreground:   #0F0F0F;
@@ -34,8 +34,8 @@
     --card-foreground:      #F2F0ED;
     --popover:                #1A1A1A;
     --popover-foreground:     #F2F0ED;
-    --primary:                #F2F0ED;
-    --primary-foreground:     #121212;
+    --primary:                #4BA278;
+    --primary-foreground:     #FFFFFF;
     --secondary:              #242424;
     --secondary-foreground:   #F2F0ED;
     --muted:                  #242424;

@@ -303,7 +303,7 @@ export default function AddExercisePage() {
           <Button type="button" variant="outline" className="flex-1" asChild>
             <Link to="/exercises">Annuler</Link>
           </Button>
-          <Button type="submit" className="flex-1 bg-mint text-white hover:opacity-90">
+          <Button type="submit" className="flex-1">
             Enregistrer
           </Button>
         </div>

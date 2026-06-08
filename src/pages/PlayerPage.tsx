@@ -118,7 +118,7 @@ function PlayerCore({
           <button
             type="button"
             onClick={onExit}
-            className="w-[4.5rem] px-3 py-1.5 rounded-md border border-paper/20 bg-white text-forest text-sm font-medium transition-opacity hover:opacity-90 shrink-0"
+            className="w-[4.5rem] px-3 py-1.5 rounded-md border border-paper/20 bg-white text-mint text-sm font-medium transition-opacity hover:opacity-90 shrink-0"
           >
             Arrêter
           </button>
