@@ -131,28 +131,36 @@ export default function SessionForm({ sessionId }: SessionFormProps) {
     return session
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     const result = buildSession()
     if ('error' in result) {
       setError(result.error)
       return
     }
-    if (existing) {
-      updateSession(result)
-    } else {
-      addSession(result)
+    try {
+      if (existing) {
+        await updateSession(result)
+      } else {
+        await addSession(result)
+      }
+      navigate('/sessions')
+    } catch {
+      setError('Impossible d’enregistrer la séance. Réessaie.')
     }
-    navigate('/sessions')
   }
 
   const isEdit = Boolean(existing)
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     if (!existing) return
     if (window.confirm(`Supprimer la séance « ${existing.name} » ?`)) {
-      deleteSession(existing.id)
-      navigate('/sessions')
+      try {
+        await deleteSession(existing.id)
+        navigate('/sessions')
+      } catch {
+        setError('Impossible de supprimer la séance. Réessaie.')
+      }
     }
   }
 

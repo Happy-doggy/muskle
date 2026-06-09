@@ -1,31 +1,29 @@
 import { exercisesDB, type Exercise } from '../data/exercices'
+import { storage } from '../storage'
+import type { Exercise as FirestoreExercise } from '../types'
 
-const STORAGE_KEY = 'muskle:custom-exercises'
+let customCache: Exercise[] = []
 
-function readCustom(): Exercise[] {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY)
-    return raw ? (JSON.parse(raw) as Exercise[]) : []
-  } catch {
-    return []
-  }
+function toFirestore(exercise: Exercise): FirestoreExercise {
+  return exercise as unknown as FirestoreExercise
 }
 
-function writeCustom(exercises: Exercise[]): void {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(exercises))
+function fromFirestore(exercise: FirestoreExercise): Exercise {
+  return exercise as unknown as Exercise
 }
 
-export function loadCustomExercises(): Exercise[] {
-  return readCustom()
+export async function loadCustomExercises(): Promise<Exercise[]> {
+  customCache = (await storage.getExercises()).map(fromFirestore)
+  return customCache
 }
 
-export function saveCustomExercise(exercise: Exercise): void {
-  const list = readCustom()
-  writeCustom([...list, exercise])
+export async function saveCustomExercise(exercise: Exercise): Promise<void> {
+  await storage.saveExercise(toFirestore(exercise))
+  customCache = [...customCache, exercise]
 }
 
 export function getCatalogExercises(): Exercise[] {
-  return [...exercisesDB, ...readCustom()]
+  return [...exercisesDB, ...customCache]
 }
 
 export function slugifyExerciseName(name: string): string {

@@ -115,7 +115,7 @@ export default function AddExercisePage() {
     setError(null)
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     const result = buildExercise(form)
     if ('error' in result) {
@@ -129,8 +129,12 @@ export default function AddExercisePage() {
       ...(form.video.trim() ? { video: form.video.trim() } : {}),
     }
 
-    saveCustomExercise(exercise)
-    navigate('/exercises')
+    try {
+      await saveCustomExercise(exercise)
+      navigate('/exercises')
+    } catch {
+      setError('Impossible d’enregistrer l’exercice. Réessaie.')
+    }
   }
 
   return (

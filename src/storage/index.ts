@@ -6,5 +6,5 @@
  *   remplacer localStorageAdapter par le nouvel adapter.
  */
 
-export { localStorageAdapter as storage } from './localStorage'
+export { firestoreAdapter as storage } from './firestore'
 export { exportData, importData } from './localStorage'

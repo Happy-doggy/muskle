@@ -1,45 +1,32 @@
 import { sessionsDB, type Session } from '../data/sessions'
+import { storage } from '../storage'
+import type { Session as FirestoreSession } from '../types'
 
-const STORAGE_KEY = 'muskle_sessions'
-
-function read(): Session[] {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY)
-    return raw ? (JSON.parse(raw) as Session[]) : []
-  } catch {
-    return []
-  }
+function toFirestore(session: Session): FirestoreSession {
+  return session as unknown as FirestoreSession
 }
 
-function write(sessions: Session[]): void {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(sessions))
+function fromFirestore(session: FirestoreSession): Session {
+  return session as unknown as Session
 }
 
-export function loadSessions(): Session[] {
-  const stored = read()
+export async function loadSessions(): Promise<Session[]> {
+  const stored = (await storage.getSessions()).map(fromFirestore)
   if (stored.length === 0) {
-    write(sessionsDB)
+    await Promise.all(sessionsDB.map((session) => storage.saveSession(toFirestore(session))))
     return [...sessionsDB]
   }
   return stored
 }
 
-export function saveSessions(sessions: Session[]): void {
-  write(sessions)
+export async function saveSessions(sessions: Session[]): Promise<void> {
+  await Promise.all(sessions.map((session) => storage.saveSession(toFirestore(session))))
 }
 
-export function upsertSession(session: Session): void {
-  const list = loadSessions()
-  const idx = list.findIndex((s) => s.id === session.id)
-  if (idx === -1) {
-    saveSessions([...list, session])
-  } else {
-    const next = [...list]
-    next[idx] = session
-    saveSessions(next)
-  }
+export async function upsertSession(session: Session): Promise<void> {
+  await storage.saveSession(toFirestore(session))
 }
 
-export function deleteSessionById(id: string): void {
-  saveSessions(loadSessions().filter((s) => s.id !== id))
+export async function deleteSessionById(id: string): Promise<void> {
+  await storage.deleteSession(id)
 }

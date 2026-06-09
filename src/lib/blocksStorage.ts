@@ -1,45 +1,32 @@
 import { blocksDB, type Block } from '../data/blocks'
+import { storage } from '../storage'
+import type { Block as FirestoreBlock } from '../types'
 
-const STORAGE_KEY = 'muskle_blocks'
-
-function read(): Block[] {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY)
-    return raw ? (JSON.parse(raw) as Block[]) : []
-  } catch {
-    return []
-  }
+function toFirestore(block: Block): FirestoreBlock {
+  return block as unknown as FirestoreBlock
 }
 
-function write(blocks: Block[]): void {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(blocks))
+function fromFirestore(block: FirestoreBlock): Block {
+  return block as unknown as Block
 }
 
-export function loadBlocks(): Block[] {
-  const stored = read()
+export async function loadBlocks(): Promise<Block[]> {
+  const stored = (await storage.getBlocks()).map(fromFirestore)
   if (stored.length === 0) {
-    write(blocksDB)
+    await Promise.all(blocksDB.map((block) => storage.saveBlock(toFirestore(block))))
     return [...blocksDB]
   }
   return stored
 }
 
-export function saveBlocks(blocks: Block[]): void {
-  write(blocks)
+export async function saveBlocks(blocks: Block[]): Promise<void> {
+  await Promise.all(blocks.map((block) => storage.saveBlock(toFirestore(block))))
 }
 
-export function upsertBlock(block: Block): void {
-  const list = loadBlocks()
-  const idx = list.findIndex((b) => b.id === block.id)
-  if (idx === -1) {
-    saveBlocks([...list, block])
-  } else {
-    const next = [...list]
-    next[idx] = block
-    saveBlocks(next)
-  }
+export async function upsertBlock(block: Block): Promise<void> {
+  await storage.saveBlock(toFirestore(block))
 }
 
-export function deleteBlockById(id: string): void {
-  saveBlocks(loadBlocks().filter((b) => b.id !== id))
+export async function deleteBlockById(id: string): Promise<void> {
+  await storage.deleteBlock(id)
 }

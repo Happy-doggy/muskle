@@ -279,28 +279,36 @@ export default function BlockForm({ blockId }: BlockFormProps) {
     return block
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     const result = buildBlock()
     if ('error' in result) {
       setError(result.error)
       return
     }
-    if (existing) {
-      updateBlock(result)
-    } else {
-      addBlock(result)
+    try {
+      if (existing) {
+        await updateBlock(result)
+      } else {
+        await addBlock(result)
+      }
+      navigate('/blocks')
+    } catch {
+      setError('Impossible d’enregistrer le bloc. Réessaie.')
     }
-    navigate('/blocks')
   }
 
   const isEdit = Boolean(existing)
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     if (!existing) return
     if (window.confirm(`Supprimer le bloc « ${existing.name} » ?`)) {
-      deleteBlock(existing.id)
-      navigate('/blocks')
+      try {
+        await deleteBlock(existing.id)
+        navigate('/blocks')
+      } catch {
+        setError('Impossible de supprimer le bloc. Réessaie.')
+      }
     }
   }
 
