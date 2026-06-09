@@ -17,9 +17,9 @@ export default function Layout() {
       <header className="border-b header-blur backdrop-blur sticky top-0 z-40">
         <div className="max-w-4xl mx-auto px-4 h-14 flex items-center justify-between">
           <Link
-            to="/sessions"
+            to="/"
             className="text-foreground hover:text-mint transition-colors shrink-0"
-            aria-label="Muskle — Séances"
+            aria-label="Muskle"
           >
             <MuskleLogo />
           </Link>

@@ -1,0 +1,23 @@
+<!-- @dsCard group="Colors" viewport="700x150" name="Player phases" subtitle="Semantic timer colors: prepare, work, rest, done." -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; padding: 20px; background: #121212; font-family: var(--font-sans); }
+  .row { display: flex; gap: 14px; }
+  .swatch { flex: 1; border-radius: var(--radius); padding: 14px; display: flex; flex-direction: column; justify-content: space-between; min-height: 96px; color: #fff; }
+  .name { font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .hex { font-family: var(--font-mono); font-size: 11px; opacity: 0.85; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="swatch" style="background: var(--phase-prepare);"><span class="name">Préparez-vous</span><span class="hex">#5B8EC4 · prepare</span></div>
+    <div class="swatch" style="background: var(--phase-work);"><span class="name">Go !</span><span class="hex">#E8603C · work</span></div>
+    <div class="swatch" style="background: var(--phase-rest);"><span class="name">Repos</span><span class="hex">#4BA278 · rest</span></div>
+    <div class="swatch" style="background: var(--phase-done);"><span class="name">Terminé</span><span class="hex">#9B7BB8 · done</span></div>
+  </div>
+</body>
+</html>

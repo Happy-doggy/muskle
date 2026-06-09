@@ -1,0 +1,29 @@
+<!-- @dsCard group="Brand" viewport="700x180" name="Logo — wordmark" subtitle="Single-path wordmark in currentColor; ink on cream, paper on dark." -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; padding: 0; background: var(--background); font-family: var(--font-sans); }
+  .row { display: flex; min-height: 180px; }
+  .cell { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; }
+  .logo { width: 170px; height: auto; }
+  .lbl { font-family: var(--font-mono); font-size: 11px; color: var(--muted-foreground); }
+  .dark { background: #121212; }
+  .dark .lbl { color: #8C8C8C; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="cell">
+      <img class="logo" src="../assets/muskle-logo.svg" alt="Muskle" />
+      <span class="lbl">on cream · ink</span>
+    </div>
+    <div class="cell dark">
+      <img class="logo" src="../assets/muskle-logo.svg" alt="Muskle" style="filter: invert(1);" />
+      <span class="lbl">on dark · paper (invert)</span>
+    </div>
+  </div>
+</body>
+</html>

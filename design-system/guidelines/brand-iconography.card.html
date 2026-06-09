@@ -1,0 +1,29 @@
+<!-- @dsCard group="Brand" viewport="700x150" name="Iconography — Lucide" subtitle="Lucide, 2px stroke. The app's only icon set." -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="../styles.css" />
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  body { margin: 0; padding: 24px; background: var(--background); font-family: var(--font-sans); }
+  .row { display: flex; gap: 28px; flex-wrap: wrap; }
+  .ic { display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--ink); }
+  .ic svg { width: 26px; height: 26px; stroke-width: 2; }
+  .lbl { font-family: var(--font-mono); font-size: 10px; color: var(--muted-foreground); }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="ic"><i data-lucide="calendar-days"></i><span class="lbl">Séances</span></div>
+    <div class="ic"><i data-lucide="layers"></i><span class="lbl">Blocs</span></div>
+    <div class="ic"><i data-lucide="dumbbell"></i><span class="lbl">Exercices</span></div>
+    <div class="ic"><i data-lucide="plus"></i><span class="lbl">Ajouter</span></div>
+    <div class="ic" style="color: var(--mint);"><i data-lucide="play"></i><span class="lbl">Lancer</span></div>
+    <div class="ic"><i data-lucide="pause"></i><span class="lbl">Pause</span></div>
+    <div class="ic"><i data-lucide="skip-forward"></i><span class="lbl">Suivant</span></div>
+    <div class="ic"><i data-lucide="rotate-ccw"></i><span class="lbl">Recommencer</span></div>
+  </div>
+  <script>lucide.createIcons();</script>
+</body>
+</html>

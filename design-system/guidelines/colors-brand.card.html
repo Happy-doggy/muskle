@@ -1,0 +1,31 @@
+<!-- @dsCard group="Colors" viewport="700x150" name="Brand — Mint" subtitle="The single action color. Buttons, active state, focus ring." -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; padding: 20px; background: var(--background); font-family: var(--font-sans); }
+  .row { display: flex; gap: 14px; }
+  .swatch { flex: 1; border-radius: var(--radius); padding: 14px; display: flex; flex-direction: column; justify-content: space-between; min-height: 96px; border: 1px solid var(--border); }
+  .name { font-weight: 600; font-size: 14px; }
+  .hex { font-family: var(--font-mono); font-size: 12px; opacity: 0.75; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="swatch" style="background: var(--mint); color: #fff;">
+      <span class="name">Mint — primary</span>
+      <span class="hex">#4BA278 · --mint / --primary</span>
+    </div>
+    <div class="swatch" style="background: var(--mint-strong); color: #fff;">
+      <span class="name">Mint strong — pressed</span>
+      <span class="hex">#3E8C66 · --mint-strong</span>
+    </div>
+    <div class="swatch" style="background: color-mix(in srgb, var(--mint) 10%, white); color: var(--mint);">
+      <span class="name">Mint 10% — chip tint</span>
+      <span class="hex">accent / 10%</span>
+    </div>
+  </div>
+</body>
+</html>

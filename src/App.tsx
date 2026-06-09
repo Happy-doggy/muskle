@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import { useAppStore } from './store'
 import Layout from './components/ui/Layout'
 import ExercisesPage from './pages/ExercisesPage'
@@ -9,6 +9,7 @@ import BlockEditorPage from './pages/BlockEditorPage'
 import SessionsPage from './pages/SessionsPage'
 import SessionEditorPage from './pages/SessionEditorPage'
 import PlayerPage from './pages/PlayerPage'
+import LandingPage from './pages/LandingPage'
 
 export default function App() {
   const loadAll = useAppStore((s) => s.loadAll)
@@ -19,10 +20,10 @@ export default function App() {
 
   return (
     <Routes>
+      <Route path="/" element={<LandingPage />} />
       <Route path="/play/:sessionId" element={<PlayerPage />} />
 
       <Route element={<Layout />}>
-        <Route index element={<Navigate to="/sessions" replace />} />
         <Route path="/sessions" element={<SessionsPage />} />
         <Route path="/sessions/new" element={<SessionEditorPage />} />
         <Route path="/sessions/:id/edit" element={<SessionEditorPage />} />

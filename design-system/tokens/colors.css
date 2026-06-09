@@ -1,0 +1,77 @@
+/* ──────────────────────────────────────────────────────────────
+   Muskle — Color tokens
+   A warm, paper-like canvas (cream) with near-black ink and a
+   single confident mint as the brand action color. Business
+   "category" hues stay muted and earthy, never neon.
+   ────────────────────────────────────────────────────────────── */
+
+:root {
+  /* ── Brand primitives ─────────────────────────────── */
+  --mint:            #4BA278;  /* the one brand color */
+  --mint-strong:     #3E8C66;  /* pressed / deeper mint */
+  --ink:             #0F0F0F;  /* near-black foreground */
+  --cream:           #FDF5EF;  /* warm canvas background */
+  --paper:           #F2F0ED;  /* light text on dark surfaces */
+  --paper-warm:      #E6E2DB;  /* secondary surface */
+  --stroke:          #F7EDE5;  /* hairline borders on cream */
+  --ring-track:      #F6D5BC;  /* timer ring / progress track */
+
+  /* ── ShadCN semantic aliases (light theme) ────────── */
+  --background:            #FDF5EF;
+  --foreground:            #0F0F0F;
+  --card:                  #FFFFFF;
+  --card-foreground:       #0F0F0F;
+  --popover:               #FDF5EF;
+  --popover-foreground:    #0F0F0F;
+  --primary:               #4BA278;
+  --primary-foreground:    #FFFFFF;
+  --secondary:             #E6E2DB;
+  --secondary-foreground:  #0F0F0F;
+  --muted:                 #DEDAD3;
+  --muted-foreground:      #6B6B6B;
+  --accent:                #4BA278;
+  --accent-foreground:     #FFFFFF;
+  --destructive:           #DC2828;
+  --destructive-foreground:#FFFFFF;
+  --border:                #F7EDE5;
+  --input:                 #F7EDE5;
+  --ring:                  #4BA278;
+
+  /* ── Exercise category hues (earthy, muted) ───────── */
+  --cat-musculation:   #E85D4A;
+  --cat-renforcement:  #E8963C;
+  --cat-yoga:          #6BAE8E;
+  --cat-kine:          #5B8EC4;
+  --cat-cardio:        #D4604A;
+  --cat-mobilite:      #9B7BB8;
+  --cat-autre:         #8A9BA8;
+
+  /* ── Timer / player phase colors ──────────────────── */
+  --phase-prepare:  #5B8EC4;  /* blue   — get ready */
+  --phase-work:     #E8603C;  /* orange — go! */
+  --phase-rest:     #4BA278;  /* mint   — recover */
+  --phase-done:     #9B7BB8;  /* violet — finished */
+}
+
+/* ── Dark theme (player screen + opt-in .dark) ──────── */
+.dark {
+  --background:            #121212;
+  --foreground:            #F2F0ED;
+  --card:                  #1A1A1A;
+  --card-foreground:       #F2F0ED;
+  --popover:               #1A1A1A;
+  --popover-foreground:    #F2F0ED;
+  --primary:               #4BA278;
+  --primary-foreground:    #FFFFFF;
+  --secondary:             #242424;
+  --secondary-foreground:  #F2F0ED;
+  --muted:                 #242424;
+  --muted-foreground:      #8C8C8C;
+  --accent:                #4BA278;
+  --accent-foreground:     #FFFFFF;
+  --destructive:           #A52727;
+  --destructive-foreground:#FFFFFF;
+  --border:                #2E2E2E;
+  --input:                 #2E2E2E;
+  --ring:                  #4BA278;
+}

@@ -1,0 +1,23 @@
+<!-- @dsCard group="Spacing" viewport="700x150" name="Corner radii" subtitle="10px base; pills for chips & nav." -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; padding: 24px; background: var(--background); font-family: var(--font-sans); }
+  .row { display: flex; gap: 20px; align-items: flex-end; }
+  .item { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .box { width: 84px; height: 60px; background: #fff; border: 1px solid var(--border); }
+  .lbl { font-family: var(--font-mono); font-size: 11px; color: var(--muted-foreground); }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="item"><div class="box" style="border-radius: var(--radius-sm);"></div><span class="lbl">sm · 6px</span></div>
+    <div class="item"><div class="box" style="border-radius: var(--radius-md);"></div><span class="lbl">md · 8px</span></div>
+    <div class="item"><div class="box" style="border-radius: var(--radius);"></div><span class="lbl">base · 10px</span></div>
+    <div class="item"><div class="box" style="border-radius: 9999px; width: 120px;"></div><span class="lbl">pill · chips/nav</span></div>
+  </div>
+</body>
+</html>

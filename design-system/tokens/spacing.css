@@ -1,0 +1,37 @@
+/* ──────────────────────────────────────────────────────────────
+   Muskle — Spacing, radius & elevation tokens
+   Muskle is flat and quiet: hairline borders do most of the work,
+   shadows are reserved for floating surfaces (dialogs, popovers).
+   Corners are softly rounded (10px base radius).
+   ────────────────────────────────────────────────────────────── */
+
+:root {
+  /* ── Spacing scale (4px base grid) ────────────────── */
+  --space-1:  0.25rem;   /*  4px */
+  --space-2:  0.5rem;    /*  8px */
+  --space-3:  0.75rem;   /* 12px */
+  --space-4:  1rem;      /* 16px */
+  --space-5:  1.25rem;   /* 20px */
+  --space-6:  1.5rem;    /* 24px — card padding */
+  --space-8:  2rem;      /* 32px — page gutters */
+  --space-10: 2.5rem;    /* 40px */
+  --space-12: 3rem;      /* 48px */
+  --space-16: 4rem;      /* 64px */
+
+  /* ── Radius (ShadCN derives md/sm from --radius) ──── */
+  --radius:    0.625rem; /* 10px — cards, inputs, buttons */
+  --radius-lg: 0.625rem;
+  --radius-md: 0.5rem;   /* radius - 2px */
+  --radius-sm: 0.375rem; /* radius - 4px */
+  --radius-pill: 9999px; /* chips, nav pills, "Lancer" */
+
+  /* ── Layout ───────────────────────────────────────── */
+  --container-max: 56rem; /* 896px — max-w-4xl content column */
+  --header-height: 3.5rem;/* 56px sticky header */
+
+  /* ── Elevation ────────────────────────────────────── */
+  --shadow-none: none;
+  --shadow-sm:   0 1px 2px rgba(15, 15, 15, 0.04);
+  --shadow-md:   0 4px 12px rgba(15, 15, 15, 0.06);
+  --shadow-lg:   0 12px 32px rgba(15, 15, 15, 0.12);  /* dialogs */
+}

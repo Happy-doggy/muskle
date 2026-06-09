@@ -5,6 +5,16 @@
 /* ── ShadCN CSS variables (thème Muskle — couleurs hex) ── */
 @layer base {
   :root {
+    /* Brand primitives */
+    --mint:            #4BA278;
+    --mint-strong:     #3E8C66;
+    --ink:             #0F0F0F;
+    --cream:           #FDF5EF;
+    --paper:           #F2F0ED;
+    --paper-warm:      #E6E2DB;
+    --stroke:          #F7EDE5;
+    --ring-track:      #F6D5BC;
+
     --background:           #FDF5EF; /* cream */
     --foreground:           #0F0F0F; /* ink */
     --card:                   #FFFFFF;
@@ -25,6 +35,21 @@
     --input:                  #F7EDE5;
     --ring:                   #4BA278;
     --radius:                 0.625rem;
+
+    /* Exercise category hues */
+    --cat-musculation:   #E85D4A;
+    --cat-renforcement:  #E8963C;
+    --cat-yoga:          #6BAE8E;
+    --cat-kine:          #5B8EC4;
+    --cat-cardio:        #D4604A;
+    --cat-mobilite:      #9B7BB8;
+    --cat-autre:         #8A9BA8;
+
+    /* Timer / player phase colors */
+    --phase-prepare:  #5B8EC4;
+    --phase-work:     #E8603C;
+    --phase-rest:     #4BA278;
+    --phase-done:     #9B7BB8;
   }
 
   .dark {

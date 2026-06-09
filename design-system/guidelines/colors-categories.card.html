@@ -1,0 +1,28 @@
+<!-- @dsCard group="Colors" viewport="700x170" name="Category hues" subtitle="One earthy hue per discipline — shown as tinted chips." -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; padding: 20px; background: var(--background); font-family: var(--font-sans); }
+  .grid { display: flex; flex-wrap: wrap; gap: 10px; }
+  .chip { display: flex; flex-direction: column; gap: 4px; align-items: flex-start; }
+  .badge { display: inline-flex; align-items: center; padding: 4px 12px; border-radius: 9999px; font-size: 13px; font-weight: 600; }
+  .hex { font-family: var(--font-mono); font-size: 10px; color: var(--muted-foreground); padding-left: 4px; }
+  .dot-row { display: flex; gap: 14px; margin-top: 16px; }
+  .dot { width: 36px; height: 36px; border-radius: 8px; }
+</style>
+</head>
+<body>
+  <div class="grid">
+    <div class="chip"><span class="badge" style="background: color-mix(in srgb, var(--cat-musculation) 12%, white); color: var(--cat-musculation);">Musculation</span><span class="hex">#E85D4A</span></div>
+    <div class="chip"><span class="badge" style="background: color-mix(in srgb, var(--cat-renforcement) 12%, white); color: var(--cat-renforcement);">Renforcement</span><span class="hex">#E8963C</span></div>
+    <div class="chip"><span class="badge" style="background: color-mix(in srgb, var(--cat-yoga) 14%, white); color: var(--cat-yoga);">Yoga</span><span class="hex">#6BAE8E</span></div>
+    <div class="chip"><span class="badge" style="background: color-mix(in srgb, var(--cat-kine) 12%, white); color: var(--cat-kine);">Kiné</span><span class="hex">#5B8EC4</span></div>
+    <div class="chip"><span class="badge" style="background: color-mix(in srgb, var(--cat-cardio) 12%, white); color: var(--cat-cardio);">Cardio</span><span class="hex">#D4604A</span></div>
+    <div class="chip"><span class="badge" style="background: color-mix(in srgb, var(--cat-mobilite) 14%, white); color: var(--cat-mobilite);">Mobilité</span><span class="hex">#9B7BB8</span></div>
+    <div class="chip"><span class="badge" style="background: color-mix(in srgb, var(--cat-autre) 14%, white); color: var(--cat-autre);">Autre</span><span class="hex">#8A9BA8</span></div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!-- @dsCard group="Colors" viewport="700x150" name="Canvas & Ink" subtitle="Warm cream ground, near-black ink, paper for dark surfaces." -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; padding: 20px; background: var(--background); font-family: var(--font-sans); }
+  .row { display: flex; gap: 14px; }
+  .swatch { flex: 1; border-radius: var(--radius); padding: 14px; display: flex; flex-direction: column; justify-content: space-between; min-height: 96px; border: 1px solid var(--border); }
+  .name { font-weight: 600; font-size: 14px; }
+  .hex { font-family: var(--font-mono); font-size: 12px; opacity: 0.75; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="swatch" style="background: var(--cream); color: var(--ink);">
+      <span class="name">Cream — canvas</span>
+      <span class="hex">#FDF5EF · --background</span>
+    </div>
+    <div class="swatch" style="background: var(--ink); color: var(--paper);">
+      <span class="name">Ink — foreground</span>
+      <span class="hex">#0F0F0F · --foreground</span>
+    </div>
+    <div class="swatch" style="background: #fff; color: var(--ink);">
+      <span class="name">White — card</span>
+      <span class="hex">#FFFFFF · --card</span>
+    </div>
+    <div class="swatch" style="background: #121212; color: var(--paper);">
+      <span class="name">Paper on dark</span>
+      <span class="hex">#F2F0ED · --paper</span>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!-- @dsCard group="Colors" viewport="700x150" name="Neutral surfaces" subtitle="Secondary, muted, border, destructive." -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; padding: 20px; background: var(--background); font-family: var(--font-sans); }
+  .row { display: flex; gap: 14px; }
+  .swatch { flex: 1; border-radius: var(--radius); padding: 14px; display: flex; flex-direction: column; justify-content: space-between; min-height: 96px; border: 1px solid var(--border); }
+  .name { font-weight: 600; font-size: 13px; }
+  .hex { font-family: var(--font-mono); font-size: 11px; opacity: 0.8; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="swatch" style="background: var(--secondary); color: var(--ink);">
+      <span class="name">Secondary</span><span class="hex">#E6E2DB</span>
+    </div>
+    <div class="swatch" style="background: var(--muted); color: var(--muted-foreground);">
+      <span class="name">Muted</span><span class="hex">#DEDAD3</span>
+    </div>
+    <div class="swatch" style="background: #fff; color: var(--muted-foreground); border-width: 2px;">
+      <span class="name">Border / stroke</span><span class="hex">#F7EDE5</span>
+    </div>
+    <div class="swatch" style="background: var(--destructive); color: #fff;">
+      <span class="name">Destructive</span><span class="hex">#DC2828</span>
+    </div>
+  </div>
+</body>
+</html>

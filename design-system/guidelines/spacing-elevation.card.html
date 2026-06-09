@@ -1,0 +1,23 @@
+<!-- @dsCard group="Spacing" viewport="700x170" name="Elevation" subtitle="Mostly flat — borders define surfaces, shadows only float." -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; padding: 28px 24px; background: var(--background); font-family: var(--font-sans); }
+  .row { display: flex; gap: 22px; }
+  .item { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .box { width: 120px; height: 72px; background: #fff; border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--muted-foreground); }
+  .lbl { font-family: var(--font-mono); font-size: 11px; color: var(--muted-foreground); }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="item"><div class="box" style="border: 1px solid var(--border);">list card</div><span class="lbl">none + border</span></div>
+    <div class="item"><div class="box" style="box-shadow: var(--shadow-sm);">sm</div><span class="lbl">--shadow-sm</span></div>
+    <div class="item"><div class="box" style="box-shadow: var(--shadow-md);">md</div><span class="lbl">--shadow-md</span></div>
+    <div class="item"><div class="box" style="box-shadow: var(--shadow-lg);">dialog</div><span class="lbl">--shadow-lg</span></div>
+  </div>
+</body>
+</html>

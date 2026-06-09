@@ -7,13 +7,13 @@ interface TimerRingProps {
   size?: number
 }
 
-export const TIMER_RING_TRACK = '#F6D5BC'
+export const TIMER_RING_TRACK = 'var(--ring-track)'
 
 const PHASE_COLORS: Record<TimerPhase, string> = {
-  prepare: '#5B8EC4',
-  work:    '#E8603C',
-  rest:    '#4BA278',
-  done:    '#9B7BB8',
+  prepare: 'var(--phase-prepare)',
+  work:    'var(--phase-work)',
+  rest:    'var(--phase-rest)',
+  done:    'var(--phase-done)',
 }
 
 const PHASE_LABELS: Record<TimerPhase, string> = {

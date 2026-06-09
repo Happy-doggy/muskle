@@ -1,0 +1,10 @@
+/* ──────────────────────────────────────────────────────────────
+   Muskle — Webfonts
+   All three families ship from Google Fonts, exactly as the
+   production app loads them. No local binaries are required.
+   - Outfit        → display / headings
+   - Host Grotesk  → body / UI
+   - JetBrains Mono → timers, numerics, code
+   ────────────────────────────────────────────────────────────── */
+
+@import url('https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@100..900&display=swap');
