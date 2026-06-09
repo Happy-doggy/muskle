@@ -1,0 +1,352 @@
+/* Login page — split layout */
+
+.login-page {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* ── Left visual panel ── */
+.login-visual {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 40px 48px;
+  background: linear-gradient(145deg, var(--mint-strong) 0%, var(--mint) 55%, #5ec49a 100%);
+  color: #fff;
+  overflow: hidden;
+}
+
+.login-visual::before {
+  content: '';
+  position: absolute;
+  top: -120px;
+  right: -80px;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  pointer-events: none;
+}
+
+.login-visual::after {
+  content: '';
+  position: absolute;
+  bottom: -100px;
+  left: -60px;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  pointer-events: none;
+}
+
+.login-visual-logo {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  color: #fff;
+}
+
+.login-visual-body {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 28px;
+  padding: 32px 0;
+}
+
+.login-visual h1 {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(2rem, 3.5vw, 2.75rem);
+  font-weight: 600;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.login-visual-lead {
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.82);
+  max-width: 22em;
+  margin: 0;
+}
+
+.login-visual-image {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 280px;
+}
+
+.login-visual-cards {
+  position: relative;
+  width: 100%;
+  max-width: 340px;
+  height: 260px;
+}
+
+.login-polaroid {
+  position: absolute;
+  background: #fff;
+  border-radius: 12px;
+  padding: 10px 10px 28px;
+  box-shadow: 0 16px 40px rgba(15, 15, 15, 0.18);
+}
+
+.login-polaroid-back {
+  top: 24px;
+  left: 12px;
+  width: 200px;
+  transform: rotate(-8deg);
+  opacity: 0.92;
+}
+
+.login-polaroid-front {
+  top: 0;
+  right: 0;
+  width: 220px;
+  transform: rotate(4deg);
+  z-index: 1;
+}
+
+.login-polaroid-photo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 140px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--cream) 0%, var(--paper-warm) 100%);
+  color: var(--mint);
+}
+
+.login-polaroid-caption {
+  margin-top: 10px;
+  padding: 0 4px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.3;
+}
+
+.login-polaroid-sub {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: color-mix(in srgb, var(--ink) 50%, transparent);
+  margin-top: 2px;
+}
+
+.login-visual-badges {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.login-visual-badges span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.8125rem;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.login-visual-badges svg {
+  width: 15px;
+  height: 15px;
+  opacity: 0.9;
+}
+
+/* ── Right form panel ── */
+.login-form-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 32px;
+  background: #fff;
+}
+
+.login-form-inner {
+  width: 100%;
+  max-width: 400px;
+}
+
+.login-form-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: color-mix(in srgb, var(--ink) 55%, transparent);
+  margin-bottom: 40px;
+  transition: color 0.15s ease;
+}
+
+.login-form-back:hover {
+  color: var(--mint);
+}
+
+.login-form-inner h2 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 8px;
+  line-height: 1.2;
+}
+
+.login-form-subtitle {
+  font-size: 0.9375rem;
+  color: color-mix(in srgb, var(--ink) 55%, transparent);
+  margin: 0 0 32px;
+  line-height: 1.5;
+}
+
+.login-social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  height: 48px;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  background: #fff;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.login-social-btn:hover {
+  border-color: var(--mint);
+  background: color-mix(in srgb, var(--mint) 4%, white);
+}
+
+.login-divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 24px 0;
+}
+
+.login-divider::before,
+.login-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.login-divider span {
+  font-size: 0.8125rem;
+  color: color-mix(in srgb, var(--ink) 45%, transparent);
+  white-space: nowrap;
+}
+
+.login-field-label {
+  display: block;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--ink) 50%, transparent);
+  margin-bottom: 8px;
+}
+
+.login-email-wrap {
+  position: relative;
+}
+
+.login-email-wrap svg {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  color: color-mix(in srgb, var(--ink) 40%, transparent);
+  pointer-events: none;
+}
+
+.login-email-wrap input {
+  padding-left: 42px;
+  height: 48px;
+  border-radius: 0.75rem;
+}
+
+.login-submit-btn {
+  width: 100%;
+  height: 48px;
+  margin-top: 20px;
+  border-radius: 0.75rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.login-submit-btn:hover:not(:disabled) {
+  background-color: var(--mint-strong);
+  opacity: 1;
+}
+
+.login-success {
+  text-align: center;
+  padding: 32px 0;
+}
+
+.login-success-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--mint) 14%, white);
+  color: var(--mint);
+  margin-bottom: 16px;
+}
+
+.login-success h3 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 8px;
+}
+
+.login-success p {
+  font-size: 0.9375rem;
+  color: color-mix(in srgb, var(--ink) 55%, transparent);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.login-error {
+  margin-top: 16px;
+  font-size: 0.875rem;
+  color: var(--destructive);
+  text-align: center;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .login-page {
+    grid-template-columns: 1fr;
+  }
+
+  .login-visual {
+    display: none;
+  }
+
+  .login-form-panel {
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: 32px 24px;
+  }
+}

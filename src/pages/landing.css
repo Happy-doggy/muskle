@@ -56,7 +56,7 @@
 }
 
 .landing .btn-primary:hover {
-  opacity: 0.9;
+  background: var(--mint-strong);
 }
 
 .landing .btn-outline {

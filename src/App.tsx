@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
-import AuthGuard from './components/AuthGuard'
+import AuthBootstrap from './components/AuthBootstrap'
+import ProtectedRoute from './components/ProtectedRoute'
 import Layout from './components/ui/Layout'
 import ExercisesPage from './pages/ExercisesPage'
 import AddExercisePage from './pages/AddExercisePage'
@@ -9,15 +10,32 @@ import SessionsPage from './pages/SessionsPage'
 import SessionEditorPage from './pages/SessionEditorPage'
 import PlayerPage from './pages/PlayerPage'
 import LandingPage from './pages/LandingPage'
+import LoginPage from './pages/LoginPage'
+import AccountPage from './pages/AccountPage'
 
 export default function App() {
   return (
-    <AuthGuard>
+    <AuthBootstrap>
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/play/:sessionId" element={<PlayerPage />} />
+        <Route path="/login" element={<LoginPage />} />
 
-        <Route element={<Layout />}>
+        <Route
+          path="/play/:sessionId"
+          element={
+            <ProtectedRoute>
+              <PlayerPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          element={
+            <ProtectedRoute>
+              <Layout />
+            </ProtectedRoute>
+          }
+        >
           <Route path="/sessions" element={<SessionsPage />} />
           <Route path="/sessions/new" element={<SessionEditorPage />} />
           <Route path="/sessions/:id/edit" element={<SessionEditorPage />} />
@@ -26,8 +44,9 @@ export default function App() {
           <Route path="/blocks/:id/edit" element={<BlockEditorPage />} />
           <Route path="/exercises" element={<ExercisesPage />} />
           <Route path="/exercises/new" element={<AddExercisePage />} />
+          <Route path="/account" element={<AccountPage />} />
         </Route>
       </Routes>
-    </AuthGuard>
+    </AuthBootstrap>
   )
 }

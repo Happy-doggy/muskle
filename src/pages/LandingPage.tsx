@@ -14,6 +14,8 @@ import {
   Pause,
 } from 'lucide-react'
 import MuskleLogo from '@/components/ui/MuskleLogo'
+import UserMenu from '@/components/UserMenu'
+import { useAuth } from '@/hooks/useAuth'
 import './landing.css'
 
 const BLOCK_TYPES = [
@@ -55,6 +57,9 @@ const BLOCK_TYPES = [
 ] as const
 
 export default function LandingPage() {
+  const { user } = useAuth()
+  const appEntry = user ? '/sessions' : '/login'
+
   return (
     <div className="landing bg-background text-ink font-sans">
       <header className="site">
@@ -68,8 +73,11 @@ export default function LandingPage() {
             <a className="link" href="#blocs">Types de blocs</a>
           </nav>
           <div className="nav-cta">
-            <Link className="link" to="/sessions">Se connecter</Link>
-            <Link className="btn btn-primary" to="/sessions">Commencer</Link>
+            {user ? (
+              <UserMenu />
+            ) : (
+              <Link className="btn btn-primary" to="/login">Se connecter</Link>
+            )}
           </div>
         </div>
       </header>
@@ -85,7 +93,7 @@ export default function LandingPage() {
               sans compte.
             </p>
             <div className="hero-cta">
-              <Link className="btn btn-primary btn-lg" to="/sessions">
+              <Link className="btn btn-primary btn-lg" to={appEntry}>
                 <Play size={18} />
                 Lancer ma première séance
               </Link>
@@ -273,7 +281,7 @@ export default function LandingPage() {
                         <li>Cardio express</li>
                       </ol>
                     </div>
-                    <Link className="btn btn-primary" to="/sessions" style={{ padding: '9px 16px', fontSize: '0.875rem' }}>
+                    <Link className="btn btn-primary" to={appEntry} style={{ padding: '9px 16px', fontSize: '0.875rem' }}>
                       <Play size={14} />
                       Lancer
                     </Link>
@@ -374,7 +382,7 @@ export default function LandingPage() {
             <div className="cta-band">
               <h2 className="font-display">Ta prochaine séance commence maintenant.</h2>
               <p>Aucune inscription, aucun matériel. Ouvre Muskle, compose ta séance et lance le minuteur.</p>
-              <Link className="btn btn-on-mint btn-lg" to="/sessions">
+              <Link className="btn btn-on-mint btn-lg" to={appEntry}>
                 <Play size={18} />
                 Ouvrir Muskle
               </Link>
