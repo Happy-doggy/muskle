@@ -44,6 +44,8 @@ export type Exercise = {
   defaultSets?: number
   // si type === 'duration'
   defaultDuration?: number   // en secondes
+  equipment?: string
+  muscleGroups?: MuscleGroup[]
   // médias (optionnels — chemins relatifs ou URLs)
   image?: string
   video?: string

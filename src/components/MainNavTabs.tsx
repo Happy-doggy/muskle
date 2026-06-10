@@ -21,11 +21,55 @@ function isNavActive(pathname: string, to: string): boolean {
   return pathname === to || pathname.startsWith(`${to}/`)
 }
 
-export default function MainNavTabs() {
+type MainNavTabsProps = {
+  className?: string
+  cluster?: boolean
+}
+
+export default function MainNavTabs({ className, cluster }: MainNavTabsProps) {
   const { pathname } = useLocation()
   const navRef = useRef<HTMLElement>(null)
+  const labelMeasureRef = useRef<HTMLSpanElement>(null)
   const tabRefs = useRef<Partial<Record<string, HTMLAnchorElement>>>({})
   const [indicator, setIndicator] = useState<IndicatorRect | null>(null)
+  const [showActiveLabel, setShowActiveLabel] = useState(false)
+
+  const activeItem = navItems.find((item) => isNavActive(pathname, item.to))
+
+  const recomputeActiveLabel = useCallback(() => {
+    if (!cluster) {
+      setShowActiveLabel(false)
+      return
+    }
+
+    const nav = navRef.current
+    const clusterEl = nav?.parentElement
+    if (!nav || !clusterEl || !activeItem) {
+      setShowActiveLabel(false)
+      return
+    }
+
+    const profileBtn = clusterEl.lastElementChild
+    const profileWidth =
+      profileBtn instanceof HTMLElement ? profileBtn.offsetWidth : 44
+    const navBudget = clusterEl.clientWidth - profileWidth
+
+    const iconTabWidth = tabRefs.current[navItems[0].to]?.offsetWidth
+    if (!iconTabWidth) return
+
+    const labelWidth = labelMeasureRef.current?.offsetWidth ?? 0
+    const labelGap = 8
+    const navPadding = 8
+    const tabsGap = 4
+    const widthNeeded =
+      navItems.length * iconTabWidth +
+      labelGap +
+      labelWidth +
+      navPadding +
+      tabsGap
+
+    setShowActiveLabel(widthNeeded <= navBudget)
+  }, [activeItem, cluster])
 
   const updateIndicator = useCallback(() => {
     const nav = navRef.current
@@ -52,20 +96,38 @@ export default function MainNavTabs() {
   }, [pathname])
 
   useLayoutEffect(() => {
+    recomputeActiveLabel()
+  }, [recomputeActiveLabel])
+
+  useLayoutEffect(() => {
     updateIndicator()
-  }, [updateIndicator])
+  }, [updateIndicator, showActiveLabel])
 
   useEffect(() => {
     const nav = navRef.current
     if (!nav) return
 
-    const observer = new ResizeObserver(() => updateIndicator())
+    const observer = new ResizeObserver(() => {
+      recomputeActiveLabel()
+      updateIndicator()
+    })
     observer.observe(nav)
+    const clusterEl = cluster ? nav.parentElement : null
+    if (clusterEl) observer.observe(clusterEl)
     return () => observer.disconnect()
-  }, [updateIndicator])
+  }, [cluster, recomputeActiveLabel, updateIndicator])
 
   return (
-    <nav ref={navRef} className="tabs relative">
+    <nav ref={navRef} className={cn('tabs relative', cluster && 'tabs-cluster', className)}>
+      {cluster && activeItem && (
+        <span
+          ref={labelMeasureRef}
+          className="pointer-events-none invisible absolute left-0 top-0 text-sm font-medium whitespace-nowrap"
+          aria-hidden
+        >
+          {activeItem.label}
+        </span>
+      )}
       {indicator && (
         <motion.span
           className="absolute rounded-md bg-mint pointer-events-none z-0"
@@ -75,22 +137,37 @@ export default function MainNavTabs() {
           aria-hidden
         />
       )}
-      {navItems.map(({ to, icon: Icon, label }) => (
-        <NavLink
-          key={to}
-          ref={(el) => {
-            if (el) tabRefs.current[to] = el
-            else delete tabRefs.current[to]
-          }}
-          to={to}
-          className={({ isActive }) => cn('tab', isActive && 'tab-active')}
-        >
-          <span className="relative z-10 flex items-center gap-2">
-            <Icon size={16} />
-            <span className="hidden sm:inline">{label}</span>
-          </span>
-        </NavLink>
-      ))}
+      {navItems.map(({ to, icon: Icon, label }) => {
+        const isActive = isNavActive(pathname, to)
+        const showLabel = cluster
+          ? isActive && showActiveLabel
+          : false
+
+        return (
+          <NavLink
+            key={to}
+            ref={(el) => {
+              if (el) tabRefs.current[to] = el
+              else delete tabRefs.current[to]
+            }}
+            to={to}
+            className={cn('tab', isActive && 'tab-active')}
+          >
+            <span className="relative z-10 flex items-center gap-2">
+              <Icon size={16} />
+              <span
+                data-nav-label
+                className={cn(
+                  'whitespace-nowrap',
+                  cluster ? (showLabel ? 'inline' : 'hidden') : 'hidden sm:inline',
+                )}
+              >
+                {label}
+              </span>
+            </span>
+          </NavLink>
+        )
+      })}
     </nav>
   )
 }

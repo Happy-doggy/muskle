@@ -26,7 +26,7 @@
   --radius-pill: 9999px; /* chips, nav pills, "Lancer" */
 
   /* ── Layout ───────────────────────────────────────── */
-  --container-max: 90rem; /* 1440px — colonne de contenu app */
+  --container-max: 80rem; /* 1280px — colonne de contenu app / landing */
   --header-height: 4.25rem;/* 68px sticky header */
 
   /* ── Elevation ────────────────────────────────────── */

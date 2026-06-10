@@ -3,7 +3,11 @@ import { User } from 'lucide-react'
 import { useUserProfile } from '../hooks/useUserProfile'
 import { cn } from '@/lib/utils'
 
-export default function UserMenu() {
+type UserMenuProps = {
+  className?: string
+}
+
+export default function UserMenu({ className }: UserMenuProps) {
   const { display } = useUserProfile()
 
   if (!display) return null
@@ -15,10 +19,11 @@ export default function UserMenu() {
       to="/account"
       className={({ isActive }) =>
         cn(
-          'flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm font-medium transition-colors shrink-0',
+          'flex h-10 items-center gap-2 rounded-lg px-2 text-sm font-medium transition-colors shrink-0',
           isActive
             ? 'bg-primary text-primary-foreground'
             : 'border border-border bg-white text-foreground hover:border-mint',
+          className,
         )
       }
       aria-label="Mon compte"

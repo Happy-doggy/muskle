@@ -35,7 +35,7 @@
     --input:                  #F7EDE5;
     --ring:                   #4BA278;
     --radius:                 0.625rem;
-    --container-max:          90rem;
+    --container-max:          80rem;
     --header-height:          4.25rem; /* 68px — aligné landing / app */
 
     /* Exercise category hues */
@@ -92,7 +92,21 @@
 
 @layer components {
   .app-container {
-    @apply max-w-app mx-auto w-full px-4 sm:px-6;
+    @apply mx-auto w-full;
+    /* Gouttières latérales autour de la colonne de contenu */
+    max-width: min(var(--container-max), calc(100% - 2rem));
+  }
+
+  @media (min-width: 640px) {
+    .app-container {
+      max-width: min(var(--container-max), calc(100% - 3rem));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .app-container {
+      max-width: min(var(--container-max), calc(100% - 4rem));
+    }
   }
 
   /* Timer ring */
@@ -167,6 +181,14 @@
 
   .tabs-static .tab.tab-active {
     background-color: var(--mint);
+  }
+
+  .tabs-cluster {
+    @apply h-full items-center gap-0.5 border-0 rounded-none bg-transparent p-1;
+  }
+
+  .tabs-cluster .tab {
+    @apply flex h-8 items-center justify-center px-2.5;
   }
 
   .header-blur {

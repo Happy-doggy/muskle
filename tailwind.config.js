@@ -63,7 +63,7 @@ export default {
         'phase-done':    'var(--phase-done)',
       },
       maxWidth: {
-        app: '90rem', // 1440px — colonne de contenu app (desktop)
+        app: '80rem', // 1280px — colonne de contenu app / landing
       },
       borderRadius: {
         lg: 'var(--radius)',

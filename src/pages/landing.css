@@ -11,15 +11,20 @@
 }
 
 .landing .wrap {
-  max-width: var(--site-max);
   margin: 0 auto;
   width: 100%;
-  padding: 0 1rem;
+  max-width: min(var(--site-max), calc(100% - 2rem));
 }
 
 @media (min-width: 640px) {
   .landing .wrap {
-    padding: 0 1.5rem;
+    max-width: min(var(--site-max), calc(100% - 3rem));
+  }
+}
+
+@media (min-width: 1024px) {
+  .landing .wrap {
+    max-width: min(var(--site-max), calc(100% - 4rem));
   }
 }
 
