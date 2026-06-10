@@ -133,4 +133,7 @@ export interface StorageAdapter {
   getSessions(): Promise<Session[]>
   saveSession(session: Session): Promise<void>
   deleteSession(id: string): Promise<void>
+
+  getFavoriteExerciseIds(): Promise<string[]>
+  saveFavoriteExerciseIds(ids: string[]): Promise<void>
 }

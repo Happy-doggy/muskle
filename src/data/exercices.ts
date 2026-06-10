@@ -1,12 +1,25 @@
+import birdDogImage from '../assets/exercises/bird-dog.png'
+import chairDipsImage from '../assets/exercises/chair-dips.png'
 import crunchImage from '../assets/exercises/crunch.png'
 import crunchVideo from '../assets/exercises/crunch.mp4'
+import curlBicepsImage from '../assets/exercises/curl-biceps.png'
+import curlHammerImage from '../assets/exercises/curl-hammer.png'
+import deadBugImage from '../assets/exercises/dead-bug.png'
+import diamondPumpsImage from '../assets/exercises/diamond-pumps.png'
+import extensionTricepsImage from '../assets/exercises/extension-triceps.png'
 import forwardLungeImage from '../assets/exercises/forward-lunge.png'
 import gluteBridgeImage from '../assets/exercises/glute-bridge.png'
+import jumpSquatImage from '../assets/exercises/jump-squat.png'
+import mountainClimberImage from '../assets/exercises/mountain-climber.png'
+import pikePushUpImage from '../assets/exercises/pike-push-up.png'
 import plankImage from '../assets/exercises/plank.png'
 import pushUpImage from '../assets/exercises/push-up.png'
 import pushUpVideo from '../assets/exercises/push-up.mp4'
+import sidePlankImage from '../assets/exercises/side-plank.png'
 import squatImage from '../assets/exercises/squat.png'
+import standingBurpeeImage from '../assets/exercises/standing-burpee.png'
 import supermanImage from '../assets/exercises/superman.png'
+import widePushUpImage from '../assets/exercises/wide-push-up.png'
 
 export type MuscleGroup =
   | 'Gainage'
@@ -57,6 +70,7 @@ export const exercisesDB: Exercise[] = [
     type: 'duration',
     defaultDuration: 20,
     defaultSets: 3,
+    image: sidePlankImage,
   },
   {
     id: 'dead-bug',
@@ -66,6 +80,7 @@ export const exercisesDB: Exercise[] = [
     type: 'reps',
     defaultReps: 10,
     defaultSets: 3,
+    image: deadBugImage,
   },
   {
     id: 'bird-dog',
@@ -75,6 +90,7 @@ export const exercisesDB: Exercise[] = [
     type: 'reps',
     defaultReps: 10,
     defaultSets: 3,
+    image: birdDogImage,
   },
   {
     id: 'crunch',
@@ -178,6 +194,7 @@ export const exercisesDB: Exercise[] = [
     type: 'reps',
     defaultReps: 12,
     defaultSets: 3,
+    image: widePushUpImage,
   },
   {
     id: 'diamond-push-up',
@@ -187,6 +204,7 @@ export const exercisesDB: Exercise[] = [
     type: 'reps',
     defaultReps: 10,
     defaultSets: 3,
+    image: diamondPumpsImage,
   },
   {
     id: 'dips',
@@ -196,6 +214,7 @@ export const exercisesDB: Exercise[] = [
     type: 'reps',
     defaultReps: 12,
     defaultSets: 3,
+    image: chairDipsImage,
   },
 
   // ── Épaules ───────────────────────────────────────────
@@ -207,6 +226,7 @@ export const exercisesDB: Exercise[] = [
     type: 'reps',
     defaultReps: 10,
     defaultSets: 3,
+    image: pikePushUpImage,
   },
   {
     id: 'lateral-raise',
@@ -257,6 +277,7 @@ export const exercisesDB: Exercise[] = [
     type: 'reps',
     defaultReps: 12,
     defaultSets: 3,
+    image: curlBicepsImage,
   },
   {
     id: 'hammer-curl',
@@ -266,6 +287,7 @@ export const exercisesDB: Exercise[] = [
     type: 'reps',
     defaultReps: 12,
     defaultSets: 3,
+    image: curlHammerImage,
   },
 
   // ── Triceps ───────────────────────────────────────────
@@ -277,6 +299,7 @@ export const exercisesDB: Exercise[] = [
     type: 'reps',
     defaultReps: 12,
     defaultSets: 3,
+    image: extensionTricepsImage,
   },
 
   // ── Mollets ───────────────────────────────────────────
@@ -299,6 +322,7 @@ export const exercisesDB: Exercise[] = [
     type: 'reps',
     defaultReps: 10,
     defaultSets: 3,
+    image: standingBurpeeImage,
   },
   {
     id: 'mountain-climber',
@@ -308,6 +332,7 @@ export const exercisesDB: Exercise[] = [
     type: 'duration',
     defaultDuration: 30,
     defaultSets: 3,
+    image: mountainClimberImage,
   },
   {
     id: 'jump-squat',
@@ -317,6 +342,7 @@ export const exercisesDB: Exercise[] = [
     type: 'reps',
     defaultReps: 12,
     defaultSets: 3,
+    image: jumpSquatImage,
   },
 ]
 
@@ -338,6 +364,27 @@ export function filterExercisesByCategory(
   category: MuscleGroup,
 ): Exercise[] {
   return exercises.filter((e) => e.category === category)
+}
+
+export function filterExercisesByFavorites(
+  exercises: Exercise[],
+  favoriteIds: Set<string>,
+): Exercise[] {
+  return exercises.filter((e) => favoriteIds.has(e.id))
+}
+
+export function filterExercisesBySearch(
+  exercises: Exercise[],
+  query: string,
+): Exercise[] {
+  const q = query.trim().toLowerCase()
+  if (!q) return exercises
+  return exercises.filter(
+    (e) =>
+      e.name.toLowerCase().includes(q) ||
+      e.description.toLowerCase().includes(q) ||
+      e.category.toLowerCase().includes(q),
+  )
 }
 
 export function findExerciseById(

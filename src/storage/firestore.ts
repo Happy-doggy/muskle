@@ -9,6 +9,7 @@ import {
   collection,
   deleteDoc,
   doc,
+  getDoc,
   getDocs,
   setDoc,
 } from 'firebase/firestore'
@@ -31,6 +32,10 @@ function blocksRef(uid: string) {
 
 function sessionsRef(uid: string) {
   return collection(db, 'users', uid, 'sessions')
+}
+
+function favoritesRef(uid: string) {
+  return doc(db, 'users', uid, 'preferences', 'favorites')
 }
 
 export const firestoreAdapter: StorageAdapter = {
@@ -81,5 +86,18 @@ export const firestoreAdapter: StorageAdapter = {
   async deleteSession(id) {
     const uid = getUid()
     await deleteDoc(doc(sessionsRef(uid), id))
+  },
+
+  async getFavoriteExerciseIds() {
+    const uid = getUid()
+    const snap = await getDoc(favoritesRef(uid))
+    if (!snap.exists()) return []
+    const ids = snap.data().exerciseIds
+    return Array.isArray(ids) ? ids : []
+  },
+
+  async saveFavoriteExerciseIds(ids) {
+    const uid = getUid()
+    await setDoc(favoritesRef(uid), { exerciseIds: ids }, { merge: true })
   },
 }

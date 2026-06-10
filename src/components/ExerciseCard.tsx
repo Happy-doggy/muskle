@@ -2,12 +2,39 @@ import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import type { Exercise } from '../data/exercices'
 import { formatExerciseDefaults } from '../lib/customExercises'
+import { useExerciseFavorites } from '../hooks/useExerciseFavorites'
 import { cn } from '@/lib/utils'
-import { Dumbbell } from 'lucide-react'
+import { Dumbbell, Heart } from 'lucide-react'
 
 type ExerciseCardProps = {
   exercise: Exercise
   className?: string
+}
+
+function ExerciseFavoriteButton({ exerciseId }: { exerciseId: string }) {
+  const { isFavorite, toggleFavorite } = useExerciseFavorites()
+  const favorited = isFavorite(exerciseId)
+
+  return (
+    <button
+      type="button"
+      onClick={(e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        toggleFavorite(exerciseId)
+      }}
+      className={cn(
+        'absolute top-2.5 right-2.5 z-10 flex items-center justify-center size-9 rounded-full',
+        'bg-white/90 backdrop-blur-sm border border-border/60 shadow-sm',
+        'transition-colors hover:bg-white',
+        favorited && 'text-mint border-mint/40',
+      )}
+      aria-label={favorited ? 'Retirer des favoris' : 'Ajouter aux favoris'}
+      aria-pressed={favorited}
+    >
+      <Heart size={18} className={cn(favorited && 'fill-current')} />
+    </button>
+  )
 }
 
 function ExerciseCardMedia({ exercise }: { exercise: Exercise }) {
@@ -65,6 +92,7 @@ function ExerciseCardMedia({ exercise }: { exercise: Exercise }) {
           <Dumbbell size={40} className="text-muted-foreground/40" />
         </div>
       )}
+      <ExerciseFavoriteButton exerciseId={exercise.id} />
     </div>
   )
 }
@@ -91,14 +119,13 @@ export function ExerciseCardContent({ exercise }: { exercise: Exercise }) {
 
 export default function ExerciseCard({ exercise, className }: ExerciseCardProps) {
   return (
-    <Link
-      to={`/exercises/${exercise.id}`}
-      className={cn(
-        'list-card list-card-clickable overflow-hidden flex flex-col p-0',
-        className,
-      )}
-    >
-      <ExerciseCardContent exercise={exercise} />
-    </Link>
+    <div className={cn('list-card list-card-clickable overflow-hidden flex flex-col p-0', className)}>
+      <Link
+        to={`/exercises/${exercise.id}`}
+        className="flex flex-col flex-1 min-h-0"
+      >
+        <ExerciseCardContent exercise={exercise} />
+      </Link>
+    </div>
   )
 }

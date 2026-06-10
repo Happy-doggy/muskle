@@ -14,6 +14,7 @@ const KEYS = {
   exercises: 'muskle:exercises',
   blocks: 'muskle:blocks',
   sessions: 'muskle:sessions',
+  favorites: 'muskle:exercise-favorites',
 } as const
 
 // ── helpers ──────────────────────────────────
@@ -84,6 +85,14 @@ export const localStorageAdapter: StorageAdapter = {
   async deleteSession(id) {
     const list = read<Session>(KEYS.sessions).filter((x) => x.id !== id)
     write(KEYS.sessions, list)
+  },
+
+  async getFavoriteExerciseIds() {
+    return read<string>(KEYS.favorites)
+  },
+
+  async saveFavoriteExerciseIds(ids) {
+    write(KEYS.favorites, ids)
   },
 }
 
