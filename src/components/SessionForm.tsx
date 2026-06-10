@@ -166,7 +166,7 @@ export default function SessionForm({ sessionId }: SessionFormProps) {
 
   if (sessionId && !existing) {
     return (
-      <div className="max-w-lg mx-auto text-center py-12">
+      <div className="text-center py-12">
         <p className="text-ink/60 mb-4">Séance introuvable.</p>
         <Button variant="outline" asChild>
           <Link to="/sessions">Retour aux séances</Link>
@@ -177,7 +177,7 @@ export default function SessionForm({ sessionId }: SessionFormProps) {
 
   if (blocks.length === 0) {
     return (
-      <div className="max-w-lg mx-auto text-center py-12">
+      <div className="text-center py-12">
         <p className="text-ink/60 mb-4">Crée d’abord au moins un bloc avant une séance.</p>
         <Button asChild>
           <Link to="/blocks/new">Créer un bloc</Link>
@@ -187,7 +187,7 @@ export default function SessionForm({ sessionId }: SessionFormProps) {
   }
 
   return (
-    <div className="max-w-lg mx-auto">
+    <div>
       <div className="mb-6">
         <Button variant="outline" size="sm" className="-ml-2 mb-4" asChild>
           <Link to="/sessions">

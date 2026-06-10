@@ -5,12 +5,12 @@ import {
   ArrowRight,
   CalendarDays,
   Check,
-  Layers,
   Loader2,
   Mail,
   Shield,
-  Timer,
 } from 'lucide-react'
+import plankImage from '../assets/exercises/plank.png'
+import squatImage from '../assets/exercises/squat.png'
 import { useAuth } from '../hooks/useAuth'
 import { Button } from '../components/ui/button'
 import { Input } from '../components/ui/input'
@@ -97,18 +97,11 @@ export default function LoginPage() {
         </Link>
 
         <div className="login-visual-body">
-          <div>
-            <h1>À l&apos;effort !</h1>
-            <p className="login-visual-lead">
-              Compose tes séances, lance le minuteur et reste guidé du premier échauffement au dernier repos.
-            </p>
-          </div>
-
           <div className="login-visual-image">
             <div className="login-visual-cards">
               <div className="login-polaroid login-polaroid-back">
                 <div className="login-polaroid-photo">
-                  <Layers size={40} strokeWidth={1.5} />
+                  <img src={plankImage} alt="Planche" />
                 </div>
                 <div className="login-polaroid-caption">
                   Gainage de base
@@ -117,7 +110,7 @@ export default function LoginPage() {
               </div>
               <div className="login-polaroid login-polaroid-front">
                 <div className="login-polaroid-photo">
-                  <Timer size={44} strokeWidth={1.5} />
+                  <img src={squatImage} alt="Squat" />
                 </div>
                 <div className="login-polaroid-caption">
                   Full body — débutant
@@ -125,6 +118,13 @@ export default function LoginPage() {
                 </div>
               </div>
             </div>
+          </div>
+
+          <div>
+            <h1>À l&apos;effort !</h1>
+            <p className="login-visual-lead">
+              Compose tes séances, lance le minuteur et reste guidé du premier échauffement au dernier repos.
+            </p>
           </div>
         </div>
 

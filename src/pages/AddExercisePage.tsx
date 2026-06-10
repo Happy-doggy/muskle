@@ -138,7 +138,7 @@ export default function AddExercisePage() {
   }
 
   return (
-    <div className="max-w-lg mx-auto">
+    <div>
       <div className="mb-6">
         <Button variant="outline" size="sm" className="-ml-2 mb-4" asChild>
           <Link to="/exercises">

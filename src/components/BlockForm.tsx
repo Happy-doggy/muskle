@@ -314,7 +314,7 @@ export default function BlockForm({ blockId }: BlockFormProps) {
 
   if (blockId && !existing) {
     return (
-      <div className="max-w-lg mx-auto text-center py-12">
+      <div className="text-center py-12">
         <p className="text-ink/60 mb-4">Bloc introuvable.</p>
         <Button variant="outline" asChild>
           <Link to="/blocks">Retour aux blocs</Link>
@@ -324,7 +324,7 @@ export default function BlockForm({ blockId }: BlockFormProps) {
   }
 
   return (
-    <div className="max-w-lg mx-auto">
+    <div>
       <div className="mb-6">
         <Button variant="outline" size="sm" className="-ml-2 mb-4" asChild>
           <Link to="/blocks">

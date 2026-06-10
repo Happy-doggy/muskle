@@ -16,7 +16,24 @@ import {
 import MuskleLogo from '@/components/ui/MuskleLogo'
 import UserMenu from '@/components/UserMenu'
 import { useAuth } from '@/hooks/useAuth'
+import plankImage from '@/assets/exercises/plank.png'
+import pushUpImage from '@/assets/exercises/push-up.png'
+import sidePlankImage from '@/assets/exercises/side-plank.png'
+import squatImage from '@/assets/exercises/squat.png'
+import supermanImage from '@/assets/exercises/superman.png'
 import './landing.css'
+
+function ExerciseThumb({ image, alt }: { image?: string; alt: string }) {
+  return (
+    <div className={`ex-thumb${image ? ' ex-thumb-img' : ''}`}>
+      {image ? (
+        <img src={image} alt={alt} />
+      ) : (
+        <Dumbbell />
+      )}
+    </div>
+  )
+}
 
 const BLOCK_TYPES = [
   {
@@ -191,25 +208,22 @@ export default function LandingPage() {
                 </ul>
               </div>
               <div className="feature-visual">
-                <div className="panel">
+                <div className="ex-card-grid">
                   {[
-                    { name: 'Squat', cat: 'Musculation', catColor: 'var(--cat-musculation)', meta: '12 reps × 4 séries' },
-                    { name: 'Planche', cat: 'Gainage', catColor: 'var(--cat-autre)', meta: '30s × 3 séries' },
-                    { name: 'Burpee', cat: 'Cardio', catColor: 'var(--cat-cardio)', meta: '10 reps × 3 séries' },
+                    { name: 'Squat', cat: 'Musculation', meta: '12 reps × 4 séries', image: squatImage },
+                    { name: 'Planche', cat: 'Gainage', meta: '30s × 3 séries', image: plankImage },
+                    { name: 'Pompes', cat: 'Cardio', meta: '10 reps × 3 séries', image: pushUpImage },
                   ].map((ex) => (
-                    <div key={ex.name} className="ex-row">
-                      <div className="ex-thumb"><Dumbbell /></div>
-                      <div>
-                        <h4>{ex.name}</h4>
-                        <div className="ex-meta">
-                          <span
-                            className="cat-chip"
-                            style={{ color: ex.catColor, background: `color-mix(in srgb, ${ex.catColor} 12%, white)` }}
-                          >
-                            {ex.cat}
-                          </span>
-                          <p>{ex.meta}</p>
+                    <div key={ex.name} className="ex-card">
+                      <div className="ex-card-media">
+                        <img src={ex.image} alt={ex.name} />
+                      </div>
+                      <div className="ex-card-body">
+                        <div className="ex-card-head">
+                          <h4>{ex.name}</h4>
+                          <span className="ex-card-cat">{ex.cat}</span>
                         </div>
+                        <p className="ex-card-meta">{ex.meta}</p>
                       </div>
                     </div>
                   ))}
@@ -240,12 +254,12 @@ export default function LandingPage() {
                     <span className="mode-badge" style={{ background: 'var(--mint)', color: '#fff' }}>Circuit</span>
                   </div>
                   {[
-                    { name: 'Planche', meta: '30s · repos 15s' },
-                    { name: 'Planche latérale', meta: '20s · repos 15s' },
-                    { name: 'Dead bug', meta: '10 reps · repos 20s' },
+                    { name: 'Planche', meta: '30s · repos 15s', image: plankImage },
+                    { name: 'Planche latérale', meta: '20s · repos 15s', image: sidePlankImage },
+                    { name: 'Superman', meta: '10 reps · repos 20s', image: supermanImage },
                   ].map((ex) => (
                     <div key={ex.name} className="ex-row" style={{ padding: '10px 0' }}>
-                      <div className="ex-thumb" style={{ width: 38, height: 38 }}><Dumbbell /></div>
+                      <ExerciseThumb image={ex.image} alt={ex.name} />
                       <div>
                         <h4>{ex.name}</h4>
                         <p>{ex.meta}</p>

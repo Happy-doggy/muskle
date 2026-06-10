@@ -35,6 +35,8 @@
     --input:                  #F7EDE5;
     --ring:                   #4BA278;
     --radius:                 0.625rem;
+    --container-max:          90rem;
+    --header-height:          4.25rem; /* 68px — aligné landing / app */
 
     /* Exercise category hues */
     --cat-musculation:   #E85D4A;
@@ -77,6 +79,9 @@
 
 @layer base {
   * { @apply border-border; }
+  html {
+    scrollbar-gutter: stable;
+  }
   body {
     @apply bg-background text-foreground font-sans;
   }
@@ -86,6 +91,10 @@
 }
 
 @layer components {
+  .app-container {
+    @apply max-w-app mx-auto w-full px-4 sm:px-6;
+  }
+
   /* Timer ring */
   .timer-ring-progress {
     fill: none;
@@ -110,6 +119,35 @@
     @apply cursor-pointer transition-colors hover:border-mint;
   }
 
+  /* Grille exercices — colonnes selon la largeur du conteneur */
+  .exercise-page {
+    container-type: inline-size;
+  }
+
+  .exercise-grid {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+
+  @container (min-width: 32rem) {
+    .exercise-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @container (min-width: 48rem) {
+    .exercise-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @container (min-width: 68rem) {
+    .exercise-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
   .tabs {
     @apply flex flex-wrap items-center gap-1 bg-white rounded-lg p-1 border border-border;
   }
@@ -125,6 +163,10 @@
 
   .tab-active {
     @apply text-white;
+  }
+
+  .tabs-static .tab.tab-active {
+    background-color: var(--mint);
   }
 
   .header-blur {

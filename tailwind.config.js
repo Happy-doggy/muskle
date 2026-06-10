@@ -62,6 +62,9 @@ export default {
         'phase-rest':    'var(--phase-rest)',
         'phase-done':    'var(--phase-done)',
       },
+      maxWidth: {
+        app: '90rem', // 1440px — colonne de contenu app (desktop)
+      },
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',

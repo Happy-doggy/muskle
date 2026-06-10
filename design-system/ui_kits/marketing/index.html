@@ -10,11 +10,12 @@
 <link rel="stylesheet" href="../../styles.css" />
 <script src="https://unpkg.com/lucide@latest"></script>
 <style>
-  :root { --site-max: 1120px; }
+  :root { --site-max: 90rem; }
   html { scroll-behavior: smooth; }
   body { margin: 0; background: var(--background); color: var(--ink); font-family: var(--font-sans); }
   a { color: inherit; text-decoration: none; }
-  .wrap { max-width: var(--site-max); margin: 0 auto; padding: 0 24px; }
+  .wrap { max-width: var(--site-max); margin: 0 auto; width: 100%; padding: 0 1rem; }
+  @media (min-width: 640px) { .wrap { padding: 0 1.5rem; } }
   h1, h2, h3 { font-family: var(--font-display); letter-spacing: var(--tracking-tight); margin: 0; }
   .eyebrow { font-size: var(--text-sm); font-weight: 600; color: var(--mint); text-transform: uppercase; letter-spacing: var(--tracking-wide); }
   .lead { font-size: var(--text-lg); color: color-mix(in srgb, var(--ink) 62%, transparent); line-height: var(--leading-relaxed); }
@@ -34,7 +35,7 @@
   /* ── Header ──────────────────────────── */
   header.site { position: sticky; top: 0; z-index: 50; border-bottom: 1px solid var(--border);
     background: color-mix(in srgb, var(--background) 88%, transparent); backdrop-filter: blur(10px); }
-  .nav { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+  .nav { display: flex; align-items: center; justify-content: space-between; height: var(--header-height, 3.5rem); min-height: var(--header-height, 3.5rem); }
   .nav-logo { display: inline-flex; color: var(--ink); }
   .nav-logo img { height: 26px; }
   .nav-links { display: flex; align-items: center; gap: 30px; }

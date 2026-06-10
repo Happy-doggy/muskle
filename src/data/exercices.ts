@@ -1,3 +1,13 @@
+import crunchImage from '../assets/exercises/crunch.png'
+import crunchVideo from '../assets/exercises/crunch.mp4'
+import forwardLungeImage from '../assets/exercises/forward-lunge.png'
+import gluteBridgeImage from '../assets/exercises/glute-bridge.png'
+import plankImage from '../assets/exercises/plank.png'
+import pushUpImage from '../assets/exercises/push-up.png'
+import pushUpVideo from '../assets/exercises/push-up.mp4'
+import squatImage from '../assets/exercises/squat.png'
+import supermanImage from '../assets/exercises/superman.png'
+
 export type MuscleGroup =
   | 'Gainage'
   | 'Cuisses & Fessiers'
@@ -37,6 +47,7 @@ export const exercisesDB: Exercise[] = [
     type: 'duration',
     defaultDuration: 30,
     defaultSets: 3,
+    image: plankImage,
   },
   {
     id: 'side-plank',
@@ -73,6 +84,8 @@ export const exercisesDB: Exercise[] = [
     type: 'reps',
     defaultReps: 15,
     defaultSets: 3,
+    image: crunchImage,
+    video: crunchVideo,
   },
 
   // ── Cuisses & Fessiers ────────────────────────────────
@@ -84,6 +97,7 @@ export const exercisesDB: Exercise[] = [
     type: 'reps',
     defaultReps: 12,
     defaultSets: 4,
+    image: squatImage,
   },
   {
     id: 'bulgarian-split-squat',
@@ -102,6 +116,7 @@ export const exercisesDB: Exercise[] = [
     type: 'reps',
     defaultReps: 12,
     defaultSets: 3,
+    image: forwardLungeImage,
   },
   {
     id: 'wall-sit',
@@ -122,6 +137,7 @@ export const exercisesDB: Exercise[] = [
     type: 'reps',
     defaultReps: 15,
     defaultSets: 3,
+    image: gluteBridgeImage,
   },
   {
     id: 'hip-thrust',
@@ -151,6 +167,8 @@ export const exercisesDB: Exercise[] = [
     type: 'reps',
     defaultReps: 12,
     defaultSets: 4,
+    image: pushUpImage,
+    video: pushUpVideo,
   },
   {
     id: 'wide-push-up',
@@ -227,6 +245,7 @@ export const exercisesDB: Exercise[] = [
     type: 'reps',
     defaultReps: 12,
     defaultSets: 3,
+    image: supermanImage,
   },
 
   // ── Biceps ────────────────────────────────────────────
@@ -319,4 +338,11 @@ export function filterExercisesByCategory(
   category: MuscleGroup,
 ): Exercise[] {
   return exercises.filter((e) => e.category === category)
+}
+
+export function findExerciseById(
+  exercises: Exercise[],
+  id: string,
+): Exercise | undefined {
+  return exercises.find((e) => e.id === id)
 }
