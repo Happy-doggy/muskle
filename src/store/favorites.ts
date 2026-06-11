@@ -30,6 +30,7 @@ export const useFavoritesStore = create<FavoritesStore>((set, get) => ({
     } catch (err) {
       console.error('[favorites] Failed to save favorites', err)
       set({ favoriteIds: previous })
+      throw err
     }
   },
 

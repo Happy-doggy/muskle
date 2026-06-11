@@ -1,4 +1,4 @@
-export type BlockMode = 'list' | 'circuit'
+export type BlockMode = 'list' | 'circuit' | 'tabata' | 'amrap' | 'emom'
 
 export type BlockExercise = {
   exerciseId: string      // référence à Exercise.id
@@ -12,10 +12,12 @@ export type Block = {
   id: string
   name: string
   mode: BlockMode
-  // circuit uniquement : nombre de tours
+  // circuit / tabata / emom : nombre de tours ou minutes
   rounds?: number
   // repos entre les rounds (circuit)
   restBetweenRounds?: number
+  // amrap : durée totale en secondes
+  totalDuration?: number
   exercises: BlockExercise[]
 }
 

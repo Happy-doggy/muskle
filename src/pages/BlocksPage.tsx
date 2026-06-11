@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useAppStore } from '../store'
+import { getBlockModeLabel, blockModeUsesRounds } from '../lib/blockFormats'
 import { Button } from '../components/ui/button'
 import { Layers, Plus } from 'lucide-react'
 
@@ -18,7 +19,7 @@ export default function BlocksPage() {
         <Button variant="outline" asChild>
           <Link to="/blocks/new">
             <Plus size={16} />
-            Ajouter
+            Créer
           </Link>
         </Button>
       </div>
@@ -43,14 +44,14 @@ export default function BlocksPage() {
               <div className="flex items-center gap-2 mb-2 flex-wrap">
                 <h3 className="font-medium text-ink">{block.name}</h3>
                 <span className="text-xs px-2.5 py-1 rounded-full bg-mint text-white font-medium">
-                  {block.mode === 'circuit' ? 'Circuit' : 'Liste'}
+                  {getBlockModeLabel(block.mode)}
                 </span>
               </div>
               <p className="text-sm text-ink/50">
                 {block.exercises.length} exercice
                 {block.exercises.length !== 1 ? 's' : ''}
-                {block.mode === 'circuit' && block.rounds != null && (
-                  <span> · {block.rounds} rounds</span>
+                {blockModeUsesRounds(block.mode) && block.rounds != null && (
+                  <span> · {block.rounds} {block.mode === 'emom' ? 'min' : 'rounds'}</span>
                 )}
               </p>
             </Link>

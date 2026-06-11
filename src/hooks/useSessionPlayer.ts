@@ -99,24 +99,34 @@ export function buildPlayerSteps(
     const block = blockMap.get(blockId)
     if (!block) return
 
-    if (block.mode === 'circuit') {
-      const rounds = block.rounds ?? 1
+    if (
+      block.mode === 'circuit' ||
+      block.mode === 'tabata' ||
+      block.mode === 'emom' ||
+      block.mode === 'amrap'
+    ) {
+      const rounds = block.mode === 'amrap' ? 1 : block.rounds ?? 1
       for (let round = 0; round < rounds; round++) {
         block.exercises.forEach((blockEx, exIdx) => {
           const exercise = exerciseMap.get(blockEx.exerciseId)
           if (!exercise) return
+          const effectiveEx =
+            block.mode === 'tabata'
+              ? { ...blockEx, duration: 20, restSeconds: 10, reps: undefined }
+              : blockEx
           pushWorkAndRest(steps, {
             blockName: block.name,
             blockIndex,
             exercise,
-            blockEx,
+            blockEx: effectiveEx,
             set: round + 1,
             totalSets: rounds,
             exIdx,
             totalExercisesInBlock: block.exercises.length,
           })
         })
-        const between = block.restBetweenRounds ?? 0
+        const between =
+          block.mode === 'circuit' ? block.restBetweenRounds ?? 0 : 0
         if (between > 0 && round < rounds - 1) {
           steps.push({
             blockTitle: block.name,

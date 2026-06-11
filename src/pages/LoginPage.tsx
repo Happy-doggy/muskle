@@ -16,6 +16,7 @@ import { Button } from '../components/ui/button'
 import { Input } from '../components/ui/input'
 import { Label } from '../components/ui/label'
 import MuskleLogo from '../components/ui/MuskleLogo'
+import { toast } from '@/lib/toast'
 import './login.css'
 
 function GoogleIcon() {
@@ -69,9 +70,10 @@ export default function LoginPage() {
     try {
       await sendMagicLink(trimmed)
       setLinkSent(true)
+      toast.success('Lien de connexion envoyé')
     } catch (err) {
       console.error('[LoginPage] Failed to send magic link', err)
-      setAuthError('Impossible d’envoyer le lien. Réessaie.')
+      toast.error('Impossible d’envoyer le lien. Réessaie.')
     } finally {
       setSending(false)
     }

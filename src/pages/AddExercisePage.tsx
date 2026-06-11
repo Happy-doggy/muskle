@@ -26,6 +26,7 @@ import {
   CardTitle,
 } from '../components/ui/card'
 import { cn } from '@/lib/utils'
+import { toast } from '@/lib/toast'
 
 type ExerciseType = Exercise['type']
 
@@ -131,9 +132,10 @@ export default function AddExercisePage() {
 
     try {
       await saveCustomExercise(exercise)
+      toast.success('Exercice créé')
       navigate('/exercises')
     } catch {
-      setError('Impossible d’enregistrer l’exercice. Réessaie.')
+      toast.error('Impossible d’enregistrer l’exercice. Réessaie.')
     }
   }
 

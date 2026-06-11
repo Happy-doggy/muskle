@@ -22,7 +22,7 @@ export default function SessionsPage() {
         <Button variant="outline" asChild>
           <Link to="/sessions/new">
             <Plus size={16} />
-            Ajouter
+            Créer
           </Link>
         </Button>
       </div>

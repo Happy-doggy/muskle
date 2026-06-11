@@ -7,6 +7,7 @@ import { Button } from '../components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
 import { Input } from '../components/ui/input'
 import { Label } from '../components/ui/label'
+import { toast } from '@/lib/toast'
 
 export default function AccountPage() {
   const { signOut } = useAuth()
@@ -16,7 +17,6 @@ export default function AccountPage() {
   const [saving, setSaving] = useState(false)
   const [signingOut, setSigningOut] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [saved, setSaved] = useState(false)
 
   useEffect(() => {
     if (display) setFirstName(display.firstName)
@@ -40,13 +40,12 @@ export default function AccountPage() {
     }
     setSaving(true)
     setError(null)
-    setSaved(false)
     try {
       await saveFirstName(trimmed)
-      setSaved(true)
+      toast.success('Prénom enregistré')
     } catch (err) {
       console.error('[AccountPage] Failed to save profile', err)
-      setError('Impossible d’enregistrer. Réessaie.')
+      toast.error('Impossible d’enregistrer. Réessaie.')
     } finally {
       setSaving(false)
     }
@@ -56,9 +55,11 @@ export default function AccountPage() {
     setSigningOut(true)
     try {
       await signOut()
+      toast.success('Déconnexion réussie')
       navigate('/')
     } catch (err) {
       console.error('[AccountPage] Sign out failed', err)
+      toast.error('Impossible de se déconnecter. Réessaie.')
       setSigningOut(false)
     }
   }
@@ -101,14 +102,12 @@ export default function AccountPage() {
                   onChange={(e) => {
                     setFirstName(e.target.value)
                     setError(null)
-                    setSaved(false)
                   }}
                   autoComplete="given-name"
                   disabled={saving}
                 />
               </div>
               {error && <p className="text-sm text-destructive">{error}</p>}
-              {saved && <p className="text-sm text-mint">Prénom enregistré.</p>}
               <Button type="submit" disabled={saving}>
                 {saving ? 'Enregistrement…' : 'Enregistrer'}
               </Button>

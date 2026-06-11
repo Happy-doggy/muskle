@@ -13,10 +13,12 @@ import PlayerPage from './pages/PlayerPage'
 import LandingPage from './pages/LandingPage'
 import LoginPage from './pages/LoginPage'
 import AccountPage from './pages/AccountPage'
+import { Toaster } from './components/ui/toaster'
 
 export default function App() {
   return (
     <AuthBootstrap>
+      <Toaster />
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />

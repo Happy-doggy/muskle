@@ -1,5 +1,6 @@
 import { Heart } from 'lucide-react'
 import { useExerciseFavorites } from '../hooks/useExerciseFavorites'
+import { toast } from '@/lib/toast'
 import { cn } from '@/lib/utils'
 
 type ExerciseFavoriteButtonProps = {
@@ -16,14 +17,24 @@ export default function ExerciseFavoriteButton({
   const { isFavorite, toggleFavorite } = useExerciseFavorites()
   const favorited = isFavorite(exerciseId)
 
+  const handleToggle = async (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    const wasFavorite = favorited
+    try {
+      await toggleFavorite(exerciseId)
+      toast.success(
+        wasFavorite ? 'Retiré des favoris' : 'Ajouté aux favoris',
+      )
+    } catch {
+      toast.error('Impossible de mettre à jour les favoris. Réessaie.')
+    }
+  }
+
   return (
     <button
       type="button"
-      onClick={(e) => {
-        e.preventDefault()
-        e.stopPropagation()
-        toggleFavorite(exerciseId)
-      }}
+      onClick={(e) => void handleToggle(e)}
       className={cn(
         'flex items-center justify-center rounded-full transition-colors',
         variant === 'overlay' &&
