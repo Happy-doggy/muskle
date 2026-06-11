@@ -37,9 +37,9 @@ export default function AppHeader({ variant = 'app' }: AppHeaderProps) {
         {user ? (
           <>
             <div className="col-start-2 row-start-1 flex justify-end sm:hidden">
-              <div className="flex h-10 items-stretch overflow-hidden rounded-lg border border-border bg-white">
+              <div className="flex h-12 items-stretch overflow-hidden rounded-lg border border-border bg-white">
                 <MainNavTabs cluster />
-                <UserMenu className="rounded-none border-0 border-l border-border" />
+                <UserMenu className="h-full rounded-none border-0 border-l border-border" />
               </div>
             </div>
 

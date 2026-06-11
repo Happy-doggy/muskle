@@ -52,9 +52,15 @@ export default function MainNavTabs({ className, cluster }: MainNavTabsProps) {
     const profileBtn = clusterEl.lastElementChild
     const profileWidth =
       profileBtn instanceof HTMLElement ? profileBtn.offsetWidth : 44
-    const navBudget = clusterEl.clientWidth - profileWidth
+    // The cluster is content-sized; use the full header column width as budget.
+    const columnEl = clusterEl.parentElement
+    const availableWidth = columnEl?.clientWidth ?? clusterEl.clientWidth
+    const navBudget = availableWidth - profileWidth
 
-    const iconTabWidth = tabRefs.current[navItems[0].to]?.offsetWidth
+    const inactiveItem = navItems.find((item) => !isNavActive(pathname, item.to))
+    const iconTabWidth = inactiveItem
+      ? tabRefs.current[inactiveItem.to]?.offsetWidth
+      : tabRefs.current[navItems[0].to]?.offsetWidth
     if (!iconTabWidth) return
 
     const labelWidth = labelMeasureRef.current?.offsetWidth ?? 0
@@ -68,8 +74,9 @@ export default function MainNavTabs({ className, cluster }: MainNavTabsProps) {
       navPadding +
       tabsGap
 
-    setShowActiveLabel(widthNeeded <= navBudget)
-  }, [activeItem, cluster])
+    const fits = widthNeeded <= navBudget
+    setShowActiveLabel((prev) => (prev === fits ? prev : fits))
+  }, [activeItem, cluster, pathname])
 
   const updateIndicator = useCallback(() => {
     const nav = navRef.current
@@ -113,7 +120,11 @@ export default function MainNavTabs({ className, cluster }: MainNavTabsProps) {
     })
     observer.observe(nav)
     const clusterEl = cluster ? nav.parentElement : null
-    if (clusterEl) observer.observe(clusterEl)
+    if (clusterEl) {
+      observer.observe(clusterEl)
+      const columnEl = clusterEl.parentElement
+      if (columnEl) observer.observe(columnEl)
+    }
     return () => observer.disconnect()
   }, [cluster, recomputeActiveLabel, updateIndicator])
 
