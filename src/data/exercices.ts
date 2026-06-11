@@ -11,9 +11,11 @@ import extensionTricepsImage from '../assets/exercises/extension-triceps.png'
 import forwardLungeImage from '../assets/exercises/forward-lunge.png'
 import forwardLungeVideo from '../assets/exercises/forward-lunge.mp4'
 import gluteBridgeImage from '../assets/exercises/glute-bridge.png'
+import gluteBridgeVideo from '../assets/exercises/glute-bridge.mp4'
 import jumpSquatImage from '../assets/exercises/jump-squat.png'
 import kneePushUpImage from '../assets/exercises/knee-push-up.png'
 import mountainClimberImage from '../assets/exercises/mountain-climber.png'
+import mountainClimberVideo from '../assets/exercises/mountain-climber.mp4'
 import pikePushUpImage from '../assets/exercises/pike-push-up.png'
 import plankImage from '../assets/exercises/plank.png'
 import pushUpImage from '../assets/exercises/push-up.png'
@@ -162,6 +164,7 @@ export const exercisesDB: Exercise[] = [
     defaultReps: 15,
     defaultSets: 3,
     image: gluteBridgeImage,
+    video: gluteBridgeVideo,
   },
   {
     id: 'hip-thrust',
@@ -352,6 +355,7 @@ export const exercisesDB: Exercise[] = [
     defaultDuration: 30,
     defaultSets: 3,
     image: mountainClimberImage,
+    video: mountainClimberVideo,
   },
   {
     id: 'jump-squat',
