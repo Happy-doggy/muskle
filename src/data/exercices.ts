@@ -3,19 +3,23 @@ import chairDipsImage from '../assets/exercises/chair-dips.png'
 import crunchImage from '../assets/exercises/crunch.png'
 import crunchVideo from '../assets/exercises/crunch.mp4'
 import curlBicepsImage from '../assets/exercises/curl-biceps.png'
+import curlBicepsVideo from '../assets/exercises/curl-biceps.mp4'
 import curlHammerImage from '../assets/exercises/curl-hammer.png'
 import deadBugImage from '../assets/exercises/dead-bug.png'
 import diamondPumpsImage from '../assets/exercises/diamond-pumps.png'
 import extensionTricepsImage from '../assets/exercises/extension-triceps.png'
 import forwardLungeImage from '../assets/exercises/forward-lunge.png'
+import forwardLungeVideo from '../assets/exercises/forward-lunge.mp4'
 import gluteBridgeImage from '../assets/exercises/glute-bridge.png'
 import jumpSquatImage from '../assets/exercises/jump-squat.png'
+import kneePushUpImage from '../assets/exercises/knee-push-up.png'
 import mountainClimberImage from '../assets/exercises/mountain-climber.png'
 import pikePushUpImage from '../assets/exercises/pike-push-up.png'
 import plankImage from '../assets/exercises/plank.png'
 import pushUpImage from '../assets/exercises/push-up.png'
 import pushUpVideo from '../assets/exercises/push-up.mp4'
 import sidePlankImage from '../assets/exercises/side-plank.png'
+import sidePlankVideo from '../assets/exercises/side-plank.mp4'
 import squatImage from '../assets/exercises/squat.png'
 import standingBurpeeImage from '../assets/exercises/standing-burpee.png'
 import supermanImage from '../assets/exercises/superman.png'
@@ -73,6 +77,7 @@ export const exercisesDB: Exercise[] = [
     defaultDuration: 20,
     defaultSets: 3,
     image: sidePlankImage,
+    video: sidePlankVideo,
   },
   {
     id: 'dead-bug',
@@ -135,6 +140,7 @@ export const exercisesDB: Exercise[] = [
     defaultReps: 12,
     defaultSets: 3,
     image: forwardLungeImage,
+    video: forwardLungeVideo,
   },
   {
     id: 'wall-sit',
@@ -187,6 +193,16 @@ export const exercisesDB: Exercise[] = [
     defaultSets: 4,
     image: pushUpImage,
     video: pushUpVideo,
+  },
+  {
+    id: 'knee-push-up',
+    name: 'Pompes sur les genoux',
+    category: 'Pectoraux',
+    description: 'Variante des pompes en appui sur les genoux, pour diminuer la charge tout en gardant le mouvement.',
+    type: 'reps',
+    defaultReps: 12,
+    defaultSets: 3,
+    image: kneePushUpImage,
   },
   {
     id: 'wide-push-up',
@@ -280,6 +296,7 @@ export const exercisesDB: Exercise[] = [
     defaultReps: 12,
     defaultSets: 3,
     image: curlBicepsImage,
+    video: curlBicepsVideo,
   },
   {
     id: 'hammer-curl',
