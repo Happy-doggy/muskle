@@ -16,12 +16,20 @@ import {
 import MuskleLogo from '@/components/ui/MuskleLogo'
 import UserMenu from '@/components/UserMenu'
 import { useAuth } from '@/hooks/useAuth'
+import { exercisesDB, type Exercise } from '../data/exercices'
 import plankImage from '@/assets/exercises/plank.png'
-import pushUpImage from '@/assets/exercises/push-up.png'
 import sidePlankImage from '@/assets/exercises/side-plank.png'
-import squatImage from '@/assets/exercises/squat.png'
 import supermanImage from '@/assets/exercises/superman.png'
 import './landing.css'
+
+const LANDING_FEATURE_EXERCISE_IDS = ['lunge', 'crunch', 'push-up'] as const
+
+function formatExerciseMeta(exercise: Exercise): string {
+  if (exercise.type === 'duration') {
+    return `${exercise.defaultDuration ?? 30}s × ${exercise.defaultSets ?? 3} séries`
+  }
+  return `${exercise.defaultReps ?? 10} reps × ${exercise.defaultSets ?? 3} séries`
+}
 
 function ExerciseThumb({ image, alt }: { image?: string; alt: string }) {
   return (
@@ -209,24 +217,35 @@ export default function LandingPage() {
               </div>
               <div className="feature-visual">
                 <div className="ex-card-grid">
-                  {[
-                    { name: 'Squat', cat: 'Musculation', meta: '12 reps × 4 séries', image: squatImage },
-                    { name: 'Planche', cat: 'Gainage', meta: '30s × 3 séries', image: plankImage },
-                    { name: 'Pompes', cat: 'Cardio', meta: '10 reps × 3 séries', image: pushUpImage },
-                  ].map((ex) => (
-                    <div key={ex.name} className="ex-card">
-                      <div className="ex-card-media">
-                        <img src={ex.image} alt={ex.name} />
-                      </div>
-                      <div className="ex-card-body">
-                        <div className="ex-card-head">
-                          <h4>{ex.name}</h4>
-                          <span className="ex-card-cat">{ex.cat}</span>
+                  {LANDING_FEATURE_EXERCISE_IDS.map((id) => {
+                    const ex = exercisesDB.find((e) => e.id === id)
+                    if (!ex) return null
+                    return (
+                      <div key={ex.id} className="ex-card">
+                        <div className="ex-card-media">
+                          {ex.video ? (
+                            <video
+                              src={ex.video}
+                              poster={ex.image}
+                              loop
+                              muted
+                              autoPlay
+                              playsInline
+                            />
+                          ) : ex.image ? (
+                            <img src={ex.image} alt={ex.name} />
+                          ) : null}
                         </div>
-                        <p className="ex-card-meta">{ex.meta}</p>
+                        <div className="ex-card-body">
+                          <div className="ex-card-head">
+                            <h4>{ex.name}</h4>
+                            <span className="ex-card-cat">{ex.category}</span>
+                          </div>
+                          <p className="ex-card-meta">{formatExerciseMeta(ex)}</p>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    )
+                  })}
                 </div>
               </div>
             </div>

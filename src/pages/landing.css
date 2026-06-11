@@ -578,9 +578,10 @@
 /* Exercise cards (bibliothèque) */
 .landing .ex-card-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-  width: 100%;
+  grid-template-columns: repeat(3, 180px);
+  gap: 16px;
+  width: fit-content;
+  max-width: 100%;
 }
 
 .landing .ex-card {
@@ -598,17 +599,23 @@
   overflow: hidden;
 }
 
-.landing .ex-card-media img {
+.landing .ex-card-media img,
+.landing .ex-card-media video {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
+}
+
+.landing .ex-card-media video {
+  background: var(--ink);
 }
 
 .landing .ex-card-body {
-  padding: 14px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
   flex: 1;
 }
 
@@ -616,12 +623,12 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 8px;
+  gap: 10px;
 }
 
 .landing .ex-card-head h4 {
   font-family: 'Host Grotesk', sans-serif;
-  font-size: 0.875rem;
+  font-size: 1rem;
   font-weight: 500;
   margin: 0;
   line-height: 1.3;
@@ -639,7 +646,7 @@
 }
 
 .landing .ex-card-meta {
-  font-size: 12px;
+  font-size: 13px;
   color: color-mix(in srgb, var(--ink) 40%, transparent);
   margin: 0;
 }
@@ -868,7 +875,8 @@
   }
 
   .landing .ex-card-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(160px, 180px));
+    justify-content: center;
   }
 
   .landing .feature.flip .feature-text {
@@ -886,7 +894,8 @@
 
 @media (max-width: 520px) {
   .landing .ex-card-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 180px);
+    justify-content: center;
   }
 
   .landing .benefits {
