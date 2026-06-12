@@ -1,5 +1,5 @@
 import { NavLink, Outlet } from 'react-router-dom'
-import { Dumbbell, Users } from 'lucide-react'
+import { ArrowLeft, Dumbbell, Users } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import MuskleLogo from '@/components/ui/MuskleLogo'
 
@@ -10,8 +10,8 @@ const navItems = [
 
 export default function AdminLayout() {
   return (
-    <div className="min-h-screen bg-background flex">
-      <aside className="w-64 border-r border-border bg-card flex flex-col shrink-0">
+    <div className="min-h-screen bg-background">
+      <aside className="fixed inset-y-0 left-0 z-40 flex h-screen w-64 flex-col border-r border-border bg-card">
         <div className="p-6 border-b border-border">
           <MuskleLogo className="h-7" />
           <p className="text-xs text-muted-foreground mt-2">Back-office admin</p>
@@ -35,8 +35,17 @@ export default function AdminLayout() {
             </NavLink>
           ))}
         </nav>
+        <div className="p-4 border-t border-border">
+          <NavLink
+            to="/account"
+            className="flex items-center justify-center gap-2 rounded-md border border-border bg-white px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:border-mint hover:text-foreground"
+          >
+            <ArrowLeft className="h-4 w-4 shrink-0 text-mint" aria-hidden />
+            Retour au front
+          </NavLink>
+        </div>
       </aside>
-      <main className="flex-1 overflow-auto">
+      <main className="ml-64 min-h-screen overflow-auto">
         <div className="p-8">
           <Outlet />
         </div>

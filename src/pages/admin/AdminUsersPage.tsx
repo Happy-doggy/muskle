@@ -141,7 +141,7 @@ export default function AdminUsersPage() {
           <p className="text-sm text-destructive">{error}</p>
         )}
 
-        <div className="rounded-lg border">
+        <div className="rounded-lg border bg-white">
           <Table>
             <TableHeader>
               <TableRow>

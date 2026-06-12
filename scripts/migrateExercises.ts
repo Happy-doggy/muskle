@@ -19,6 +19,23 @@ import type { MuscleGroup } from '../src/types/exercise'
 
 const PROJECT_ID = 'muskle-e0af6'
 
+function sanitize<T>(value: T): T {
+  if (value === null || typeof value !== 'object') {
+    return value
+  }
+
+  if (Array.isArray(value)) {
+    return value.map((item) => sanitize(item)) as T
+  }
+
+  const result: Record<string, unknown> = {}
+  for (const [key, val] of Object.entries(value)) {
+    if (val === undefined) continue
+    result[key] = sanitize(val)
+  }
+  return result as T
+}
+
 function staticToCatalogExercise(
   ex: (typeof exerciseDefinitions)[number],
 ): CatalogExercise {
@@ -67,7 +84,7 @@ async function main() {
   const catalogExercises = exerciseDefinitions.map(staticToCatalogExercise)
 
   for (const exercise of catalogExercises) {
-    batch.set(collectionRef.doc(exercise.id), exercise)
+    batch.set(collectionRef.doc(exercise.id), sanitize(exercise))
   }
 
   await batch.commit()
