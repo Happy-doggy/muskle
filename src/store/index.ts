@@ -6,8 +6,8 @@
  */
 
 import { create } from 'zustand'
-import { blocksDB, type Block } from '../data/blocks'
-import { sessionsDB, type Session } from '../data/sessions'
+import type { Block } from '../data/blocks'
+import type { Session } from '../data/sessions'
 import { loadCustomExercises } from '../lib/customExercises'
 import { auth } from '../lib/firebase'
 import { storage } from '../storage'
@@ -53,21 +53,8 @@ export const useAppStore = create<AppStore>((set) => ({
 
     await loadCustomExercises()
 
-    let blocks = (await storage.getBlocks()).map(fromFirestoreBlock)
-    if (blocks.length === 0) {
-      await Promise.all(
-        blocksDB.map((block) => storage.saveBlock(toFirestoreBlock(block))),
-      )
-      blocks = [...blocksDB]
-    }
-
-    let sessions = (await storage.getSessions()).map(fromFirestoreSession)
-    if (sessions.length === 0) {
-      await Promise.all(
-        sessionsDB.map((session) => storage.saveSession(toFirestoreSession(session))),
-      )
-      sessions = [...sessionsDB]
-    }
+    const blocks = (await storage.getBlocks()).map(fromFirestoreBlock)
+    const sessions = (await storage.getSessions()).map(fromFirestoreSession)
 
     set({ blocks, sessions })
   },

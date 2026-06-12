@@ -1,4 +1,4 @@
-import { sessionsDB, type Session } from '../data/sessions'
+import type { Session } from '../data/sessions'
 import { storage } from '../storage'
 import type { Session as FirestoreSession } from '../types'
 
@@ -11,12 +11,7 @@ function fromFirestore(session: FirestoreSession): Session {
 }
 
 export async function loadSessions(): Promise<Session[]> {
-  const stored = (await storage.getSessions()).map(fromFirestore)
-  if (stored.length === 0) {
-    await Promise.all(sessionsDB.map((session) => storage.saveSession(toFirestore(session))))
-    return [...sessionsDB]
-  }
-  return stored
+  return (await storage.getSessions()).map(fromFirestore)
 }
 
 export async function saveSessions(sessions: Session[]): Promise<void> {
