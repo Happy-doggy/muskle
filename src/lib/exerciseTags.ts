@@ -1,4 +1,4 @@
-import type { Exercise, MuscleGroup } from '@/data/exercices'
+import type { Exercise, MuscleGroup } from '@/types/exercise'
 import type {
   OnboardingContrainte,
   OnboardingMateriel,
@@ -7,7 +7,7 @@ import type {
   OnboardingSport,
   OnboardingZone,
 } from '@/types/onboarding'
-import type { ExerciseTags } from '@/data/exercices'
+import type { ExerciseTags } from '@/types/exercise'
 
 export const MUSCLE_GROUP_TO_ZONES: Record<MuscleGroup, OnboardingZone[]> = {
   Gainage: ['abdos'],

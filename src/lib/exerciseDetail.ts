@@ -1,4 +1,4 @@
-import type { Exercise, MuscleGroup } from '../data/exercices'
+import type { Exercise, MuscleGroup } from '@/types/exercise'
 import { formatMaterielList, resolveExerciseTags } from '@/lib/exerciseTags'
 
 export type ExerciseLevel = 'débutant' | 'confirmé' | 'expert'

@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from 'react'
-import type { MuscleGroup } from '@/data/exercices'
+import type { MuscleGroup } from '@/types/exercise'
 import type { OnboardingObjectif, OnboardingSport } from '@/types/onboarding'
 import {
   EMPTY_BROWSE_FILTERS,

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { nanoid } from 'nanoid'
-import { muscleGroups, type MuscleGroup } from '@/data/exercices'
+import { muscleGroups, type MuscleGroup } from '@/types/exercise'
 import type { OnboardingNiveau } from '@/types/onboarding'
 import type { AdminExercise } from '@/types/adminExercise'
 import { uploadExerciseImage, uploadExerciseVideo } from '@/storage/exerciseMedia'

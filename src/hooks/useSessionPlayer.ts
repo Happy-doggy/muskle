@@ -8,7 +8,7 @@
 import { useMemo, useState, useCallback } from 'react'
 import type { Block } from '../data/blocks'
 import type { Session } from '../data/sessions'
-import type { Exercise } from '../data/exercices'
+import type { Exercise } from '@/types/exercise'
 import type { PlayerStep } from '../types'
 
 interface UseSessionPlayerOptions {
@@ -46,8 +46,8 @@ function pushWorkAndRest(
     blockIndex,
     exerciseTitle: exercise.name,
     exerciseDescription: exercise.description,
-    exerciseImageUrl: exercise.image,
-    exerciseVideoUrl: exercise.video,
+    exerciseImageUrl: exercise.imageUrl,
+    exerciseVideoUrl: exercise.videoUrl,
     set,
     totalSets,
     exerciseIndexInBlock: exIdx,

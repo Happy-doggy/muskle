@@ -16,7 +16,8 @@ import {
 import MuskleLogo from '@/components/ui/MuskleLogo'
 import UserMenu from '@/components/UserMenu'
 import { useAuth } from '@/hooks/useAuth'
-import { exercisesDB, type Exercise } from '../data/exercices'
+import { useCatalogExercises } from '@/hooks/useCatalogExercises'
+import type { Exercise } from '@/types/exercise'
 import plankImage from '@/assets/exercises/plank.png'
 import sidePlankImage from '@/assets/exercises/side-plank.png'
 import supermanImage from '@/assets/exercises/superman.png'
@@ -83,6 +84,7 @@ const BLOCK_TYPES = [
 
 export default function LandingPage() {
   const { user } = useAuth()
+  const { exercises } = useCatalogExercises()
   const appEntry = user ? '/sessions' : '/login'
 
   return (
@@ -218,22 +220,22 @@ export default function LandingPage() {
               <div className="feature-visual">
                 <div className="ex-card-grid">
                   {LANDING_FEATURE_EXERCISE_IDS.map((id) => {
-                    const ex = exercisesDB.find((e) => e.id === id)
+                    const ex = exercises.find((e) => e.id === id)
                     if (!ex) return null
                     return (
                       <div key={ex.id} className="ex-card">
                         <div className="ex-card-media">
-                          {ex.video ? (
+                          {ex.videoUrl ? (
                             <video
-                              src={ex.video}
-                              poster={ex.image}
+                              src={ex.videoUrl}
+                              poster={ex.imageUrl}
                               loop
                               muted
                               autoPlay
                               playsInline
                             />
-                          ) : ex.image ? (
-                            <img src={ex.image} alt={ex.name} />
+                          ) : ex.imageUrl ? (
+                            <img src={ex.imageUrl} alt={ex.name} />
                           ) : null}
                         </div>
                         <div className="ex-card-body">

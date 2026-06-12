@@ -122,10 +122,6 @@ export interface PlayerState {
 // ─────────────────────────────────────────────
 
 export interface StorageAdapter {
-  getExercises(): Promise<Exercise[]>
-  saveExercise(exercise: Exercise): Promise<void>
-  deleteExercise(id: string): Promise<void>
-
   getBlocks(): Promise<Block[]>
   saveBlock(block: Block): Promise<void>
   deleteBlock(id: string): Promise<void>

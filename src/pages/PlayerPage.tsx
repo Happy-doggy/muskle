@@ -1,8 +1,8 @@
 import { useParams, useNavigate } from 'react-router-dom'
-import { useEffect, useCallback, useMemo, useRef } from 'react'
+import { useEffect, useCallback, useRef } from 'react'
 import { RotateCcw } from 'lucide-react'
 import { useAppStore } from '../store'
-import { getCatalogExercises } from '../lib/customExercises'
+import { useCatalogExercises } from '../hooks/useCatalogExercises'
 import { useSessionPlayer } from '../hooks/useSessionPlayer'
 import { useTimer } from '../hooks/useTimer'
 import { useTimerSounds } from '../hooks/useTimerSounds'
@@ -12,6 +12,7 @@ import PlayerActionDock from '../components/PlayerActionDock'
 import { cn } from '@/lib/utils'
 import { useAuth } from '../hooks/useAuth'
 import { trackWorkoutCompleted } from '../firebase/userTracking'
+import type { Exercise } from '@/types/exercise'
 
 const OVERLAY_TRACK = 'rgba(255, 255, 255, 0.22)'
 
@@ -22,7 +23,7 @@ export default function PlayerPage() {
   const blocks = useAppStore((s) => s.blocks)
   const sessions = useAppStore((s) => s.sessions)
   const session = sessions.find((s) => s.id === sessionId)
-  const exercises = useMemo(() => getCatalogExercises(), [])
+  const { exercises } = useCatalogExercises()
 
   const handleComplete = () => {
     if (user) {
@@ -59,7 +60,7 @@ export default function PlayerPage() {
 
 type PlayerCoreProps = {
   session: NonNullable<ReturnType<typeof useAppStore.getState>['sessions'][number]>
-  exercises: ReturnType<typeof getCatalogExercises>
+  exercises: Exercise[]
   blocks: ReturnType<typeof useAppStore.getState>['blocks']
   onExit: () => void
   onComplete: () => void

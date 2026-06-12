@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import type { Exercise } from '../data/exercices'
+import type { Exercise } from '@/types/exercise'
 import { formatExerciseDefaults } from '../lib/customExercises'
 import ExerciseFavoriteButton from './ExerciseFavoriteButton'
 import { cn } from '@/lib/utils'
@@ -14,7 +14,7 @@ type ExerciseCardProps = {
 function ExerciseCardMedia({ exercise }: { exercise: Exercise }) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [hovering, setHovering] = useState(false)
-  const hasVideo = Boolean(exercise.video)
+  const hasVideo = Boolean(exercise.videoUrl)
 
   const handleEnter = () => {
     if (!hasVideo) return
@@ -40,8 +40,8 @@ function ExerciseCardMedia({ exercise }: { exercise: Exercise }) {
       {hasVideo && (
         <video
           ref={videoRef}
-          src={exercise.video}
-          poster={exercise.image}
+          src={exercise.videoUrl}
+          poster={exercise.imageUrl}
           loop
           muted
           playsInline
@@ -52,9 +52,9 @@ function ExerciseCardMedia({ exercise }: { exercise: Exercise }) {
           )}
         />
       )}
-      {exercise.image ? (
+      {exercise.imageUrl ? (
         <img
-          src={exercise.image}
+          src={exercise.imageUrl}
           alt={exercise.name}
           className={cn(
             'w-full h-full object-cover transition-opacity duration-300',

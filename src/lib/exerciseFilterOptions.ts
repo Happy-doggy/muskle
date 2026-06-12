@@ -1,5 +1,5 @@
 import { ONBOARDING_STEPS } from '@/data/onboarding'
-import { muscleGroups, type MuscleGroup } from '@/data/exercices'
+import { muscleGroups, type MuscleGroup } from '@/types/exercise'
 import type {
   OnboardingMateriel,
   OnboardingNiveau,

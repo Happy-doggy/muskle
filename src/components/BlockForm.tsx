@@ -19,8 +19,8 @@ import {
 import { CSS } from '@dnd-kit/utilities'
 import { ArrowLeft, GripVertical, Pencil, Plus, Trash2 } from 'lucide-react'
 import type { Block, BlockExercise, BlockMode } from '../data/blocks'
-import type { Exercise } from '../data/exercices'
-import { getCatalogExercises } from '../lib/customExercises'
+import type { Exercise } from '@/types/exercise'
+import { useCatalogExercises } from '@/hooks/useCatalogExercises'
 import {
   BLOCK_FORMAT_OPTIONS,
   blockModeUsesRounds,
@@ -74,7 +74,7 @@ function defaultsFromExercise(
   return { ...base, duration: ex.defaultDuration ?? 30 }
 }
 
-function blockToForm(block: Block): FormState {
+function blockToForm(block: Block, catalog: Exercise[]): FormState {
   return {
     name: block.name,
     mode: block.mode,
@@ -84,7 +84,7 @@ function blockToForm(block: Block): FormState {
       block.totalDuration != null ? Math.round(block.totalDuration / 60) : 10,
     ),
     exercises: block.exercises.map((row) => {
-      const ex = getCatalogExercises().find((e) => e.id === row.exerciseId)
+      const ex = catalog.find((e) => e.id === row.exerciseId)
       return {
         ...row,
         key: crypto.randomUUID(),
@@ -257,10 +257,9 @@ export default function BlockForm({ blockId }: BlockFormProps) {
   const addBlock = useAppStore((s) => s.addBlock)
   const updateBlock = useAppStore((s) => s.updateBlock)
   const deleteBlock = useAppStore((s) => s.deleteBlock)
+  const { exercises: catalog } = useCatalogExercises()
 
-  const [form, setForm] = useState<FormState>(() =>
-    existing ? blockToForm(existing) : initialForm(),
-  )
+  const [form, setForm] = useState<FormState>(initialForm)
   const [draft, setDraft] = useState<ExerciseRow | null>(null)
   const [editingKey, setEditingKey] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -271,10 +270,13 @@ export default function BlockForm({ blockId }: BlockFormProps) {
   )
 
   useEffect(() => {
-    if (existing) setForm(blockToForm(existing))
-  }, [existing])
+    if (existing && catalog.length > 0) {
+      setForm(blockToForm(existing, catalog))
+    } else if (!existing) {
+      setForm(initialForm())
+    }
+  }, [existing, catalog])
 
-  const catalog = useMemo(() => getCatalogExercises(), [])
   const catalogMap = useMemo(
     () => new Map(catalog.map((e) => [e.id, e])),
     [catalog],

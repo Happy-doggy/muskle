@@ -3,7 +3,7 @@
  */
 import { AnimatePresence, motion } from 'framer-motion'
 import { useMemo } from 'react'
-import { useExerciseCatalog } from '../hooks/useExerciseCatalog'
+import { useCatalogExercises } from '../hooks/useCatalogExercises'
 import { useExerciseFavorites } from '../hooks/useExerciseFavorites'
 import { useExerciseFilters } from '../hooks/useExerciseFilters'
 import { Input } from '../components/ui/input'
@@ -44,7 +44,7 @@ const cardVariants = {
 const LIBRARY_TABS: ExerciseLibraryTab[] = ['profile', 'favorites', 'all']
 
 export default function ExercisesPage() {
-  const { exercises } = useExerciseCatalog()
+  const { exercises, loading } = useCatalogExercises()
   const { favoriteIds } = useExerciseFavorites()
   const filterController = useExerciseFilters()
   const {
@@ -122,6 +122,13 @@ export default function ExercisesPage() {
 
   return (
     <div className="exercise-page">
+      {loading ? (
+        <>
+          <h1 className="font-display text-3xl text-ink mb-6">Exercices</h1>
+          <p className="text-sm text-ink/50">Chargement des exercices…</p>
+        </>
+      ) : (
+        <>
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-6">
         <div>
           <h1 className="font-display text-3xl text-ink">Exercices</h1>
@@ -240,6 +247,8 @@ export default function ExercisesPage() {
           </AnimatePresence>
         </div>
       </div>
+        </>
+      )}
     </div>
   )
 }

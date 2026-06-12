@@ -1,4 +1,4 @@
-import type { Exercise, MuscleGroup } from '@/data/exercices'
+import type { Exercise, MuscleGroup } from '@/types/exercise'
 import type {
   OnboardingAnswers,
   OnboardingMateriel,

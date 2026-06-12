@@ -152,3 +152,4 @@ functions/.env.local
 
 # Vercel
 .vercel
+serviceAccount.json

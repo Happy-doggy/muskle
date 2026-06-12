@@ -1,22 +1,8 @@
-import type { MuscleGroup } from '@/data/exercices'
-import type { OnboardingNiveau } from '@/types/onboarding'
+import type { CatalogExercise } from '@/types/catalogExercise'
+import type { MuscleGroup } from '@/types/exercise'
 
-export interface AdminExercise {
-  id: string
-  name: string
-  description: string
-  category: MuscleGroup
+export type AdminExercise = CatalogExercise & {
   muscles: MuscleGroup[]
-  imageUrl?: string
-  videoUrl?: string
-  difficulty?: OnboardingNiveau
-  equipment?: string
-  type: 'reps' | 'duration'
-  defaultReps?: number
-  defaultSets?: number
-  defaultDuration?: number
-  createdAt: string
-  updatedAt: string
 }
 
 export type AdminExerciseInput = Omit<AdminExercise, 'createdAt' | 'updatedAt'>

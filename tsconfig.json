@@ -20,6 +20,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "scripts/exerciseDefinitions.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

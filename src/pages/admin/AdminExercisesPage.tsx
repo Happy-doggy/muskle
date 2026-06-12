@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { Pencil, Plus, Search, Trash2 } from 'lucide-react'
-import { muscleGroups, type MuscleGroup } from '@/data/exercices'
+import { muscleGroups, type MuscleGroup } from '@/types/exercise'
 import type { AdminExercise } from '@/types/adminExercise'
 import { useAdminExercises } from '@/hooks/useAdminExercises'
 import ExerciseFormDialog from '@/components/admin/ExerciseFormDialog'

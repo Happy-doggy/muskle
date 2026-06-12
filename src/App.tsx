@@ -6,7 +6,6 @@ import AdminLayout from './components/admin/AdminLayout'
 import Layout from './components/ui/Layout'
 import ExercisesPage from './pages/ExercisesPage'
 import ExerciseDetailPage from './pages/ExerciseDetailPage'
-import AddExercisePage from './pages/AddExercisePage'
 import BlocksPage from './pages/BlocksPage'
 import BlockEditorPage from './pages/BlockEditorPage'
 import SessionsPage from './pages/SessionsPage'
@@ -85,7 +84,6 @@ export default function App() {
           <Route path="/blocks/new" element={<BlockEditorPage />} />
           <Route path="/blocks/:id/edit" element={<BlockEditorPage />} />
           <Route path="/exercises" element={<ExercisesPage />} />
-          <Route path="/exercises/new" element={<AddExercisePage />} />
           <Route path="/exercises/:id" element={<ExerciseDetailPage />} />
           <Route path="/account" element={<AccountPage />} />
           <Route path="/account/sport-profile/:stepId" element={<SportProfileStepEditPage />} />

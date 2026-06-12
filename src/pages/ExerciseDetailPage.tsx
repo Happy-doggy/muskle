@@ -1,7 +1,8 @@
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { ArrowLeft, Dumbbell } from 'lucide-react'
-import { findExerciseById, type Exercise } from '../data/exercices'
-import { useExerciseCatalog } from '../hooks/useExerciseCatalog'
+import { findExerciseById } from '@/lib/exercises'
+import type { Exercise } from '@/types/exercise'
+import { useCatalogExercises } from '@/hooks/useCatalogExercises'
 import {
   getExerciseEquipment,
   getExerciseLevelProposals,
@@ -12,19 +13,19 @@ import ExerciseFavoriteButton from '../components/ExerciseFavoriteButton'
 function ExerciseDetailMedia({ exercise }: { exercise: Exercise }) {
   return (
     <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg bg-paper-warm">
-      {exercise.video ? (
+      {exercise.videoUrl ? (
         <video
-          src={exercise.video}
-          poster={exercise.image}
+          src={exercise.videoUrl}
+          poster={exercise.imageUrl}
           loop
           muted
           autoPlay
           playsInline
           className="h-full w-full object-cover bg-ink"
         />
-      ) : exercise.image ? (
+      ) : exercise.imageUrl ? (
         <img
-          src={exercise.image}
+          src={exercise.imageUrl}
           alt={exercise.name}
           className="h-full w-full object-cover"
         />
@@ -39,10 +40,14 @@ function ExerciseDetailMedia({ exercise }: { exercise: Exercise }) {
 
 export default function ExerciseDetailPage() {
   const { id } = useParams<{ id: string }>()
-  const { exercises } = useExerciseCatalog()
+  const { exercises, loading } = useCatalogExercises()
 
   if (!id) {
     return <Navigate to="/exercises" replace />
+  }
+
+  if (loading) {
+    return null
   }
 
   const exercise = findExerciseById(exercises, id)

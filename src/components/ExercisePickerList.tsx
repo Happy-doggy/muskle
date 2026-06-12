@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Dumbbell, Search } from 'lucide-react'
-import { filterExercisesBySearch, type Exercise } from '../data/exercices'
+import { filterExercisesBySearch } from '@/lib/exercises'
+import type { Exercise } from '@/types/exercise'
 import { Input } from './ui/input'
 import { cn } from '@/lib/utils'
 
@@ -98,9 +99,9 @@ export default function ExercisePickerList({
                   )}
                 >
                   <div className="size-14 shrink-0 overflow-hidden rounded-md bg-paper-warm">
-                    {exercise.image ? (
+                    {exercise.imageUrl ? (
                       <img
-                        src={exercise.image}
+                        src={exercise.imageUrl}
                         alt=""
                         className="h-full w-full object-cover"
                       />

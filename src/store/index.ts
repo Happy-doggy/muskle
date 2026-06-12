@@ -8,7 +8,6 @@
 import { create } from 'zustand'
 import type { Block } from '../data/blocks'
 import type { Session } from '../data/sessions'
-import { loadCustomExercises } from '../lib/customExercises'
 import { auth } from '../lib/firebase'
 import { storage } from '../storage'
 import type { Block as FirestoreBlock, Session as FirestoreSession } from '../types'
@@ -50,8 +49,6 @@ export const useAppStore = create<AppStore>((set) => ({
 
   loadAll: async () => {
     if (!auth.currentUser) return
-
-    await loadCustomExercises()
 
     const blocks = (await storage.getBlocks()).map(fromFirestoreBlock)
     const sessions = (await storage.getSessions()).map(fromFirestoreSession)
