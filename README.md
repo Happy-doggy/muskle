@@ -1,182 +1,126 @@
 # Muskle
 
-Application web pour planifier et réaliser des séances de sport à la maison — renforcement musculaire, musculation, yoga, kiné.
+**A personal home workout app for strength training, yoga, and physical therapy exercises.**
 
-## Fonctionnalités
-
-- **Exercices** : bibliothèque personnelle avec titre, description, catégorie, image/vidéo optionnelle
-- **Blocs** : groupes d'exercices (série, circuit, tabata, AMRAP, EMOM) avec configuration des séries/répétitions/durées et temps de repos
-- **Séances** : composition de séances en assemblant des blocs
-- **Player** : lecteur de séance plein écran avec minuteur (préparation → exercice → repos), navigation et progression visuelle
-
-## Stack technique
-
-| Outil | Rôle |
-|-------|------|
-| React 18 + Vite | Framework + bundler |
-| TypeScript | Typage strict |
-| Zustand | State global |
-| React Router v6 | Navigation |
-| Tailwind CSS | Styles |
-| dnd-kit | Drag & drop |
-| Framer Motion | Animations player |
-| localStorage | Stockage (swappable → Supabase) |
-
-## Installation
-
-### Prérequis
-
-- Node.js 18+
-- npm ou yarn
-
-### Démarrage
-
-```bash
-# Cloner le repo
-git clone https://github.com/TON_USERNAME/fitplanner.git
-cd fitplanner
-
-# Installer les dépendances
-npm install
-
-# Lancer en dev
-npm run dev
-```
-
-L'app est disponible sur `http://localhost:5173`
-
-### Build production
-
-```bash
-npm run build
-npm run preview  # pour tester le build localement
-```
-
-## Structure du projet
-
-```
-src/
-├── components/
-│   ├── exercises/     # Composants CRUD exercices
-│   ├── blocks/        # Composants CRUD blocs
-│   ├── sessions/      # Composants CRUD séances
-│   ├── player/        # Composants du lecteur
-│   └── ui/            # Composants partagés (Layout, TimerRing, CategoryBadge…)
-├── hooks/
-│   ├── useTimer.ts          # Timer et gestion des phases
-│   └── useSessionPlayer.ts  # Logique du player (steps, navigation)
-├── pages/
-│   ├── ExercisesPage.tsx
-│   ├── BlocksPage.tsx
-│   ├── SessionsPage.tsx
-│   └── PlayerPage.tsx       # Plein écran, sans navigation
-├── store/
-│   └── index.ts             # Store Zustand (CRUD + actions)
-├── storage/
-│   ├── localStorage.ts      # Adapter localStorage
-│   └── index.ts             # Point d'entrée (swapper ici pour changer de backend)
-└── types/
-    └── index.ts             # Tous les types TypeScript
-```
-
-## Données & stockage
-
-Les données (exercices, blocs, séances) sont stockées dans le `localStorage` du navigateur sous les clés :
-- `fitplanner:exercises`
-- `fitplanner:blocks`
-- `fitplanner:sessions`
-
-### Backup / export
-
-> À implémenter en Phase 6 — un bouton "Exporter" générera un fichier JSON téléchargeable.
-
-### Migrer vers Supabase (futur)
-
-1. Créer `src/storage/supabase.ts` qui implémente l'interface `StorageAdapter`
-2. Dans `src/storage/index.ts`, remplacer `localStorageAdapter` par `supabaseAdapter`
-3. Rien d'autre à toucher dans l'app ✓
-
-## Upload d'images/vidéos
-
-Dépose tes fichiers dans `public/uploads/` et référence-les dans les exercices avec le chemin `/uploads/mon-fichier.jpg`.
-
-> ⚠️ `public/uploads/` est dans `.gitignore` — les médias ne sont pas versionnés.
-
-## Déploiement
-
-### GitHub Pages (gratuit)
-
-```bash
-npm install --save-dev gh-pages
-
-# Dans package.json, ajouter :
-# "homepage": "https://TON_USERNAME.github.io/fitplanner",
-# "predeploy": "npm run build",
-# "deploy": "gh-pages -d dist"
-
-npm run deploy
-```
-
-### Vercel (recommandé, gratuit)
-
-1. Connecte ton repo GitHub à [vercel.com](https://vercel.com)
-2. Framework preset : **Vite**
-3. Deploy — c'est tout.
-
-## Roadmap
-
-- [x] Phase 1 — Fondations (types, store, storage, router, player)
-- [ ] Phase 2 — CRUD exercices (formulaire, upload image/vidéo)
-- [ ] Phase 3 — CRUD blocs (drag & drop exercices)
-- [ ] Phase 4 — CRUD séances (assemblage blocs)
-- [ ] Phase 5 — Polish player (sons, animations Framer Motion)
-- [ ] Phase 6 — Export/Import JSON, PWA
-
-## Licence
-
-MIT — usage personnel et open source.
+🌐 [muskle.club](https://www.muskle.club)
 
 ---
 
-## ShadCN/ui
+## What is Muskle?
 
-Ce projet utilise [ShadCN/ui](https://ui.shadcn.com/) pour les composants UI.
+Muskle is a web app I built for myself to plan and track home workout sessions. It covers strength training, yoga, and physical therapy exercises — the three practices I combine in my weekly routine.
 
-### Ajouter un composant ShadCN
+The app lets you:
+- Browse a curated exercise catalog with illustrations and video guidance
+- Build custom workout blocks (straight sets or circuits)
+- Run sessions with a built-in player and rest timer
+- Track your history and progress over time
 
-```bash
-npx shadcn@latest add button
-npx shadcn@latest add input
-npx shadcn@latest add dialog
-npx shadcn@latest add card
-npx shadcn@latest add select
-npx shadcn@latest add badge
-npx shadcn@latest add separator
-npx shadcn@latest add tooltip
-npx shadcn@latest add progress
-npx shadcn@latest add label
+No subscription. No noise. Just training.
+
+---
+
+## Why I built it
+
+I'm a Product Designer. I work with founders and product & tech teams on product creation and redesign — but I've always believed that the best designers are the ones who ship.
+
+Muskle is my sandbox for that. A real product, with real users (starting with me), where every decision — from data architecture to deployment — is mine to make and learn from.
+
+It's also an honest reflection of how the role of Product Designer is evolving: understanding systems, making technical tradeoffs, and building end-to-end, not just designing screens.
+
+---
+
+## Stack
+
+| Layer | Technology |
+|---|---|
+| Frontend | React 18 + Vite + TypeScript (strict) |
+| UI | Tailwind CSS + ShadCN/UI + Lucide React |
+| State | Zustand |
+| Routing | React Router v6 |
+| Animation | Framer Motion |
+| Drag & drop | dnd-kit |
+| Auth | Firebase Authentication (Google + Magic Link) |
+| Database | Firebase Firestore |
+| Storage | Firebase Storage |
+| Functions | Firebase Cloud Functions v2 |
+| Hosting | Vercel |
+| Email | Brevo |
+| IDE | Cursor |
+
+---
+
+## Architecture principles
+
+- **Storage adapter pattern** — Firestore is never called directly from components. All data access goes through a `StorageAdapter` interface, making the backend swappable without touching UI code.
+- **Centralized exercise catalog** — exercises are managed by the admin back-office and served from Firestore, not hardcoded in the app.
+- **Admin back-office** — a protected `/admin` route for managing the exercise catalog (full CRUD with image/video upload) and monitoring user acquisition metrics.
+- **No direct localStorage in components** — enforced via `.cursorrules`.
+
+---
+
+## Project structure
+
+```
+src/
+├── components/       # UI components
+│   └── admin/        # Back-office components
+├── config/           # App-level constants
+├── firebase/         # Firebase init + user tracking
+├── hooks/            # Custom React hooks
+├── pages/            # Route-level pages
+│   └── admin/        # Back-office pages
+├── storage/          # StorageAdapter + Firestore adapters
+├── types/            # TypeScript types
+└── data/             # (deprecated) Static exercise data
+functions/
+└── src/
+    └── index.ts      # Cloud Functions (new user notification)
 ```
 
-Les composants sont copiés dans `src/components/ui/` — tu les possèdes et peux les modifier.
+---
 
-### Composants recommandés pour FitPlanner
-
-| Composant | Usage |
-|-----------|-------|
-| `Button` | Actions principales et secondaires |
-| `Input` + `Label` | Formulaires exercices/blocs/séances |
-| `Dialog` | Modals de création/édition |
-| `Card` | Cartes exercices, blocs, séances |
-| `Select` | Sélection catégorie, type de bloc |
-| `Badge` | Catégories d'exercices |
-| `Progress` | Barre de progression du player |
-| `Separator` | Séparateurs dans les listes |
-| `Tooltip` | Aide contextuelle |
-
-### Initialisation complète (première fois)
+## Getting started
 
 ```bash
+# Install dependencies
 npm install
-npx shadcn@latest add button input label card dialog select badge separator tooltip progress
+
+# Start dev server
 npm run dev
 ```
+
+You'll need a Firebase project with Authentication, Firestore, and Storage enabled. Copy `.env.example` to `.env.local` and fill in your Firebase config and admin UID.
+
+---
+
+## Admin back-office
+
+The back-office is accessible at `/admin` and protected by Firebase UID verification. It includes:
+
+- **Users** — registration date, last login, session count, completed workouts
+- **Exercises** — full CRUD with image and video upload to Firebase Storage
+
+---
+
+## Roadmap
+
+- [ ] Multi-device sync polish
+- [ ] Exercise filtering by muscle group, equipment, level
+- [ ] Session history and progress charts
+- [ ] Optional paid tier (TBD)
+
+---
+
+## Legal
+
+Muskle is operated by Thomas RÉAUBOURG (Entrepreneur Individuel, France).
+Terms of use and privacy policy are available at [muskle.club/legal](https://www.muskle.club/legal).
+
+---
+
+## About
+
+Built by [Thomas RÉAUBOURG](https://www.linkedin.com/in/thomas-reaubourg) — Product Designer at Lonestone and freelance.
+I work with founders and product & tech teams on product creation and redesign.
+I write about design, product, and what happens behind the screens.
