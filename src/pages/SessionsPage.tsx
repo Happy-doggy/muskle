@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useAppStore } from '../store'
 import { Button } from '../components/ui/button'
-import { CalendarDays, Play, Plus } from 'lucide-react'
+import { CalendarDays, Pencil, Play, Plus } from 'lucide-react'
 
 export default function SessionsPage() {
   const sessions = useAppStore((s) => s.sessions)
@@ -41,12 +41,9 @@ export default function SessionsPage() {
           {sessions.map((session) => (
             <div
               key={session.id}
-              className="list-card list-card-clickable flex items-start justify-between gap-4"
+              className="list-card flex items-start justify-between gap-4"
             >
-              <Link
-                to={`/sessions/${session.id}/edit`}
-                className="flex-1 min-w-0 block"
-              >
+              <div className="flex-1 min-w-0">
                 <h3 className="font-medium text-ink mb-1">{session.name}</h3>
                 {session.description && (
                   <p className="text-sm text-ink/60 line-clamp-2 mb-2">
@@ -58,16 +55,22 @@ export default function SessionsPage() {
                     <li key={blockId}>{blockName(blockId)}</li>
                   ))}
                 </ol>
-              </Link>
+              </div>
 
-              <button
-                type="button"
-                onClick={() => navigate(`/play/${session.id}`)}
-                className="flex items-center justify-center gap-2 bg-accent text-accent-foreground px-4 py-2 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity shrink-0"
-              >
-                <Play size={14} />
-                Lancer
-              </button>
+              <div className="flex items-center gap-2 shrink-0">
+                <Button variant="outline" size="icon" className="h-9 w-9" asChild>
+                  <Link
+                    to={`/sessions/${session.id}/edit`}
+                    aria-label={`Modifier ${session.name}`}
+                  >
+                    <Pencil size={16} />
+                  </Link>
+                </Button>
+                <Button onClick={() => navigate(`/play/${session.id}`)}>
+                  <Play size={16} />
+                  Lancer
+                </Button>
+              </div>
             </div>
           ))}
         </div>

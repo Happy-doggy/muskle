@@ -432,6 +432,7 @@ export default function LandingPage() {
             <a href="#etapes">Comment ça marche</a>
             <a href="#blocs">Types de blocs</a>
             <a href="https://github.com/Happy-doggy/muskle" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <Link to="/legal">CGU &amp; mentions légales</Link>
           </div>
           <span className="copy">© 2026 Muskle — Entraîne-toi à la maison.</span>
         </div>

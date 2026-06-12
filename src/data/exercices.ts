@@ -26,6 +26,14 @@ import squatImage from '../assets/exercises/squat.png'
 import standingBurpeeImage from '../assets/exercises/standing-burpee.png'
 import supermanImage from '../assets/exercises/superman.png'
 import widePushUpImage from '../assets/exercises/wide-push-up.png'
+import type {
+  OnboardingContrainte,
+  OnboardingMateriel,
+  OnboardingNiveau,
+  OnboardingObjectif,
+  OnboardingSport,
+  OnboardingZone,
+} from '../types/onboarding'
 
 export type MuscleGroup =
   | 'Gainage'
@@ -38,6 +46,15 @@ export type MuscleGroup =
   | 'Triceps'
   | 'Mollets'
   | 'Cardio / Full Body'
+
+export type ExerciseTags = {
+  objectifs?: OnboardingObjectif[]
+  sports?: OnboardingSport[]
+  zones?: OnboardingZone[]
+  materiel?: OnboardingMateriel[]
+  niveau?: OnboardingNiveau[]
+  contraindications?: OnboardingContrainte[]
+}
 
 export type Exercise = {
   id: string
@@ -52,10 +69,15 @@ export type Exercise = {
   defaultDuration?: number   // en secondes
   equipment?: string
   muscleGroups?: MuscleGroup[]
+  tags?: ExerciseTags
   // médias (optionnels — chemins relatifs ou URLs)
   image?: string
   video?: string
 }
+
+const ALL_LEVELS: OnboardingNiveau[] = ['debutant', 'intermediaire', 'confirme', 'expert']
+const MID_LEVELS: OnboardingNiveau[] = ['intermediaire', 'confirme', 'expert']
+const ADVANCED_LEVELS: OnboardingNiveau[] = ['confirme', 'expert']
 
 export const exercisesDB: Exercise[] = [
 
@@ -69,6 +91,13 @@ export const exercisesDB: Exercise[] = [
     defaultDuration: 30,
     defaultSets: 3,
     image: plankImage,
+    tags: {
+      objectifs: ['gainage', 'forme'],
+      sports: ['running', 'velo', 'natation', 'raquettes', 'collectif'],
+      zones: ['abdos'],
+      materiel: ['poids-corps', 'tapis'],
+      niveau: ALL_LEVELS,
+    },
   },
   {
     id: 'side-plank',
@@ -80,6 +109,13 @@ export const exercisesDB: Exercise[] = [
     defaultSets: 3,
     image: sidePlankImage,
     video: sidePlankVideo,
+    tags: {
+      objectifs: ['gainage', 'forme'],
+      sports: ['running', 'velo', 'raquettes'],
+      zones: ['abdos'],
+      materiel: ['poids-corps', 'tapis'],
+      niveau: ALL_LEVELS,
+    },
   },
   {
     id: 'dead-bug',
@@ -90,6 +126,13 @@ export const exercisesDB: Exercise[] = [
     defaultReps: 10,
     defaultSets: 3,
     image: deadBugImage,
+    tags: {
+      objectifs: ['gainage', 'mobilite', 'forme'],
+      sports: ['running', 'natation'],
+      zones: ['abdos'],
+      materiel: ['poids-corps', 'tapis'],
+      niveau: ['debutant', 'intermediaire', 'confirme'],
+    },
   },
   {
     id: 'bird-dog',
@@ -100,6 +143,13 @@ export const exercisesDB: Exercise[] = [
     defaultReps: 10,
     defaultSets: 3,
     image: birdDogImage,
+    tags: {
+      objectifs: ['gainage', 'mobilite'],
+      sports: ['running', 'rando'],
+      zones: ['abdos', 'dos'],
+      materiel: ['poids-corps', 'tapis'],
+      niveau: ['debutant', 'intermediaire', 'confirme'],
+    },
   },
   {
     id: 'crunch',
@@ -111,6 +161,13 @@ export const exercisesDB: Exercise[] = [
     defaultSets: 3,
     image: crunchImage,
     video: crunchVideo,
+    tags: {
+      objectifs: ['gainage', 'muscle'],
+      sports: ['collectif'],
+      zones: ['abdos'],
+      materiel: ['poids-corps', 'tapis'],
+      niveau: ALL_LEVELS,
+    },
   },
 
   // ── Cuisses & Fessiers ────────────────────────────────
@@ -123,6 +180,13 @@ export const exercisesDB: Exercise[] = [
     defaultReps: 12,
     defaultSets: 4,
     image: squatImage,
+    tags: {
+      objectifs: ['force', 'muscle', 'forme'],
+      sports: ['running', 'velo', 'rando', 'collectif'],
+      zones: ['jambes'],
+      materiel: ['poids-corps'],
+      niveau: ALL_LEVELS,
+    },
   },
   {
     id: 'bulgarian-split-squat',
@@ -132,6 +196,13 @@ export const exercisesDB: Exercise[] = [
     type: 'reps',
     defaultReps: 10,
     defaultSets: 3,
+    tags: {
+      objectifs: ['force', 'muscle'],
+      sports: ['running', 'velo', 'rando'],
+      zones: ['jambes'],
+      materiel: ['banc', 'poids-corps'],
+      niveau: MID_LEVELS,
+    },
   },
   {
     id: 'lunge',
@@ -143,6 +214,13 @@ export const exercisesDB: Exercise[] = [
     defaultSets: 3,
     image: forwardLungeImage,
     video: forwardLungeVideo,
+    tags: {
+      objectifs: ['force', 'muscle', 'forme'],
+      sports: ['running', 'rando', 'raquettes', 'collectif'],
+      zones: ['jambes'],
+      materiel: ['poids-corps'],
+      niveau: ALL_LEVELS,
+    },
   },
   {
     id: 'wall-sit',
@@ -152,6 +230,13 @@ export const exercisesDB: Exercise[] = [
     type: 'duration',
     defaultDuration: 40,
     defaultSets: 3,
+    tags: {
+      objectifs: ['force', 'forme'],
+      sports: ['running', 'velo', 'rando'],
+      zones: ['jambes'],
+      materiel: ['poids-corps'],
+      niveau: ['debutant', 'intermediaire', 'confirme'],
+    },
   },
 
   // ── Ischio-jambiers ───────────────────────────────────
@@ -165,6 +250,13 @@ export const exercisesDB: Exercise[] = [
     defaultSets: 3,
     image: gluteBridgeImage,
     video: gluteBridgeVideo,
+    tags: {
+      objectifs: ['force', 'muscle'],
+      sports: ['running', 'velo'],
+      zones: ['ischio', 'jambes'],
+      materiel: ['poids-corps', 'tapis'],
+      niveau: ALL_LEVELS,
+    },
   },
   {
     id: 'hip-thrust',
@@ -174,6 +266,13 @@ export const exercisesDB: Exercise[] = [
     type: 'reps',
     defaultReps: 12,
     defaultSets: 4,
+    tags: {
+      objectifs: ['force', 'muscle'],
+      sports: ['velo', 'running'],
+      zones: ['ischio', 'jambes'],
+      materiel: ['banc', 'poids-corps'],
+      niveau: MID_LEVELS,
+    },
   },
   {
     id: 'rdl',
@@ -183,6 +282,13 @@ export const exercisesDB: Exercise[] = [
     type: 'reps',
     defaultReps: 10,
     defaultSets: 3,
+    tags: {
+      objectifs: ['force', 'muscle'],
+      sports: ['running', 'velo', 'rando'],
+      zones: ['ischio'],
+      materiel: ['halteres'],
+      niveau: MID_LEVELS,
+    },
   },
 
   // ── Pectoraux ─────────────────────────────────────────
@@ -196,6 +302,13 @@ export const exercisesDB: Exercise[] = [
     defaultSets: 4,
     image: pushUpImage,
     video: pushUpVideo,
+    tags: {
+      objectifs: ['force', 'muscle'],
+      sports: ['collectif', 'raquettes'],
+      zones: ['pecs', 'bras'],
+      materiel: ['poids-corps'],
+      niveau: MID_LEVELS,
+    },
   },
   {
     id: 'knee-push-up',
@@ -206,6 +319,13 @@ export const exercisesDB: Exercise[] = [
     defaultReps: 12,
     defaultSets: 3,
     image: kneePushUpImage,
+    tags: {
+      objectifs: ['force', 'forme'],
+      sports: ['collectif'],
+      zones: ['pecs'],
+      materiel: ['poids-corps', 'tapis'],
+      niveau: ['debutant', 'intermediaire'],
+    },
   },
   {
     id: 'wide-push-up',
@@ -216,6 +336,13 @@ export const exercisesDB: Exercise[] = [
     defaultReps: 12,
     defaultSets: 3,
     image: widePushUpImage,
+    tags: {
+      objectifs: ['force', 'muscle'],
+      sports: ['collectif'],
+      zones: ['pecs'],
+      materiel: ['poids-corps'],
+      niveau: ['intermediaire', 'confirme'],
+    },
   },
   {
     id: 'diamond-push-up',
@@ -226,6 +353,13 @@ export const exercisesDB: Exercise[] = [
     defaultReps: 10,
     defaultSets: 3,
     image: diamondPumpsImage,
+    tags: {
+      objectifs: ['force', 'muscle'],
+      sports: ['collectif'],
+      zones: ['pecs', 'bras'],
+      materiel: ['poids-corps'],
+      niveau: ADVANCED_LEVELS,
+    },
   },
   {
     id: 'dips',
@@ -236,6 +370,13 @@ export const exercisesDB: Exercise[] = [
     defaultReps: 12,
     defaultSets: 3,
     image: chairDipsImage,
+    tags: {
+      objectifs: ['force', 'muscle'],
+      sports: ['collectif'],
+      zones: ['pecs', 'bras'],
+      materiel: ['poids-corps', 'banc'],
+      niveau: MID_LEVELS,
+    },
   },
 
   // ── Épaules ───────────────────────────────────────────
@@ -248,6 +389,13 @@ export const exercisesDB: Exercise[] = [
     defaultReps: 10,
     defaultSets: 3,
     image: pikePushUpImage,
+    tags: {
+      objectifs: ['force', 'muscle'],
+      sports: ['natation', 'raquettes'],
+      zones: ['epaules'],
+      materiel: ['poids-corps'],
+      niveau: ADVANCED_LEVELS,
+    },
   },
   {
     id: 'lateral-raise',
@@ -257,6 +405,13 @@ export const exercisesDB: Exercise[] = [
     type: 'reps',
     defaultReps: 12,
     defaultSets: 3,
+    tags: {
+      objectifs: ['muscle'],
+      sports: ['natation', 'raquettes'],
+      zones: ['epaules'],
+      materiel: ['halteres'],
+      niveau: MID_LEVELS,
+    },
   },
 
   // ── Dos ───────────────────────────────────────────────
@@ -268,6 +423,13 @@ export const exercisesDB: Exercise[] = [
     type: 'reps',
     defaultReps: 8,
     defaultSets: 4,
+    tags: {
+      objectifs: ['force', 'muscle'],
+      sports: ['natation', 'raquettes'],
+      zones: ['dos', 'bras'],
+      materiel: ['barre'],
+      niveau: ADVANCED_LEVELS,
+    },
   },
   {
     id: 'row-dumbbell',
@@ -277,6 +439,13 @@ export const exercisesDB: Exercise[] = [
     type: 'reps',
     defaultReps: 10,
     defaultSets: 3,
+    tags: {
+      objectifs: ['force', 'muscle'],
+      sports: ['natation', 'velo'],
+      zones: ['dos'],
+      materiel: ['halteres', 'banc'],
+      niveau: MID_LEVELS,
+    },
   },
   {
     id: 'superman',
@@ -287,6 +456,13 @@ export const exercisesDB: Exercise[] = [
     defaultReps: 12,
     defaultSets: 3,
     image: supermanImage,
+    tags: {
+      objectifs: ['gainage', 'mobilite'],
+      sports: ['natation', 'running'],
+      zones: ['dos'],
+      materiel: ['poids-corps', 'tapis'],
+      niveau: ['debutant', 'intermediaire', 'confirme'],
+    },
   },
 
   // ── Biceps ────────────────────────────────────────────
@@ -300,6 +476,13 @@ export const exercisesDB: Exercise[] = [
     defaultSets: 3,
     image: curlBicepsImage,
     video: curlBicepsVideo,
+    tags: {
+      objectifs: ['muscle'],
+      sports: ['raquettes'],
+      zones: ['bras'],
+      materiel: ['halteres'],
+      niveau: ALL_LEVELS,
+    },
   },
   {
     id: 'hammer-curl',
@@ -310,6 +493,13 @@ export const exercisesDB: Exercise[] = [
     defaultReps: 12,
     defaultSets: 3,
     image: curlHammerImage,
+    tags: {
+      objectifs: ['muscle'],
+      sports: ['raquettes', 'collectif'],
+      zones: ['bras'],
+      materiel: ['halteres'],
+      niveau: ALL_LEVELS,
+    },
   },
 
   // ── Triceps ───────────────────────────────────────────
@@ -322,6 +512,13 @@ export const exercisesDB: Exercise[] = [
     defaultReps: 12,
     defaultSets: 3,
     image: extensionTricepsImage,
+    tags: {
+      objectifs: ['muscle'],
+      sports: ['raquettes', 'natation'],
+      zones: ['bras'],
+      materiel: ['halteres'],
+      niveau: MID_LEVELS,
+    },
   },
 
   // ── Mollets ───────────────────────────────────────────
@@ -333,6 +530,13 @@ export const exercisesDB: Exercise[] = [
     type: 'reps',
     defaultReps: 20,
     defaultSets: 3,
+    tags: {
+      objectifs: ['force', 'forme'],
+      sports: ['running', 'rando'],
+      zones: ['mollets'],
+      materiel: ['poids-corps'],
+      niveau: ALL_LEVELS,
+    },
   },
 
   // ── Cardio / Full Body ────────────────────────────────
@@ -345,6 +549,13 @@ export const exercisesDB: Exercise[] = [
     defaultReps: 10,
     defaultSets: 3,
     image: standingBurpeeImage,
+    tags: {
+      objectifs: ['cardio', 'forme'],
+      sports: ['running', 'collectif'],
+      zones: ['jambes', 'pecs', 'abdos'],
+      materiel: ['poids-corps'],
+      niveau: MID_LEVELS,
+    },
   },
   {
     id: 'mountain-climber',
@@ -356,6 +567,13 @@ export const exercisesDB: Exercise[] = [
     defaultSets: 3,
     image: mountainClimberImage,
     video: mountainClimberVideo,
+    tags: {
+      objectifs: ['cardio', 'gainage'],
+      sports: ['running', 'collectif'],
+      zones: ['abdos', 'jambes'],
+      materiel: ['poids-corps', 'tapis'],
+      niveau: MID_LEVELS,
+    },
   },
   {
     id: 'jump-squat',
@@ -366,6 +584,315 @@ export const exercisesDB: Exercise[] = [
     defaultReps: 12,
     defaultSets: 3,
     image: jumpSquatImage,
+    tags: {
+      objectifs: ['cardio', 'force'],
+      sports: ['running', 'collectif'],
+      zones: ['jambes'],
+      materiel: ['poids-corps'],
+      niveau: ADVANCED_LEVELS,
+    },
+  },
+
+  // ── Running / rando ───────────────────────────────────
+  {
+    id: 'step-up',
+    name: 'Step-up',
+    category: 'Cuisses & Fessiers',
+    description: 'Monter sur un banc ou une marche en poussant sur la jambe avant. Alternatif.',
+    type: 'reps',
+    defaultReps: 12,
+    defaultSets: 3,
+    tags: {
+      objectifs: ['force', 'forme'],
+      sports: ['running', 'rando'],
+      zones: ['jambes'],
+      materiel: ['banc', 'poids-corps'],
+      niveau: ['debutant', 'intermediaire', 'confirme'],
+    },
+  },
+  {
+    id: 'reverse-lunge',
+    name: 'Fente arrière',
+    category: 'Cuisses & Fessiers',
+    description: 'Reculer d\'un grand pas, descendre le genou arrière vers le sol. Moins de stress sur les genoux.',
+    type: 'reps',
+    defaultReps: 12,
+    defaultSets: 3,
+    tags: {
+      objectifs: ['force', 'muscle', 'forme'],
+      sports: ['running', 'rando', 'raquettes'],
+      zones: ['jambes'],
+      materiel: ['poids-corps'],
+      niveau: ALL_LEVELS,
+    },
+  },
+  {
+    id: 'single-leg-glute-bridge',
+    name: 'Pont fessier unilatéral',
+    category: 'Ischio-jambiers',
+    description: 'Pont fessier sur une jambe, l\'autre jambe tendue. Renforce la stabilité du bassin.',
+    type: 'reps',
+    defaultReps: 10,
+    defaultSets: 3,
+    tags: {
+      objectifs: ['force', 'muscle'],
+      sports: ['running', 'velo'],
+      zones: ['ischio', 'jambes'],
+      materiel: ['poids-corps', 'tapis'],
+      niveau: MID_LEVELS,
+    },
+  },
+  {
+    id: 'hip-abduction',
+    name: 'Abduction de hanche',
+    category: 'Cuisses & Fessiers',
+    description: 'Debout ou allongé sur le côté, écarter la jambe en gardant le bassin stable.',
+    type: 'reps',
+    defaultReps: 15,
+    defaultSets: 3,
+    tags: {
+      objectifs: ['force', 'forme'],
+      sports: ['running', 'rando'],
+      zones: ['jambes'],
+      materiel: ['poids-corps', 'elastiques'],
+      niveau: ALL_LEVELS,
+    },
+  },
+
+  // ── Vélo / ischio ─────────────────────────────────────
+  {
+    id: 'nordic-curl',
+    name: 'Nordic curl',
+    category: 'Ischio-jambiers',
+    description: 'À genoux, pieds fixés, descendre le buste vers l\'avant en contrôlant la descente avec les ischio.',
+    type: 'reps',
+    defaultReps: 6,
+    defaultSets: 3,
+    tags: {
+      objectifs: ['force', 'muscle'],
+      sports: ['velo', 'running'],
+      zones: ['ischio'],
+      materiel: ['poids-corps', 'tapis'],
+      niveau: ADVANCED_LEVELS,
+    },
+  },
+
+  // ── Natation / dos & épaules ──────────────────────────
+  {
+    id: 'band-pull-apart',
+    name: 'Écartement élastique',
+    category: 'Dos',
+    description: 'Élastique tendu devant soi, écarter les bras sur les côtés en serrant les omoplates.',
+    type: 'reps',
+    defaultReps: 15,
+    defaultSets: 3,
+    tags: {
+      objectifs: ['force', 'forme'],
+      sports: ['natation', 'raquettes'],
+      zones: ['dos', 'epaules'],
+      materiel: ['elastiques'],
+      niveau: ALL_LEVELS,
+    },
+  },
+  {
+    id: 'thoracic-rotation',
+    name: 'Rotation thoracique',
+    category: 'Dos',
+    description: 'À quatre pattes, main derrière la tête, ouvrir le coude vers le plafond. Mobilité du haut du dos.',
+    type: 'reps',
+    defaultReps: 10,
+    defaultSets: 3,
+    tags: {
+      objectifs: ['mobilite', 'forme'],
+      sports: ['natation', 'raquettes'],
+      zones: ['dos'],
+      materiel: ['poids-corps', 'tapis'],
+      niveau: ALL_LEVELS,
+    },
+  },
+  {
+    id: 'scapular-push-up',
+    name: 'Pompes scapulaires',
+    category: 'Dos',
+    description: 'En position de pompe haute, protraction et rétraction des omoplates sans plier les coudes.',
+    type: 'reps',
+    defaultReps: 12,
+    defaultSets: 3,
+    tags: {
+      objectifs: ['force', 'forme'],
+      sports: ['natation'],
+      zones: ['dos', 'epaules'],
+      materiel: ['poids-corps'],
+      niveau: ['debutant', 'intermediaire', 'confirme'],
+    },
+  },
+  {
+    id: 'hollow-hold',
+    name: 'Hollow hold',
+    category: 'Gainage',
+    description: 'Allongé sur le dos, décoller épaules et jambes du sol, bas du dos plaqué. Position de nageur.',
+    type: 'duration',
+    defaultDuration: 20,
+    defaultSets: 3,
+    tags: {
+      objectifs: ['gainage', 'forme'],
+      sports: ['natation'],
+      zones: ['abdos'],
+      materiel: ['poids-corps', 'tapis'],
+      niveau: MID_LEVELS,
+    },
+  },
+
+  // ── Raquettes / anti-rotation ─────────────────────────
+  {
+    id: 'pallof-press',
+    name: 'Pallof press',
+    category: 'Gainage',
+    description: 'Élastique sur le côté, pousser les mains devant la poitrine en résistant à la rotation.',
+    type: 'reps',
+    defaultReps: 12,
+    defaultSets: 3,
+    tags: {
+      objectifs: ['gainage', 'force'],
+      sports: ['raquettes', 'collectif'],
+      zones: ['abdos'],
+      materiel: ['elastiques'],
+      niveau: MID_LEVELS,
+    },
+  },
+  {
+    id: 'external-rotation',
+    name: 'Rotation externe épaule',
+    category: 'Épaules',
+    description: 'Coude plié à 90°, élastique fixé, tourner l\'avant-bras vers l\'extérieur. Prévention épaule.',
+    type: 'reps',
+    defaultReps: 15,
+    defaultSets: 3,
+    tags: {
+      objectifs: ['forme', 'mobilite'],
+      sports: ['raquettes', 'natation'],
+      zones: ['epaules'],
+      materiel: ['elastiques'],
+      niveau: ALL_LEVELS,
+    },
+  },
+
+  // ── Sport collectif ─────────────────────────────────
+  {
+    id: 'lateral-bound',
+    name: 'Saut latéral',
+    category: 'Cardio / Full Body',
+    description: 'Sauter latéralement d\'un pied sur l\'autre, amortir en fléchissant. Travail d\'appuis.',
+    type: 'reps',
+    defaultReps: 12,
+    defaultSets: 3,
+    tags: {
+      objectifs: ['cardio', 'force'],
+      sports: ['collectif', 'raquettes'],
+      zones: ['jambes'],
+      materiel: ['poids-corps'],
+      niveau: MID_LEVELS,
+    },
+  },
+  {
+    id: 'skater-hop',
+    name: 'Skater hop',
+    category: 'Cardio / Full Body',
+    description: 'Sauts latéraux avec amorti sur une jambe, genou légèrement fléchi. Explosivité multidirectionnelle.',
+    type: 'reps',
+    defaultReps: 10,
+    defaultSets: 3,
+    tags: {
+      objectifs: ['cardio', 'force'],
+      sports: ['collectif', 'raquettes'],
+      zones: ['jambes'],
+      materiel: ['poids-corps'],
+      niveau: MID_LEVELS,
+    },
+  },
+  {
+    id: 'boxer-shuffle',
+    name: 'Pas chassés',
+    category: 'Cardio / Full Body',
+    description: 'Déplacements rapides latéraux en chassant les pieds, genoux souples. Travail cardio et appuis.',
+    type: 'duration',
+    defaultDuration: 30,
+    defaultSets: 3,
+    tags: {
+      objectifs: ['cardio', 'forme'],
+      sports: ['collectif', 'raquettes'],
+      zones: ['jambes'],
+      materiel: ['poids-corps'],
+      niveau: ALL_LEVELS,
+    },
+  },
+
+  // ── Mobilité ──────────────────────────────────────────
+  {
+    id: 'cat-cow',
+    name: 'Chat-vache',
+    category: 'Gainage',
+    description: 'À quatre pattes, alterner cambrure et arrondi du dos en synchronisant la respiration.',
+    type: 'reps',
+    defaultReps: 10,
+    defaultSets: 2,
+    tags: {
+      objectifs: ['mobilite', 'forme'],
+      sports: ['running', 'velo', 'natation', 'rando'],
+      zones: ['dos', 'abdos'],
+      materiel: ['poids-corps', 'tapis'],
+      niveau: ALL_LEVELS,
+    },
+  },
+  {
+    id: 'hip-90-90',
+    name: 'Mobilité 90/90',
+    category: 'Cuisses & Fessiers',
+    description: 'Assis, jambes à 90° devant et sur le côté. Basculer d\'un côté à l\'autre pour ouvrir les hanches.',
+    type: 'reps',
+    defaultReps: 8,
+    defaultSets: 2,
+    tags: {
+      objectifs: ['mobilite'],
+      sports: ['running', 'velo', 'rando'],
+      zones: ['jambes'],
+      materiel: ['poids-corps', 'tapis'],
+      niveau: ALL_LEVELS,
+    },
+  },
+  {
+    id: 'worlds-greatest-stretch',
+    name: 'World\'s greatest stretch',
+    category: 'Cardio / Full Body',
+    description: 'Fente profonde, coude au sol, rotation thoracique. Étirement dynamique full-body.',
+    type: 'reps',
+    defaultReps: 6,
+    defaultSets: 2,
+    tags: {
+      objectifs: ['mobilite', 'forme'],
+      sports: ['running', 'collectif', 'rando'],
+      zones: ['jambes', 'dos'],
+      materiel: ['poids-corps', 'tapis'],
+      niveau: ALL_LEVELS,
+    },
+  },
+
+  // ── Débutant ──────────────────────────────────────────
+  {
+    id: 'incline-push-up',
+    name: 'Pompes inclinées',
+    category: 'Pectoraux',
+    description: 'Mains sur un banc ou une surface surélevée, corps gainé. Variante accessible des pompes.',
+    type: 'reps',
+    defaultReps: 12,
+    defaultSets: 3,
+    tags: {
+      objectifs: ['force', 'forme'],
+      sports: ['collectif'],
+      zones: ['pecs'],
+      materiel: ['banc', 'poids-corps'],
+      niveau: ['debutant', 'intermediaire'],
+    },
   },
 ]
 

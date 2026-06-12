@@ -157,7 +157,7 @@
   }
 
   @container (min-width: 68rem) {
-    .exercise-grid {
+    .exercise-grid:not(.exercise-grid-with-sidebar) {
       grid-template-columns: repeat(4, minmax(0, 1fr));
     }
   }

@@ -1,10 +1,12 @@
 import type { TimerPhase } from '../../types'
+import { cn } from '@/lib/utils'
 
 interface TimerRingProps {
   progress: number      // 0 → 1
   remaining: number     // secondes restantes
   phase: TimerPhase
   size?: number
+  variant?: 'default' | 'overlay'
 }
 
 export const TIMER_RING_TRACK = 'var(--ring-track)'
@@ -23,11 +25,21 @@ const PHASE_LABELS: Record<TimerPhase, string> = {
   done:    'Terminé',
 }
 
-export default function TimerRing({ progress, remaining, phase, size = 200 }: TimerRingProps) {
+const OVERLAY_TRACK = 'rgba(255, 255, 255, 0.18)'
+
+export default function TimerRing({
+  progress,
+  remaining,
+  phase,
+  size = 200,
+  variant = 'default',
+}: TimerRingProps) {
   const radius = (size - 20) / 2
   const circumference = 2 * Math.PI * radius
   const offset = circumference * (1 - progress)
   const color = PHASE_COLORS[phase]
+  const trackColor = variant === 'overlay' ? OVERLAY_TRACK : TIMER_RING_TRACK
+  const timeClass = variant === 'overlay' ? 'text-white' : 'text-ink'
 
   const minutes = Math.floor(remaining / 60)
   const seconds = remaining % 60
@@ -41,7 +53,7 @@ export default function TimerRing({ progress, remaining, phase, size = 200 }: Ti
           cy={size / 2}
           r={radius}
           fill="none"
-          stroke={TIMER_RING_TRACK}
+          stroke={trackColor}
           strokeWidth={8}
         />
         {/* Progress */}
@@ -65,7 +77,7 @@ export default function TimerRing({ progress, remaining, phase, size = 200 }: Ti
 
       {/* Center content */}
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="font-mono text-4xl font-medium text-ink tabular-nums">
+        <span className={cn('font-mono text-4xl font-medium tabular-nums', timeClass)}>
           {minutes > 0
             ? `${minutes}:${String(seconds).padStart(2, '0')}`
             : String(remaining)}

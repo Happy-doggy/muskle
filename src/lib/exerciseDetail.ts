@@ -1,24 +1,12 @@
 import type { Exercise, MuscleGroup } from '../data/exercices'
+import { formatMaterielList, resolveExerciseTags } from '@/lib/exerciseTags'
 
 export type ExerciseLevel = 'débutant' | 'confirmé' | 'expert'
 
-const EQUIPMENT_BY_ID: Record<string, string> = {
-  'wall-sit': 'Mur',
-  'bulgarian-split-squat': 'Banc',
-  'hip-thrust': 'Banc',
-  rdl: 'Haltères',
-  'pull-up': 'Barre de traction',
-  'row-dumbbell': 'Haltère, banc',
-  'lateral-raise': 'Haltères',
-  'bicep-curl': 'Haltères',
-  'hammer-curl': 'Haltères',
-  'tricep-extension': 'Haltère',
-  dips: 'Chaise',
-  'calf-raise': 'Marche (optionnel)',
-}
-
 export function getExerciseEquipment(exercise: Exercise): string {
-  return exercise.equipment ?? EQUIPMENT_BY_ID[exercise.id] ?? 'Aucun matériel'
+  if (exercise.equipment) return exercise.equipment
+  const materiel = resolveExerciseTags(exercise).materiel
+  return formatMaterielList(materiel)
 }
 
 export function getExerciseMuscleGroups(exercise: Exercise): MuscleGroup[] {

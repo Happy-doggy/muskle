@@ -775,7 +775,7 @@ export default function BlockForm({ blockId }: BlockFormProps) {
                 </Button>
                 <Button type="button" className="flex-1" onClick={confirmDraft}>
                   <Plus size={16} />
-                  {editingKey ? 'Enregistrer l’exercice' : 'Créer l’exercice'}
+                  {editingKey ? 'Enregistrer l’exercice' : 'Ajouter'}
                 </Button>
               </div>
             </div>

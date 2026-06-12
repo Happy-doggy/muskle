@@ -405,7 +405,7 @@ export default function SessionForm({ sessionId }: SessionFormProps) {
                 </Button>
                 <Button type="button" className="flex-1" onClick={includePickedBlock}>
                   <Plus size={16} />
-                  Inclure le bloc
+                  Ajouter
                 </Button>
               </div>
             </div>

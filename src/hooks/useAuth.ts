@@ -10,6 +10,7 @@ import {
   type User,
 } from 'firebase/auth'
 import { auth } from '../lib/firebase'
+import { trackUserLogin } from '../firebase/userTracking'
 
 const MAGIC_EMAIL_KEY = 'muskle_magic_email'
 
@@ -52,6 +53,11 @@ export function useAuth() {
     return onAuthStateChanged(auth, (u) => {
       setUser(u)
       setLoading(false)
+      if (u) {
+        void trackUserLogin(u).catch((err) => {
+          console.error('[useAuth] Failed to track user login', err)
+        })
+      }
     })
   }, [])
 
