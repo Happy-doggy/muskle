@@ -3,11 +3,11 @@ import { initializeApp } from 'firebase-admin/app'
 
 initializeApp()
 
-interface ResendEmailPayload {
-  from: string
-  to: string[]
+interface BrevoEmailPayload {
+  sender: { name: string; email: string }
+  to: { email: string }[]
   subject: string
-  html: string
+  htmlContent: string
 }
 
 async function sendAdminNotificationEmail(
@@ -15,19 +15,19 @@ async function sendAdminNotificationEmail(
   displayName: string,
   createdAt: string,
 ): Promise<void> {
-  const apiKey = process.env.RESEND_API_KEY
+  const apiKey = process.env.BREVO_API_KEY
   const adminEmail = process.env.ADMIN_EMAIL
 
   if (!apiKey || !adminEmail) {
-    console.warn('[onNewUser] Missing RESEND_API_KEY or ADMIN_EMAIL — email skipped')
+    console.warn('[onNewUser] Missing BREVO_API_KEY or ADMIN_EMAIL — email skipped')
     return
   }
 
-  const payload: ResendEmailPayload = {
-    from: 'Muskle <onboarding@resend.dev>',
-    to: [adminEmail],
+  const payload: BrevoEmailPayload = {
+    sender: { name: 'Muskle', email: 'contact@muskle.club' },
+    to: [{ email: adminEmail }],
     subject: `🎉 Nouvel utilisateur Muskle : ${email || 'sans email'}`,
-    html: `
+    htmlContent: `
       <h2>Nouvel utilisateur Muskle</h2>
       <ul>
         <li><strong>Email :</strong> ${email || '—'}</li>
@@ -37,10 +37,10 @@ async function sendAdminNotificationEmail(
     `,
   }
 
-  const response = await fetch('https://api.resend.com/emails', {
+  const response = await fetch('https://api.brevo.com/v3/smtp/email', {
     method: 'POST',
     headers: {
-      Authorization: `Bearer ${apiKey}`,
+      'api-key': apiKey,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(payload),
@@ -48,7 +48,7 @@ async function sendAdminNotificationEmail(
 
   if (!response.ok) {
     const body = await response.text()
-    throw new Error(`Resend API error ${response.status}: ${body}`)
+    throw new Error(`Brevo API error ${response.status}: ${body}`)
   }
 }
 
